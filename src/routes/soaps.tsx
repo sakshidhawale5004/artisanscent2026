@@ -90,6 +90,53 @@ function SoapsPage() {
           </div>
         </section>
 
+        {/* Page Info Section - Image Left, Info Right */}
+        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Left */}
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="/assets/shopimages/soap sectionimage.jpg"
+                alt="Artisan Handcrafted Soaps Collection"
+                className="w-full h-[420px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </div>
+            {/* Info Right */}
+            <div className="flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-4">
+                <span className="w-5 h-[1px] bg-[#d4af37]" />
+                <span>PERSONAL CARE</span>
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl font-normal tracking-tight text-[#1a1a1a] mb-4">
+                Bathing as a<br />
+                <em className="text-[#1b5e3f] font-serif italic">Daily Ritual</em>
+              </h2>
+              <p className="text-[#555555] text-sm sm:text-base font-light leading-relaxed mb-4">
+                Our handcrafted bathing bars are made using the traditional cold-process method — slow-cured in small batches to preserve the natural glycerin and essential oil integrity. Enriched with plant-derived butters, these soaps are gentle on the skin, generous in lather, and quietly luxurious in lasting botanical fragrance.
+              </p>
+              <ul className="space-y-2 mb-6">
+                {[
+                  '✦ Cold-processed — naturally glycerin-rich',
+                  '✦ Enriched with pure essential oils',
+                  '✦ No synthetic fragrances or harsh SLS',
+                  '✦ Gentle for all skin types',
+                  '✦ Handcrafted in small batches',
+                ].map((item) => (
+                  <li key={item} className="text-sm text-[#444444] font-light flex items-start gap-2">
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+                <span className="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-semibold">Cold Process · Botanical · Artisan</span>
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Product Grid - Synchronized with Delicate Beige Borders */}
         <section className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">

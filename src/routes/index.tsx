@@ -227,16 +227,21 @@ function Index() {
           <div className="section-heading reveal-on-scroll">
             <div>
               <div className="eyebrow text-muted-foreground">OUR COLLECTION</div>
-              <h2 className="section-title">Six Categories of Luxury</h2>
+              <h2 className="section-title">Our Categories of Luxury</h2>
             </div>
-            <Button
-              variant="editorial"
-              onClick={() => {
-                setFilter("All Products");
-              }}
+            <a
+              href={
+                filter === "Perfumes" ? "/perfumes"
+                : filter === "Oils" ? "/essence-oils"
+                : filter === "Car Perfumes" ? "/car-perfumes"
+                : filter === "Agarbatti" ? "/agarbatti"
+                : filter === "Soaps" ? "/soaps"
+                : "/perfumes"
+              }
+              className="inline-flex items-center gap-2 text-sm font-medium text-[#1b5e3f] hover:text-[#164a31] transition-colors"
             >
-              View all <ArrowRight />
-            </Button>
+              View all {filter !== "All Products" ? filter : "products"} <ArrowRight size={15} />
+            </a>
           </div>
 
           <div
@@ -244,7 +249,7 @@ function Index() {
             role="tablist"
             aria-label="Product category"
           >
-            {["All Products", "Perfumes", "Oils", "Car Perfumes", "Agarbatti", "Soaps"].map((f) => (
+            {["All Products", "Perfumes", "Oils", "Car Perfumes"].map((f) => (
               <Button
                 key={f}
                 variant="tab"
@@ -259,7 +264,7 @@ function Index() {
           </div>
 
           <div className="product-grid">
-            {filtered.slice(0, 6).map((p, idx) => {
+            {filtered.slice(0, 3).map((p, idx) => {
               const delayClass =
                 idx % 3 === 0
                   ? "reveal-delay-100"
@@ -321,6 +326,23 @@ function Index() {
                 </article>
               );
             })}
+          </div>
+
+          {/* View All Category Link */}
+          <div className="flex justify-center mt-10 reveal-on-scroll">
+            <a
+              href={
+                filter === "Perfumes" ? "/perfumes"
+                : filter === "Oils" ? "/essence-oils"
+                : filter === "Car Perfumes" ? "/car-perfumes"
+                : filter === "Agarbatti" ? "/agarbatti"
+                : filter === "Soaps" ? "/soaps"
+                : "/perfumes"
+              }
+              className="inline-flex items-center gap-3 h-12 px-8 rounded-full border border-[#1b5e3f]/40 bg-white hover:bg-[#1b5e3f] hover:text-white text-[#1b5e3f] text-sm font-medium tracking-wide transition-all duration-300 shadow-sm hover:shadow-md"
+            >
+              See all {filter !== "All Products" ? filter : "Perfumes"} <ArrowRight size={15} />
+            </a>
           </div>
         </section>
 
@@ -701,13 +723,13 @@ function Index() {
 
         <section id="journal" className="section journal">
           <img
-            src={products[0]?.image}
+            src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85"
             alt="Premium fragrance collection"
-            width={1024}
-            height={1024}
+            width={1200}
+            height={900}
             loading="lazy"
             className="reveal-scale"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "cover", borderRadius: "12px" }}
           />
           <div className="reveal-on-scroll reveal-delay-150">
             <div className="eyebrow text-muted-foreground">THE ARTISAN DIFFERENCE</div>
@@ -724,6 +746,77 @@ function Index() {
             <Button variant="editorial" onClick={() => setPanel("story")}>
               Learn more <ArrowRight />
             </Button>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="section bg-[#fafaf8] text-[#333333] border-b border-[#2d8659]/15 py-20">
+          <div className="max-w-4xl mx-auto px-6 sm:px-8">
+            <div className="text-center mb-14 reveal-on-scroll">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
+                <span className="w-5 h-[1px] bg-[#d4af37]" />
+                <span>FREQUENTLY ASKED QUESTIONS</span>
+                <span className="w-5 h-[1px] bg-[#d4af37]" />
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#1a1a1a]">
+                Everything You Need to Know
+              </h2>
+              <p className="text-[#666666] text-sm mt-3 font-light leading-relaxed max-w-xl mx-auto">
+                Have questions about our fragrances, ingredients, or orders? We've answered the most common ones below.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  q: "What makes Artisan Scent fragrances different from regular perfumes?",
+                  a: "Our fragrances are crafted in small batches using high-concentration botanical essences sourced from KEOMC's aromatic plant labs. We use traditional extraction methods — steam distillation and cold-press — to preserve the authentic character of each ingredient. Every product is free from synthetic fillers and harmful chemicals."
+                },
+                {
+                  q: "Are your products 100% natural and chemical-free?",
+                  a: "Yes. We are committed to using only pure botanical extracts, essential oils, plant-derived butters, and natural bamboo or glass packaging materials. Our agarbatti sticks are charcoal-free; our soaps contain no SLS or parabens; and our essence oils are unadulterated single-origin distillates."
+                },
+                {
+                  q: "How long do the perfumes and essence oils last?",
+                  a: "Our luxury perfumes have a high extrait concentration of 30–40% pure essence and typically last 8–12 hours on the skin. Essence oils, when applied to pulse points, can last 6–10 hours. Car perfumes provide continuous fragrance for up to 60 days."
+                },
+                {
+                  q: "Do you offer bulk or wholesale pricing?",
+                  a: "Yes! We supply essence oils in bulk quantities (500ml, 1L, and custom larger quantities) for perfumers, spas, and wellness businesses. We also offer agarbatti in wholesale packs. Please contact us through the Contact page for pricing and MOQ details."
+                },
+                {
+                  q: "What is your shipping policy?",
+                  a: "We offer free shipping on all orders above ₹999 within India. Standard delivery takes 3–5 business days. Express delivery is available at checkout for faster dispatch. All orders are carefully packed to prevent breakage during transit."
+                },
+                {
+                  q: "Can I return or exchange a product?",
+                  a: "We accept returns within 7 days of delivery for unopened, unused products in original packaging. For damaged or incorrect items, please contact us within 48 hours of delivery with a photo, and we'll arrange an immediate replacement at no cost."
+                },
+                {
+                  q: "Are Artisan Scent products suitable as gifts?",
+                  a: "Absolutely. Our luxury perfumes, essence oil kits, and handcrafted soap sets make beautiful gifts for any occasion. We offer gift-ready packaging on select products. For corporate gifting or bulk gift orders, please reach out to us directly."
+                },
+                {
+                  q: "Where are Artisan Scent products manufactured?",
+                  a: "All our products are made in India, leveraging the rich tradition of Indian perfumery and botanical expertise. We work closely with KEOMC's aromatic plant cultivation and distillation facilities to ensure traceable, ethical sourcing from farm to bottle."
+                },
+              ].map((faq, idx) => (
+                <details
+                  key={idx}
+                  className={`reveal-on-scroll reveal-delay-${(idx % 4) * 100 + 50} group rounded-2xl border border-[#e8e2d8] bg-white overflow-hidden transition-all duration-300 hover:border-[#1b5e3f]/30 hover:shadow-md`}
+                >
+                  <summary className="flex items-center justify-between px-7 py-5 cursor-pointer list-none select-none">
+                    <span className="font-display text-base sm:text-lg text-[#1a1a1a] pr-4">{faq.q}</span>
+                    <span className="shrink-0 w-6 h-6 rounded-full border border-[#1b5e3f]/30 flex items-center justify-center text-[#1b5e3f] group-open:rotate-45 transition-transform duration-300">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                    </span>
+                  </summary>
+                  <div className="px-7 pb-6 text-sm text-[#555555] font-light leading-relaxed border-t border-[#e8e2d8] pt-4">
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
       </main>

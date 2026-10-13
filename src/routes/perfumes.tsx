@@ -63,7 +63,7 @@ function PerfumesPage() {
           {/* Unsplash Background Image */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=2400&q=85"
+              src="/assets/shopimages/perfume sectionimage.png"
               alt="Luxury Perfumes Background"
               className="w-full h-full object-cover scale-105"
             />
@@ -111,6 +111,54 @@ function PerfumesPage() {
             fragrances
           </div>
         </div>
+
+
+        {/* Page Info Section - Image Left, Info Right */}
+        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Left */}
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="/assets/shopimages/perfume sectionimage.png"
+                alt="Artisan Perfumes Collection"
+                className="w-full h-[420px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </div>
+            {/* Info Right */}
+            <div className="flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-4">
+                <span className="w-5 h-[1px] bg-[#d4af37]" />
+                <span>LUXURY PERFUMES</span>
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl font-normal tracking-tight text-[#1a1a1a] mb-4">
+                Crafted for the<br />
+                <em className="text-[#1b5e3f] font-serif italic">Discerning Soul</em>
+              </h2>
+              <p className="text-[#555555] text-sm sm:text-base font-light leading-relaxed mb-4">
+                Our luxury perfume collection is the crowning jewel of Artisan Scents. Each fragrance is a complex composition of high-concentration rare essences — sourced from KEOMC's botanical labs, hand-blended, and presented in premium glass flacons. From soft florals to deep woody ambers, every bottle tells a story.
+              </p>
+              <ul className="space-y-2 mb-6">
+                {[
+                  '✦ High Extrait Concentration (30–40% pure essence)',
+                  '✦ Long-lasting sillage — up to 12 hours',
+                  '✦ Handcrafted in small batches',
+                  '✦ Luxury glass flacons with wooden caps',
+                  '✦ Perfect for gifting & personal wear',
+                ].map((item) => (
+                  <li key={item} className="text-sm text-[#444444] font-light flex items-start gap-2">
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+                <span className="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-semibold">Est. 2020 · Premium House</span>
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Product Grid - Synchronized with Delicate Beige Borders */}
         <section className="max-w-7xl mx-auto px-6 sm:px-8 py-12">

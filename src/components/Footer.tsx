@@ -58,8 +58,15 @@ export function Footer({
     <footer className="footer" style={{ marginTop }}>
       <div className="footer-top reveal-on-scroll">
         <div>
-          <a href="/" className="wordmark">
-            ARTISAN<span className="text-gold">SCENTS</span>
+          <a href="/" className="flex items-center gap-3 mb-2">
+            <img
+              src="/assets/logo.jpeg"
+              alt="Artisan Scent Logo"
+              className="w-10 h-10 rounded-full object-cover border border-[#d4af37]/40 shadow-sm"
+            />
+            <span className="wordmark tracking-widest text-lg">
+              ARTISAN <span className="text-gold">SCENT</span>
+            </span>
           </a>
           <p className="text-[11px] text-muted-foreground mt-2 max-w-xs">{tagline}</p>
         </div>

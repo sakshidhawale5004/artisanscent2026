@@ -90,6 +90,53 @@ function CarPerfumesPage() {
           </div>
         </section>
 
+        {/* Page Info Section - Image Left, Info Right */}
+        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Left */}
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="/assets/shopimages/carsectionimagw.png"
+                alt="Artisan Car Perfumes Collection"
+                className="w-full h-[420px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </div>
+            {/* Info Right */}
+            <div className="flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-4">
+                <span className="w-5 h-[1px] bg-[#d4af37]" />
+                <span>AUTOMOTIVE COLLECTION</span>
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl font-normal tracking-tight text-[#1a1a1a] mb-4">
+                Your Cabin,<br />
+                <em className="text-[#1b5e3f] font-serif italic">Your Sanctuary</em>
+              </h2>
+              <p className="text-[#555555] text-sm sm:text-base font-light leading-relaxed mb-4">
+                Transform every drive into a sensory journey. Artisan Scents car perfumes are refined hanging diffusers and wooden-cap flacons designed to complement any vehicle interior. Crafted from botanical aromatic essences, they purify cabin air without harsh aerosol propellants — delivering calm, lasting fragrance mile after mile.
+              </p>
+              <ul className="space-y-2 mb-6">
+                {[
+                  '✦ Premium wooden hanging diffuser design',
+                  '✦ Long-lasting scent — up to 60 days',
+                  '✦ Natural botanical essence formulation',
+                  '✦ No aerosol propellants or harsh chemicals',
+                  '✦ Stylish accessory for every car interior',
+                ].map((item) => (
+                  <li key={item} className="text-sm text-[#444444] font-light flex items-start gap-2">
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+                <span className="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-semibold">Automotive · Premium Fragrance</span>
+                <div className="h-px flex-1 bg-[#e8e2d8]" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Product Grid - Synchronized with Delicate Beige Borders */}
         <section className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
