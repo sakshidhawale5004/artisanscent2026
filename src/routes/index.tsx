@@ -126,10 +126,9 @@ function Index() {
               playsInline
               className="w-full h-full object-cover scale-105"
             />
-            {/* Dark Overlays for optimal text visibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/70" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(27,94,63,0.35),_transparent_70%)]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent to-black/60" />
+            {/* Light Overlays for optimal text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/40 to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-12 lg:pt-20 lg:pb-16">
