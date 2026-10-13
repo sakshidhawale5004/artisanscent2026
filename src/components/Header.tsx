@@ -44,76 +44,89 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
 
   return (
     <>
-      {/* Desktop / Tablet Header */}
+      {/* Desktop / Tablet / Mobile Header */}
       <header
         className={`luxury-header${scrolled ? " luxury-header--scrolled" : ""}`}
         role="banner"
       >
-        {/* Left: Nav Links */}
-        <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation">
-          {navItems.slice(0, 2).map((item) =>
-            item.children ? (
-              <div key={item.label} className="luxury-dropdown-wrapper">
-                <button
-                  className={`luxury-nav-link luxury-dropdown-trigger${currentPage === item.label ? " active" : ""}`}
-                  onClick={() => setShopOpen((o) => !o)}
-                  aria-expanded={shopOpen}
-                  aria-haspopup="true"
+        {/* Left Side: Mobile Hamburger & Desktop Left Nav Links */}
+        <div className="luxury-header-left">
+          {/* Mobile Hamburger on the left */}
+          <button
+            className="luxury-hamburger md:hidden mr-3"
+            aria-label="Open menu"
+            onClick={() => setMobileOpen(true)}
+          >
+            <Menu size={22} />
+          </button>
+
+          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation left">
+            {navItems.slice(0, 2).map((item) =>
+              item.children ? (
+                <div key={item.label} className="luxury-dropdown-wrapper">
+                  <button
+                    className={`luxury-nav-link luxury-dropdown-trigger${currentPage === item.label ? " active" : ""}`}
+                    onClick={() => setShopOpen((o) => !o)}
+                    aria-expanded={shopOpen}
+                    aria-haspopup="true"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={12}
+                      className={`luxury-chevron${shopOpen ? " rotated" : ""}`}
+                    />
+                  </button>
+                  {shopOpen && (
+                    <div className="luxury-dropdown" role="menu">
+                      {item.children.map((child) => (
+                        <a
+                          key={child.label}
+                          href={child.href}
+                          className="luxury-dropdown-item"
+                          role="menuitem"
+                          onClick={() => setShopOpen(false)}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`luxury-nav-link${currentPage === item.label ? " active" : ""}`}
                 >
                   {item.label}
-                  <ChevronDown
-                    size={12}
-                    className={`luxury-chevron${shopOpen ? " rotated" : ""}`}
-                  />
-                </button>
-                {shopOpen && (
-                  <div className="luxury-dropdown" role="menu">
-                    {item.children.map((child) => (
-                      <a
-                        key={child.label}
-                        href={child.href}
-                        className="luxury-dropdown-item"
-                        role="menuitem"
-                        onClick={() => setShopOpen(false)}
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`luxury-nav-link${currentPage === item.label ? " active" : ""}`}
-              >
-                {item.label}
-              </a>
-            ),
-          )}
-        </nav>
+                </a>
+              ),
+            )}
+          </nav>
+        </div>
 
-        {/* Center: Circle Logo & Wordmark */}
-        <a href="/" className="luxury-logo-link" aria-label="Artisan Scents – home">
-          <div className="luxury-logo-circle">
-            <img
-              src="/assets/logo.jpeg"
-              alt="Artisan Scents logo"
-              className="luxury-logo-img"
-              width={48}
-              height={48}
-            />
-          </div>
-          <div>
-            <div className="luxury-brand-title">ARTISAN SCENT</div>
-            <div className="luxury-brand-subtitle">LUXURY FRAGRANCES</div>
-          </div>
-        </a>
+        {/* Center: Perfectly Center-Aligned Logo */}
+        <div className="luxury-header-center">
+          <a href="/" className="luxury-logo-link" aria-label="Artisan Scents – home">
+            <div className="luxury-logo-circle">
+              <img
+                src="/assets/logo.jpeg"
+                alt="Artisan Scents logo"
+                className="luxury-logo-img"
+                width={48}
+                height={48}
+              />
+            </div>
+            <div>
+              <div className="luxury-brand-title">ARTISAN SCENT</div>
+              <div className="luxury-brand-subtitle">LUXURY FRAGRANCES</div>
+            </div>
+          </a>
+        </div>
 
-        {/* Right: Nav Links & Action Icons */}
-        <div className="luxury-nav-cluster">
-          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation">
+        {/* Right Side: Desktop Right Nav Links & Action Icons */}
+        <div className="luxury-header-right">
+          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation right">
             {navItems.slice(2).map((item) =>
               item.children ? (
                 <div key={item.label} className="luxury-dropdown-wrapper">
@@ -171,14 +184,6 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
             >
               <ShoppingBag size={18} strokeWidth={1.5} />
               {totalItems > 0 && <span className="luxury-bag-count">{totalItems}</span>}
-            </button>
-            {/* Mobile Hamburger */}
-            <button
-              className="luxury-hamburger md:hidden"
-              aria-label="Open menu"
-              onClick={() => setMobileOpen(true)}
-            >
-              <Menu size={22} />
             </button>
           </div>
         </div>

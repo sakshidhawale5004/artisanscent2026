@@ -28,32 +28,32 @@ function KEOMCPage() {
 
       <main className="bg-[#fafaf8] text-[#333333] min-h-screen">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-20 px-6 sm:px-12 bg-[#fafaf8]">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/15 py-20 px-6 sm:px-12 bg-[#0d0c0b] text-white">
           {/* Unsplash Background Image */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=2400&q=85"
-              alt="KEOMC Background"
+              src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=2400&q=85"
+              alt="KEOMC Botanical Harvest Background"
               className="w-full h-full object-cover scale-105"
             />
-            {/* Dark Overlay for text visibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#fafaf8]/95 via-transparent to-transparent" />
+            {/* Deep Contrast Overlay for optimal text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d0c0b]/90 via-transparent to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto">
-            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#86efac] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>HERITAGE PARTNER</span>
             </div>
-            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#333333]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white">
               KEOMC
               <br />
-              <em className="text-[#1b5e3f] font-serif italic">Botanical Excellence</em>
+              <em className="text-[#86efac] font-serif italic">Botanical Excellence</em>
             </h1>
-            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-[#666666] font-light max-w-xl leading-relaxed">
-              Kulswami Essence Oil Manufacturing Company - Processing aromatic and medicinal plants
-              with expertise in essential oil extraction and botanical consulting.
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-[#e0deda] font-light max-w-xl leading-relaxed">
+              Kulswami Essence Oil Manufacturing Company — Processing aromatic and medicinal plants
+              with expertise in essential oil extraction and botanical stewardship.
             </p>
           </div>
         </section>

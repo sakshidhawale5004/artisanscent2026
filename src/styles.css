@@ -311,9 +311,9 @@ a {
 .luxury-header {
   height: 84px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 5%;
+  padding: 0 4%;
   background: #ffffff;
   color: #333333;
   position: sticky;
@@ -322,7 +322,7 @@ a {
   transition:
     box-shadow 0.3s,
     background-color 0.3s;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e8e2d8;
 }
 .luxury-header--scrolled {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -330,13 +330,38 @@ a {
   backdrop-filter: blur(12px);
 }
 
-/* logo on left in circle */
+.luxury-header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.luxury-header-center {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 16px;
+}
+
+.luxury-header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* center logo */
 .luxury-logo-link {
   display: flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  margin: 0 40px;
+  margin: 0;
 }
 .luxury-logo-circle {
   width: 46px;

@@ -420,9 +420,9 @@ function ProductDetailPage() {
                 return (
                   <article
                     key={p.id}
-                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#fefdfb] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60`}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5`}
                   >
-                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border-b border-[#e0e0e0]">
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#fcfbf9] border-b border-[#e8e2d8]">
                       <a
                         href={`/products/${p.id}`}
                         className="w-full h-full flex items-center justify-center"
@@ -433,35 +433,35 @@ function ProductDetailPage() {
                           width={600}
                           height={600}
                           loading="lazy"
-                          className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                         />
                       </a>
-                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#2d8659]/30 backdrop-blur-sm">
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                         {p.badge}
                       </span>
                     </div>
-                    <div className="p-4 flex flex-col flex-1 justify-between">
+                    <div className="p-4 flex flex-col flex-1 justify-between bg-white">
                       <div>
                         <a
                           href={`/products/${p.id}`}
-                          className="font-display text-base text-[#333333] group-hover:text-[#1b5e3f] transition-colors block"
+                          className="font-display text-base text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium"
                         >
                           {p.name}
                         </a>
-                        <p className="text-xs text-white/50 line-clamp-1 mt-0.5 font-light">
+                        <p className="text-xs text-[#666666] line-clamp-1 mt-0.5 font-light">
                           {p.notes}
                         </p>
                       </div>
-                      <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-                        <span className="font-mono text-sm font-semibold text-[#333333]">
+                      <div className="mt-3 pt-3 border-t border-[#e8e2d8] flex items-center justify-between">
+                        <span className="font-mono text-sm font-semibold text-[#1a1a1a]">
                           {money(p.price)}
                         </span>
                         <Button
                           size="sm"
-                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#333333] border border-[#2d8659]/30 text-xs"
+                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-xs font-medium"
                           onClick={() => addToBag(p)}
                         >
-                          Add <Plus size={12} className="ml-0.5" />
+                          Add <Plus size={12} className="ml-0.5 text-[#86efac]" />
                         </Button>
                       </div>
                     </div>

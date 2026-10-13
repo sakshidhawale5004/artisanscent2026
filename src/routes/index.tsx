@@ -131,95 +131,43 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent to-transparent" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-12 lg:pt-20 lg:pb-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-              {/* Left Column: Headline & Action */}
-              <div className="lg:col-span-7 flex flex-col justify-center text-left">
-                <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#86efac] font-medium mb-4">
-                  <span className="w-6 h-[1px] bg-[#d4af37]" />
-                  <span>LUXURY PERFUMES</span>
-                </div>
-
-                <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-normal leading-[1.08] tracking-tight text-white">
-                  Timeless
-                  <br />
-                  Elegance in
-                  <br />
-                  <em className="text-[#86efac] italic font-serif">every Drop</em>
-                </h1>
-
-                <p className="reveal-on-scroll reveal-delay-200 mt-5 text-sm sm:text-base text-[#e0deda] font-light leading-relaxed max-w-xl">
-                  Luxury perfumes crafted for those who appreciate the extraordinary. Handcrafted
-                  botanical compositions and rare essences born from artisanal dedication.
-                </p>
-
-                <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center gap-4">
-                  <Button
-                    asChild
-                    className="h-12 px-7 bg-[#1b5e3f] hover:bg-[#23734e] text-white border border-[#2d8659]/50 rounded-full font-medium tracking-wide shadow-xl transition-all"
-                  >
-                    <a href="/perfumes" className="flex items-center gap-2">
-                      Explore Collection <ArrowRight size={16} className="text-[#86efac]" />
-                    </a>
-                  </Button>
-
-                  <Button
-                    asChild
-                    className="h-12 px-6 rounded-full border border-white/20 hover:border-white/40 bg-white/10 hover:bg-white/20 text-white text-sm font-medium tracking-wide backdrop-blur-md transition-all"
-                  >
-                    <a href="/about" className="flex items-center gap-2.5">
-                      <Sparkles size={14} className="text-[#d4af37]" /> Our Story
-                    </a>
-                  </Button>
-                </div>
+          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 pb-14 lg:pt-24 lg:pb-20">
+            <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+              <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#86efac] font-medium mb-4">
+                <span className="w-6 h-[1px] bg-[#d4af37]" />
+                <span>LUXURY PERFUMES &amp; BOTANICAL ESSENCES</span>
+                <span className="w-6 h-[1px] bg-[#d4af37]" />
               </div>
 
-              {/* Right Column: Luxury Showcase Card with Highly Legible Details */}
-              <div className="lg:col-span-5 flex justify-center lg:justify-end">
-                <div className="reveal-on-scroll reveal-delay-200 relative w-full max-w-md rounded-2xl overflow-hidden border border-[#2d8659]/40 bg-gradient-to-b from-[#181614]/90 via-[#100e0d]/90 to-[#0a0908]/95 p-6 sm:p-7 shadow-2xl backdrop-blur-md">
-                  {/* Floating Badge */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] uppercase tracking-widest text-[#d4af37] bg-[#d4af37]/10 border border-[#d4af37]/30 px-3 py-1 rounded-full font-medium">
-                      HAUTE PARFUMERIE
-                    </span>
-                    <span className="text-[11px] text-[#86efac] font-medium flex items-center gap-1">
-                      ✦ 100% Botanical
-                    </span>
-                  </div>
+              <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-6xl md:text-7xl font-normal leading-[1.08] tracking-tight text-white max-w-3xl">
+                Timeless Elegance in
+                <br />
+                <em className="text-[#86efac] italic font-serif">every Drop</em>
+              </h1>
 
-                  {/* Hero Product Visual */}
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-b from-white/5 to-white/[0.02] border border-white/10 p-6 flex items-center justify-center mb-5 group">
-                    <img
-                      src="/assets/perfumes/Luxury Perfume Collection in Gold and Glass.png"
-                      alt="Artisan Scents Sovereign Collection"
-                      className="w-full h-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute bottom-3 left-3 right-3 bg-black/75 backdrop-blur-md border border-white/15 rounded-lg p-2.5 flex items-center justify-between">
-                      <div>
-                        <div className="text-xs font-medium text-white">Extrait de Parfum</div>
-                        <div className="text-[10px] text-[#86efac]">35% Rare Essence Concentration</div>
-                      </div>
-                      <span className="text-xs font-mono font-semibold text-[#d4af37]">₹4,499</span>
-                    </div>
-                  </div>
+              <p className="reveal-on-scroll reveal-delay-200 mt-6 text-base sm:text-lg text-[#e0deda] font-light leading-relaxed max-w-2xl">
+                Luxury perfumes crafted for those who appreciate the extraordinary. Handcrafted
+                botanical compositions and rare essences born from artisanal dedication.
+              </p>
 
-                  {/* Visible Text Content on the Right */}
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-display text-xl text-white">The Sovereign Edition</h3>
-                      <span className="text-xs text-[#d4af37] font-medium">★★★★★ 4.9</span>
-                    </div>
-                    <p className="text-xs text-[#c4c0b8] mt-1.5 font-light leading-relaxed">
-                      Rare single-harvest oud, Mysore sandalwood, and Damask rose essences crafted for enduring sillage.
-                    </p>
-                    <div className="mt-4 pt-3.5 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-[11px] text-[#86efac] uppercase tracking-wider">Small Batch Craft</span>
-                      <a href="/perfumes" className="text-xs text-white hover:text-[#86efac] font-medium inline-flex items-center gap-1 transition-colors">
-                        View Details <ArrowRight size={13} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
+                <Button
+                  asChild
+                  className="h-12 px-8 bg-[#1b5e3f] hover:bg-[#23734e] text-white border border-[#2d8659]/50 rounded-full font-medium tracking-wide shadow-xl transition-all"
+                >
+                  <a href="/perfumes" className="flex items-center gap-2">
+                    Explore Collection <ArrowRight size={16} className="text-[#86efac]" />
+                  </a>
+                </Button>
+
+                <Button
+                  asChild
+                  className="h-12 px-7 rounded-full border border-white/20 hover:border-white/40 bg-white/10 hover:bg-white/20 text-white text-sm font-medium tracking-wide backdrop-blur-md transition-all"
+                >
+                  <a href="/about" className="flex items-center gap-2.5">
+                    <Sparkles size={14} className="text-[#d4af37]" /> Our Story
+                  </a>
+                </Button>
               </div>
             </div>
 
@@ -411,9 +359,9 @@ function Index() {
               {/* Category 1: Perfumes */}
               <a
                 href="/perfumes"
-                className="reveal-on-scroll reveal-delay-100 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/20 bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
+                className="reveal-on-scroll reveal-delay-100 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/perfumes/Luxury Perfume Collection in Gold and Glass.png"
                     alt="Luxury Perfumes"
@@ -442,16 +390,16 @@ function Index() {
               {/* Category 2: Essence Oils */}
               <a
                 href="/essence-oils"
-                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/20 bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
+                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/essence oil/Amber Rosemary Oil Bottle.png"
                     alt="Essence Oils"
                     className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                     100% Pure
                   </div>
                 </div>
@@ -460,7 +408,7 @@ function Index() {
                     Essence Oils
                   </h3>
                   <p className="text-xs text-[#666666] mt-1 font-light">Pure botanical extracts</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
+                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
                     <span>Explore</span>
                     <ArrowRight
                       size={14}
@@ -473,16 +421,16 @@ function Index() {
               {/* Category 3: Car Perfumes */}
               <a
                 href="/car-perfumes"
-                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/20 bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
+                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/car perfume/Minimalist Hanging Green Diffuser Bottle.png"
                     alt="Car Perfumes"
                     className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                     Wood Cap
                   </div>
                 </div>
@@ -491,7 +439,7 @@ function Index() {
                     Car Perfumes
                   </h3>
                   <p className="text-xs text-[#666666] mt-1 font-light">Stylish hanging diffusers</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
+                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
                     <span>Explore</span>
                     <ArrowRight
                       size={14}
@@ -504,16 +452,16 @@ function Index() {
               {/* Category 4: Agarbatti & Dhoop */}
               <a
                 href="/agarbatti"
-                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/20 bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
+                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/agarbatti/Pyramid of Premium Dhoop Sticks.png"
                     alt="Agarbatti and Dhoop"
                     className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                     Sacred
                   </div>
                 </div>
@@ -524,7 +472,7 @@ function Index() {
                   <p className="text-xs text-[#666666] mt-1 font-light">
                     Sacred handcrafted incense
                   </p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
+                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
                     <span>Explore</span>
                     <ArrowRight
                       size={14}
@@ -537,16 +485,16 @@ function Index() {
               {/* Category 5: Soaps */}
               <a
                 href="/soaps"
-                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/20 bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
+                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/soaps/soap.png"
                     alt="Handcrafted Soaps"
                     className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                     Handcrafted
                   </div>
                 </div>
@@ -555,7 +503,7 @@ function Index() {
                     Soaps
                   </h3>
                   <p className="text-xs text-[#666666] mt-1 font-light">Artisan bathing bars</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
+                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
                     <span>Explore</span>
                     <ArrowRight
                       size={14}
@@ -591,16 +539,16 @@ function Index() {
                 <a
                   key={p.id}
                   href={`/products/${p.id}`}
-                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-white p-4 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-xl`}
+                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-4 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl`}
                 >
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f6f5f1] border border-[#e8e6df] p-5 flex items-center justify-center mb-4">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-5 flex items-center justify-center mb-4">
                     <img
                       src={p.image}
                       alt={p.name}
                       className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-110"
                       loading="lazy"
                     />
-                    <span className="absolute top-2 left-2 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                    <span className="absolute top-2 left-2 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2 py-0.5 rounded-full shadow-sm">
                       {p.badge}
                     </span>
                   </div>
@@ -609,7 +557,7 @@ function Index() {
                       {p.name}
                     </h3>
                     <p className="text-xs text-[#666666] mt-1 font-light">{p.notes}</p>
-                    <div className="mt-3 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
+                    <div className="mt-3 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
                       <span>{money(p.price)}</span>
                       <ArrowRight
                         size={14}
