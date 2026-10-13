@@ -16,7 +16,6 @@ import { Route as CarPerfumesRouteImport } from './routes/car-perfumes'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EssenceOilsRouteImport } from './routes/essence-oils'
 import { Route as ExhibitionsRouteImport } from './routes/exhibitions'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as PerfumesRouteImport } from './routes/perfumes'
 import { Route as ProjectSitesRouteImport } from './routes/project-sites'
 import { Route as SoapsRouteImport } from './routes/soaps'
@@ -57,11 +56,6 @@ const ExhibitionsRoute = ExhibitionsRouteImport.update({
   path: '/exhibitions',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PerfumesRoute = PerfumesRouteImport.update({
   id: '/perfumes',
   path: '/perfumes',
@@ -91,7 +85,6 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
-  '/journal': typeof JournalRoute
   '/perfumes': typeof PerfumesRoute
   '/project-sites': typeof ProjectSitesRoute
   '/soaps': typeof SoapsRoute
@@ -105,7 +98,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
-  '/journal': typeof JournalRoute
   '/perfumes': typeof PerfumesRoute
   '/project-sites': typeof ProjectSitesRoute
   '/soaps': typeof SoapsRoute
@@ -120,7 +112,6 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
-  '/journal': typeof JournalRoute
   '/perfumes': typeof PerfumesRoute
   '/project-sites': typeof ProjectSitesRoute
   '/soaps': typeof SoapsRoute
@@ -136,7 +127,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/essence-oils'
     | '/exhibitions'
-    | '/journal'
     | '/perfumes'
     | '/project-sites'
     | '/soaps'
@@ -150,7 +140,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/essence-oils'
     | '/exhibitions'
-    | '/journal'
     | '/perfumes'
     | '/project-sites'
     | '/soaps'
@@ -164,7 +153,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/essence-oils'
     | '/exhibitions'
-    | '/journal'
     | '/perfumes'
     | '/project-sites'
     | '/soaps'
@@ -179,7 +167,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EssenceOilsRoute: typeof EssenceOilsRoute
   ExhibitionsRoute: typeof ExhibitionsRoute
-  JournalRoute: typeof JournalRoute
   PerfumesRoute: typeof PerfumesRoute
   ProjectSitesRoute: typeof ProjectSitesRoute
   SoapsRoute: typeof SoapsRoute
@@ -237,13 +224,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExhibitionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/perfumes': {
       id: '/perfumes'
       path: '/perfumes'
@@ -283,7 +263,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EssenceOilsRoute: EssenceOilsRoute,
   ExhibitionsRoute: ExhibitionsRoute,
-  JournalRoute: JournalRoute,
   PerfumesRoute: PerfumesRoute,
   ProjectSitesRoute: ProjectSitesRoute,
   SoapsRoute: SoapsRoute,

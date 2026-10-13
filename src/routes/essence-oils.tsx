@@ -59,9 +59,9 @@ function EssenceOilsPage() {
 
       <main className="bg-[#191715] text-[#f4ede4] min-h-screen">
         {/* Category Hero Banner - Botanical Eucalyptus & Sage Green */}
-        <section className="relative overflow-hidden border-b border-[#c5a880]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#282521] via-[#332e2a] to-[#191715]">
+        <section className="relative overflow-hidden border-b border-[#2d8659]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#282521] via-[#332e2a] to-[#191715]">
           <div className="max-w-7xl mx-auto">
-            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>BOTANICAL COLLECTION</span>
             </div>
@@ -87,7 +87,7 @@ function EssenceOilsPage() {
                   onClick={() => setQuery(tag === "All Essences" ? "" : tag)}
                   className={`px-4 py-1.5 text-xs rounded-full border transition-all ${
                     (tag === "All Essences" && !query) || query === tag
-                      ? "bg-[#3e3933] border-[#d3c2ae]/60 text-[#f4ede4] shadow-md"
+                      ? "bg-[#1b5e3f] border-[#d3c2ae]/60 text-[#f4ede4] shadow-md"
                       : "border-white/15 bg-white/5 text-white/60 hover:text-white hover:border-white/30"
                   }`}
                 >
@@ -124,7 +124,7 @@ function EssenceOilsPage() {
                 return (
                   <article
                     key={p.id}
-                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#2b2723] to-[#151311] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#d3c2ae]/70 hover:shadow-2xl hover:shadow-[#2b2723]`}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#2d8659]/25 bg-gradient-to-b from-[#2b2723] to-[#151311] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#d3c2ae]/70 hover:shadow-2xl hover:shadow-[#2b2723]`}
                   >
                     <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#191715]/90 border-b border-white/5">
                       <a
@@ -158,7 +158,7 @@ function EssenceOilsPage() {
 
                     <div className="p-5 flex flex-col flex-1 justify-between">
                       <div>
-                        <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
+                        <div className="flex items-center gap-1 text-[#c4f0db] text-xs mb-1.5">
                           {"★★★★★"}
                           <span className="text-[11px] text-white/50 ml-1 font-light">(98)</span>
                         </div>
@@ -187,7 +187,7 @@ function EssenceOilsPage() {
                         </span>
                         <Button
                           size="sm"
-                          className="h-9 px-4 rounded-full bg-[#3e3933] hover:bg-[#4d463f] text-[#f4ede4] border border-[#d3c2ae]/40 text-xs font-medium"
+                          className="h-9 px-4 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#f4ede4] border border-[#d3c2ae]/40 text-xs font-medium"
                           onClick={() => add(p)}
                         >
                           Add to Cart <Plus size={13} className="ml-1 text-[#d3c2ae]" />
@@ -200,9 +200,9 @@ function EssenceOilsPage() {
           </div>
 
           {/* Educational Distillation Banner */}
-          <div className="reveal-on-scroll reveal-slow mt-16 rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#181614] via-[#312d28] to-[#181614] p-8 sm:p-12">
+          <div className="reveal-on-scroll reveal-slow mt-16 rounded-2xl overflow-hidden border border-[#2d8659]/30 shadow-2xl bg-gradient-to-r from-[#181614] via-[#312d28] to-[#181614] p-8 sm:p-12">
             <div className="max-w-2xl">
-              <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-2">
+              <div className="text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-2">
                 KEOMC BOTANICAL LABS
               </div>
               <h3 className="font-display text-2xl sm:text-3xl text-[#f4ede4]">
@@ -220,20 +220,20 @@ function EssenceOilsPage() {
         <section className="section">
           <h2 className="section-title mb-8 reveal-on-scroll">Sample Pack Options</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="reveal-on-scroll reveal-delay-100 bg-white/5 p-6 rounded-lg border border-[#c5a880]/20">
+            <div className="reveal-on-scroll reveal-delay-100 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
               <h3 className="font-display text-xl mb-2 text-[#f4ede4]">Starter Sample Kit</h3>
               <p className="text-sm mb-3 text-white/70">5 Oils × 5 ml each</p>
-              <p className="text-2xl font-bold text-[#d4af37]">₹999</p>
+              <p className="text-2xl font-bold text-[#c4f0db]">₹999</p>
             </div>
-            <div className="reveal-on-scroll reveal-delay-200 bg-white/5 p-6 rounded-lg border border-[#c5a880]/20">
+            <div className="reveal-on-scroll reveal-delay-200 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
               <h3 className="font-display text-xl mb-2 text-[#f4ede4]">Professional Sample Kit</h3>
               <p className="text-sm mb-3 text-white/70">10 Oils × 5 ml each</p>
-              <p className="text-2xl font-bold text-[#d4af37]">₹1,799</p>
+              <p className="text-2xl font-bold text-[#c4f0db]">₹1,799</p>
             </div>
-            <div className="reveal-on-scroll reveal-delay-300 bg-white/5 p-6 rounded-lg border border-[#c5a880]/20">
+            <div className="reveal-on-scroll reveal-delay-300 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
               <h3 className="font-display text-xl mb-2 text-[#f4ede4]">Premium Perfumery Kit</h3>
               <p className="text-sm mb-3 text-white/70">5 Premium Oils</p>
-              <p className="text-2xl font-bold text-[#d4af37]">₹2,499</p>
+              <p className="text-2xl font-bold text-[#c4f0db]">₹2,499</p>
             </div>
           </div>
         </section>
@@ -375,3 +375,4 @@ function EssenceOilsPage() {
     </>
   );
 }
+

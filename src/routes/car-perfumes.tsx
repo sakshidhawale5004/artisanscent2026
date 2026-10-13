@@ -60,9 +60,9 @@ function CarPerfumesPage() {
 
       <main className="bg-[#1a1816] text-[#f4ede4] min-h-screen">
         {/* Category Hero Banner - Modern Jade & Cypress Velvet Green */}
-        <section className="relative overflow-hidden border-b border-[#c5a880]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#2b2723] via-[#36312c] to-[#1a1816]">
+        <section className="relative overflow-hidden border-b border-[#2d8659]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#2b2723] via-[#36312c] to-[#1a1816]">
           <div className="max-w-7xl mx-auto">
-            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>AUTOMOTIVE COLLECTION</span>
             </div>
@@ -91,7 +91,7 @@ function CarPerfumesPage() {
               return (
                 <article
                   key={p.id}
-                  className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#312d29] to-[#161412] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#cbbaa7]/70 hover:shadow-2xl hover:shadow-[#312d29]`}
+                  className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#2d8659]/25 bg-gradient-to-b from-[#312d29] to-[#161412] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#2d8659]/70 hover:shadow-2xl hover:shadow-[#312d29]`}
                 >
                   <div className="relative aspect-square w-full p-8 flex items-center justify-center bg-[#1e1b18]/90 border-b border-white/5">
                     <a
@@ -107,7 +107,7 @@ function CarPerfumesPage() {
                         className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
                       />
                     </a>
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#cbbaa7] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#cbbaa7]/30 backdrop-blur-sm">
+                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#cbbaa7] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#2d8659]/30 backdrop-blur-sm">
                       {p.badge}
                     </span>
                     <button
@@ -125,7 +125,7 @@ function CarPerfumesPage() {
 
                   <div className="p-5 flex flex-col flex-1 justify-between">
                     <div>
-                      <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
+                      <div className="flex items-center gap-1 text-[#c4f0db] text-xs mb-1.5">
                         {"★★★★★"}
                         <span className="text-[11px] text-white/50 ml-1 font-light">(82)</span>
                       </div>
@@ -149,10 +149,10 @@ function CarPerfumesPage() {
                       </span>
                       <Button
                         size="sm"
-                        className="h-9 px-4 rounded-full bg-[#3e3933] hover:bg-[#4d463f] text-[#f4ede4] border border-[#cbbaa7]/40 text-xs font-medium"
+                        className="h-9 px-4 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#2d8659]/40 text-xs font-medium"
                         onClick={() => add(p)}
                       >
-                        Add to Cart <Plus size={13} className="ml-1 text-[#cbbaa7]" />
+                        Add to Cart <Plus size={13} className="ml-1 text-[#c4f0db]" />
                       </Button>
                     </div>
                   </div>
@@ -319,3 +319,4 @@ function CarPerfumesPage() {
     </>
   );
 }
+

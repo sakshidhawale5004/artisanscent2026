@@ -130,19 +130,19 @@ function ProductDetailPage() {
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-6 pb-4">
           <nav className="flex items-center gap-2 text-xs text-white/50" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-[#d4af37] transition-colors">
+            <a href="/" className="hover:text-[#c4f0db] transition-colors">
               Home
             </a>
             <span className="text-white/30">›</span>
             {crumb && (
               <>
-                <a href={crumb.href} className="hover:text-[#d4af37] transition-colors">
+                <a href={crumb.href} className="hover:text-[#c4f0db] transition-colors">
                   {crumb.label}
                 </a>
                 <span className="text-white/30">›</span>
               </>
             )}
-            <span className="text-[#d4af37] font-medium">{product.name}</span>
+            <span className="text-[#c4f0db] font-medium">{product.name}</span>
           </nav>
         </div>
 
@@ -175,7 +175,7 @@ function ProductDetailPage() {
 
               {/* Main Showcase Container (Bespoke Shade of Green) */}
               <div
-                className="relative flex-1 aspect-square rounded-2xl overflow-hidden border border-[#c5a880]/30 p-8 flex items-center justify-center shadow-2xl"
+                className="relative flex-1 aspect-square rounded-2xl overflow-hidden border border-[#2d8659]/30 p-8 flex items-center justify-center shadow-2xl"
                 style={{ backgroundColor: bgColor }}
               >
                 <img
@@ -184,8 +184,8 @@ function ProductDetailPage() {
                   className="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-500 hover:scale-105"
                 />
                 <button
-                  className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#d4af37] transition ${
-                    saved.includes(product.id) ? "text-[#d4af37]" : ""
+                  className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#c4f0db] transition ${
+                    saved.includes(product.id) ? "text-[#c4f0db]" : ""
                   }`}
                   aria-label={
                     saved.includes(product.id) ? "Remove from wishlist" : "Add to wishlist"
@@ -194,7 +194,7 @@ function ProductDetailPage() {
                 >
                   <Heart size={18} fill={saved.includes(product.id) ? "#d4af37" : "none"} />
                 </button>
-                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-3 py-1 rounded-full border border-[#c5a880]/20">
+                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-widest text-[#c4f0db] bg-black/60 px-3 py-1 rounded-full border border-[#2d8659]/20">
                   {product.badge}
                 </div>
               </div>
@@ -202,7 +202,7 @@ function ProductDetailPage() {
 
             {/* Right Column: Contiguous Purchase Module */}
             <div className="lg:col-span-5 flex flex-col justify-start reveal-on-scroll reveal-delay-100">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-2">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-2">
                 <span>{product.family}</span>
                 <span>·</span>
                 <span>{product.category.replace("-", " ").toUpperCase()}</span>
@@ -226,16 +226,16 @@ function ProductDetailPage() {
 
               {/* Fragrance Notes Breakdown with Structure */}
               <div className="mt-6 p-4 rounded-xl border border-white/10 bg-[#1e1b18]/60">
-                <div className="text-xs uppercase tracking-widest text-[#d4af37] font-medium mb-3">
+                <div className="text-xs uppercase tracking-widest text-[#c4f0db] font-medium mb-3">
                   Fragrance Composition
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {product.notes.split(" · ").map((note, index) => (
                     <span
                       key={note}
-                      className="px-3 py-1 rounded-full text-xs bg-[#322e29] border border-[#c5a880]/25 text-[#f4ede4]"
+                      className="px-3 py-1 rounded-full text-xs bg-[#322e29] border border-[#2d8659]/25 text-[#f4ede4]"
                     >
-                      <span className="text-[#d4af37] font-serif mr-1">
+                      <span className="text-[#c4f0db] font-serif mr-1">
                         {index === 0 ? "Top:" : index === 1 ? "Heart:" : "Base:"}
                       </span>
                       {note}
@@ -257,7 +257,7 @@ function ProductDetailPage() {
                   Select Flacon Size
                 </div>
                 <div className="flex items-center gap-3">
-                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-[#d4af37] bg-[#3e3933] text-[#f4ede4]">
+                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-[#d4af37] bg-[#1b5e3f] text-[#f4ede4]">
                     {product.size || "50 ml"}
                   </button>
                   <button className="px-5 py-2 rounded-lg text-xs font-medium border border-white/15 bg-white/5 text-white/60 hover:text-white hover:border-white/30">
@@ -289,14 +289,14 @@ function ProductDetailPage() {
 
                 {/* Add to Bag Button */}
                 <Button
-                  className="flex-1 h-12 rounded-full bg-[#2c2924] hover:bg-[#3e3933] text-[#f4ede4] border border-[#c5a880]/50 font-medium tracking-wide shadow-lg text-sm flex items-center justify-center gap-2"
+                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#1b5e3f] text-[#f4ede4] border border-[#2d8659]/50 font-medium tracking-wide shadow-lg text-sm flex items-center justify-center gap-2"
                   onClick={() => addToBag(product, qty)}
                 >
                   {addedFlash ? (
                     "✓ Added to Bag"
                   ) : (
                     <>
-                      Add to Cart <ShoppingBag size={16} className="text-[#d4af37]" />
+                      Add to Cart <ShoppingBag size={16} className="text-[#c4f0db]" />
                     </>
                   )}
                 </Button>
@@ -326,7 +326,7 @@ function ProductDetailPage() {
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
                   <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
                     <span>Product Specifications</span>
-                    <span className="text-[#d4af37] group-open:rotate-180 transition-transform">
+                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
@@ -349,7 +349,7 @@ function ProductDetailPage() {
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
                   <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
                     <span>Fragrance Notes & Longevity</span>
-                    <span className="text-[#d4af37] group-open:rotate-180 transition-transform">
+                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
@@ -365,7 +365,7 @@ function ProductDetailPage() {
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
                   <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
                     <span>Shipping & Returns</span>
-                    <span className="text-[#d4af37] group-open:rotate-180 transition-transform">
+                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
@@ -387,7 +387,7 @@ function ProductDetailPage() {
           <section className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 border-t border-white/10">
             <div className="reveal-on-scroll flex items-center justify-between mb-8">
               <div>
-                <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium">
+                <div className="text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium">
                   YOU MAY ALSO LIKE
                 </div>
                 <h2 className="font-display text-2xl sm:text-3xl text-[#f4ede4] mt-1">
@@ -401,7 +401,7 @@ function ProductDetailPage() {
                   className="bg-transparent border border-white/20 text-[#f4ede4] hover:border-[#d4af37] text-xs rounded-full"
                 >
                   <a href={crumb.href} className="flex items-center gap-1.5">
-                    View All <ArrowRight size={13} className="text-[#d4af37]" />
+                    View All <ArrowRight size={13} className="text-[#c4f0db]" />
                   </a>
                 </Button>
               )}
@@ -420,7 +420,7 @@ function ProductDetailPage() {
                 return (
                   <article
                     key={p.id}
-                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#211e1b] to-[#11100e] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70`}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#2d8659]/25 bg-gradient-to-b from-[#211e1b] to-[#11100e] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#2d8659]/70`}
                   >
                     <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border-b border-white/5">
                       <a
@@ -436,7 +436,7 @@ function ProductDetailPage() {
                           className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
                         />
                       </a>
-                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#c5a880]/30 backdrop-blur-sm">
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#c4f0db] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#2d8659]/30 backdrop-blur-sm">
                         {p.badge}
                       </span>
                     </div>
@@ -444,7 +444,7 @@ function ProductDetailPage() {
                       <div>
                         <a
                           href={`/products/${p.id}`}
-                          className="font-display text-base text-[#f4ede4] group-hover:text-[#d4af37] transition-colors block"
+                          className="font-display text-base text-[#f4ede4] group-hover:text-[#c4f0db] transition-colors block"
                         >
                           {p.name}
                         </a>
@@ -458,7 +458,7 @@ function ProductDetailPage() {
                         </span>
                         <Button
                           size="sm"
-                          className="h-8 px-3 rounded-full bg-[#3e3933] hover:bg-[#4d463f] text-[#f4ede4] border border-[#c5a880]/30 text-xs"
+                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#f4ede4] border border-[#2d8659]/30 text-xs"
                           onClick={() => addToBag(p)}
                         >
                           Add <Plus size={12} className="ml-0.5" />
@@ -555,3 +555,4 @@ function ProductDetailPage() {
     </>
   );
 }
+

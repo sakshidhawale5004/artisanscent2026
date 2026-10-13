@@ -152,12 +152,18 @@
   --stone: oklch(0.93 0.01 85);
   --veil: oklch(0.1 0.006 85 / 46%);
   --shadow-editorial: 0 24px 80px oklch(0.1 0 0 / 18%);
+  --dark-green: #1b5e3f;
+  --light-green: #d4f0e0;
+  --light-green-bg: #e8f5f0;
 }
 @theme inline {
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-gold: var(--gold);
   --color-stone: var(--stone);
+  --color-dark-green: var(--dark-green);
+  --color-light-green: var(--light-green);
+  --color-light-green-bg: var(--light-green-bg);
   --font-display: "Cormorant Garamond", Georgia, serif;
 }
 html {
@@ -305,7 +311,7 @@ a {
 .luxury-header {
   height: 84px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 5%;
   background: var(--ink);
@@ -329,6 +335,7 @@ a {
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  margin: 0 40px;
 }
 .luxury-logo-circle {
   width: 46px;
@@ -371,6 +378,7 @@ a {
   display: flex;
   align-items: center;
   gap: 28px;
+  margin-left: auto;
 }
 .luxury-nav {
   display: flex;

@@ -22,7 +22,6 @@ const navItems = [
     ],
   },
   { label: "About", href: "/about" },
-  { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -49,7 +48,52 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
         className={`luxury-header${scrolled ? " luxury-header--scrolled" : ""}`}
         role="banner"
       >
-        {/* Left: Circle Logo & Wordmark */}
+        {/* Left: Nav Links */}
+        <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation">
+          {navItems.slice(0, 2).map((item) =>
+            item.children ? (
+              <div key={item.label} className="luxury-dropdown-wrapper">
+                <button
+                  className={`luxury-nav-link luxury-dropdown-trigger${currentPage === item.label ? " active" : ""}`}
+                  onClick={() => setShopOpen((o) => !o)}
+                  aria-expanded={shopOpen}
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <ChevronDown
+                    size={12}
+                    className={`luxury-chevron${shopOpen ? " rotated" : ""}`}
+                  />
+                </button>
+                {shopOpen && (
+                  <div className="luxury-dropdown" role="menu">
+                    {item.children.map((child) => (
+                      <a
+                        key={child.label}
+                        href={child.href}
+                        className="luxury-dropdown-item"
+                        role="menuitem"
+                        onClick={() => setShopOpen(false)}
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`luxury-nav-link${currentPage === item.label ? " active" : ""}`}
+              >
+                {item.label}
+              </a>
+            ),
+          )}
+        </nav>
+
+        {/* Center: Circle Logo & Wordmark */}
         <a href="/" className="luxury-logo-link" aria-label="Artisan Scents – home">
           <div className="luxury-logo-circle">
             <img
@@ -61,15 +105,15 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
             />
           </div>
           <div>
-            <div className="luxury-brand-title">SCENT</div>
-            <div className="luxury-brand-subtitle">MORE THAN A FRAGRANCE</div>
+            <div className="luxury-brand-title">ARTISAN SCENT</div>
+            <div className="luxury-brand-subtitle">LUXURY FRAGRANCES</div>
           </div>
         </a>
 
         {/* Right: Nav Links & Action Icons */}
         <div className="luxury-nav-cluster">
           <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation">
-            {navItems.map((item) =>
+            {navItems.slice(2).map((item) =>
               item.children ? (
                 <div key={item.label} className="luxury-dropdown-wrapper">
                   <button
@@ -119,9 +163,6 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
                 <Search size={18} strokeWidth={1.5} />
               </button>
             )}
-            <a href="/wishlist" className="luxury-icon-btn" aria-label="Wishlist">
-              <Heart size={18} strokeWidth={1.5} />
-            </a>
             <button
               className="luxury-icon-btn luxury-bag-btn"
               aria-label={`Shopping bag, ${totalItems} items`}

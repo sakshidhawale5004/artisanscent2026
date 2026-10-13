@@ -79,12 +79,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AUREL — The Art of Fragrance" },
+      { title: "Artisan Scent — Premium Fragrances & Essential Oils" },
       {
         name: "description",
-        content: "AUREL. A collection of expressive perfumes and considered daily rituals.",
+        content: "Artisan Scent. A collection of expressive perfumes and considered daily rituals.",
       },
-      { property: "og:title", content: "AUREL — The Art of Fragrance" },
+      { property: "og:title", content: "Artisan Scent — Premium Fragrances & Essential Oils" },
       {
         property: "og:description",
         content: "A collection of expressive perfumes and considered daily rituals.",
@@ -191,3 +191,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
