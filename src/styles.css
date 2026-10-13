@@ -1028,8 +1028,8 @@ a {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: var(--ink);
-  color: var(--paper);
+  background: #000000;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1052,20 +1052,21 @@ a {
   font-size: 54px;
   line-height: 1.2;
   margin-top: 12px;
+  color: #ffffff;
 }
 .entrance-brand span {
-  color: var(--gold);
+  color: #1b5e3f;
 }
 .entrance-caption {
   font-size: 9px;
   text-transform: uppercase;
   margin-top: 14px;
-  color: var(--gold);
+  color: #1b5e3f;
 }
 .entrance-progress {
   width: 100px;
   height: 1px;
-  background: color-mix(in oklab, var(--gold) 20%, transparent);
+  background: rgba(196, 240, 219, 0.2);
   overflow: hidden;
   margin-top: 34px;
 }
@@ -1073,7 +1074,7 @@ a {
   display: block;
   width: 40%;
   height: 100%;
-  background: var(--gold);
+  background: #c4f0db;
   animation: entrance-progress 1.4s ease-in-out infinite;
 }
 @keyframes entrance-progress {

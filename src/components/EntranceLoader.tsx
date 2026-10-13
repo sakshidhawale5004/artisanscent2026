@@ -62,9 +62,9 @@ export function EntranceLoader() {
         )}
       </div>
       <div className="entrance-brand">
-        AUREL<span>.</span>
+        ARTISAN SCENT<span>.</span>
       </div>
-      <div className="entrance-caption">The art of fragrance</div>
+      <div className="entrance-caption">Luxury Fragrances</div>
       <div className="entrance-progress" aria-hidden="true">
         <span />
       </div>

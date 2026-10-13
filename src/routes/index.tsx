@@ -131,9 +131,9 @@ function Index() {
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-12 lg:pt-20 lg:pb-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              {/* Headline & Action */}
-              <div className="lg:col-span-9 xl:col-span-8 flex flex-col justify-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center justify-center">
+              {/* Headline & Action - Centered */}
+              <div className="lg:col-span-12 flex flex-col justify-center items-center text-center">
                 <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-4">
                   <span className="w-6 h-[1px] bg-[#d4af37]" />
                   <span>LUXURY PERFUMES</span>
@@ -147,12 +147,12 @@ function Index() {
                   <em className="text-[#1b5e3f] italic font-serif">every Drop</em>
                 </h1>
 
-                <p className="reveal-on-scroll reveal-delay-200 mt-5 text-sm sm:text-base text-[#555555] font-light leading-relaxed max-w-lg">
+                <p className="reveal-on-scroll reveal-delay-200 mt-5 text-sm sm:text-base text-[#555555] font-light leading-relaxed max-w-xl">
                   Luxury perfumes crafted for those who appreciate the extraordinary. Handcrafted
                   botanical compositions and rare essences born from artisanal dedication.
                 </p>
 
-                <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center gap-4">
+                <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
                   <Button
                     asChild
                     className="h-12 px-7 bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 rounded-full font-medium tracking-wide shadow-lg transition-all"
@@ -172,7 +172,18 @@ function Index() {
                   </Button>
                 </div>
               </div>
+            </div>
 
+            {/* Dark Overlay Section with ScentSculpture */}
+            <div className="mt-12 relative rounded-2xl overflow-hidden bg-[#000000] h-80 lg:h-96 flex items-center justify-center">
+              <div className="absolute inset-0 opacity-30" aria-hidden="true">
+                {/* Dark overlay background */}
+              </div>
+              <div className="relative z-10 text-center">
+                <Suspense fallback={null}>
+                  <ScentSculpture compact />
+                </Suspense>
+              </div>
             </div>
 
             {/* Trust Badges Strip (matching image.png) */}

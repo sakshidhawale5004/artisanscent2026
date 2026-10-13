@@ -38,11 +38,11 @@ const categoryBreadcrumb: Record<string, { label: string; href: string }> = {
 };
 
 const categoryBg: Record<string, string> = {
-  perfumes: "#1f1c19",
-  "essence-oils": "#26231f",
-  "car-perfumes": "#2b2723",
-  agarbatti: "#2c2824",
-  soaps: "#1e1b18",
+  perfumes: "#f5f5f0",
+  "essence-oils": "#f8f6f3",
+  "car-perfumes": "#f6f4f1",
+  agarbatti: "#f7f5f2",
+  soaps: "#f9f7f4",
 };
 
 function StarRating({ rating = 4.5, count = 124 }: { rating?: number; count?: number }) {
@@ -126,20 +126,20 @@ function ProductDetailPage() {
       </div>
       <Header currentPage="Shop" onBagClick={() => setPanel("bag")} totalItems={totalItems} />
 
-      <main className="min-h-screen bg-[#151311] text-[#333333] pb-16">
+      <main className="min-h-screen bg-[#ffffff] text-[#333333] pb-16">
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-6 pb-4">
-          <nav className="flex items-center gap-2 text-xs text-white/50" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-2 text-xs text-[#666666]" aria-label="Breadcrumb">
             <a href="/" className="hover:text-[#1b5e3f] transition-colors">
               Home
             </a>
-            <span className="text-white/30">›</span>
+            <span className="text-[#aaaaaa]">›</span>
             {crumb && (
               <>
                 <a href={crumb.href} className="hover:text-[#1b5e3f] transition-colors">
                   {crumb.label}
                 </a>
-                <span className="text-white/30">›</span>
+                <span className="text-[#aaaaaa]">›</span>
               </>
             )}
             <span className="text-[#1b5e3f] font-medium">{product.name}</span>
@@ -225,7 +225,7 @@ function ProductDetailPage() {
               </p>
 
               {/* Fragrance Notes Breakdown with Structure */}
-              <div className="mt-6 p-4 rounded-xl border border-white/10 bg-[#1e1b18]/60">
+              <div className="mt-6 p-4 rounded-xl border border-[#e0e0e0] bg-[#f9f7f4]">
                 <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-medium mb-3">
                   Fragrance Composition
                 </div>
