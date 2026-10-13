@@ -116,14 +116,17 @@ function Index() {
       <main>
         {/* Luxury Hero Section */}
         <section className="relative overflow-hidden text-white bg-[#0a0908] border-b border-[#2d8659]/20">
-          {/* Unsplash Background Image with Dark Black Overlay */}
+          {/* Video Background */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=2400&q=85"
-              alt="Artisan Scents Luxury Fragrance Background"
-              className="w-full h-full object-cover filter brightness-[0.4] scale-105"
+            <video
+              src="/videos/aurel-hero.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover scale-105"
             />
-            {/* Dark Black Gradient Overlays for optimal text visibility */}
+            {/* Dark Overlays for optimal text visibility */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/70" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(27,94,63,0.35),_transparent_70%)]" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent to-black/60" />
