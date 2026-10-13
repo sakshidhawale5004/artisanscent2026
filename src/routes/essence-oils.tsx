@@ -59,8 +59,20 @@ function EssenceOilsPage() {
 
       <main className="bg-[#f9f7f4] text-[#333333] min-h-screen">
         {/* Category Hero Banner - Botanical Eucalyptus & Sage Green */}
-        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#282521] via-[#bdb3a8] to-[#191715]">
-          <div className="max-w-7xl mx-auto">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-20 px-6 sm:px-12 bg-[#f9f7f4]">
+          {/* Unsplash Background Image */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=2400&q=85"
+              alt="Essential Oils Background"
+              className="w-full h-full object-cover scale-105"
+            />
+            {/* Dark Overlay for text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#f9f7f4]/95 via-transparent to-transparent" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>BOTANICAL COLLECTION</span>

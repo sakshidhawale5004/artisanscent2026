@@ -59,8 +59,20 @@ function AgarbattiPage() {
 
       <main className="bg-[#f8f6f3] text-[#333333] min-h-screen">
         {/* Category Hero Banner - Sacred Cypress & Amber Earth Green */}
-        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#c9c2b8] via-[#38332e] to-[#f8f6f3]">
-          <div className="max-w-7xl mx-auto">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-20 px-6 sm:px-12 bg-[#f8f6f3]">
+          {/* Unsplash Background Image */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=2400&q=85"
+              alt="Incense & Agarbatti Background"
+              className="w-full h-full object-cover scale-105"
+            />
+            {/* Dark Overlay for text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#f8f6f3]/95 via-transparent to-transparent" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>SACRED COLLECTION</span>
@@ -68,7 +80,7 @@ function AgarbattiPage() {
             <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#333333]">
               Sacred Aromas &
               <br />
-              <em className="text-[#e2c17c] font-serif italic">Temple Incense</em>
+              <em className="text-[#1b5e3f] font-serif italic">Temple Incense</em>
             </h1>
             <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-[#666666] font-light max-w-xl leading-relaxed">
               Handcrafted agarbatti and pyramid dhoop sticks steeped in Vedic botanical
