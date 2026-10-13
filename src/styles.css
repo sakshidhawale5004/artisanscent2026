@@ -779,10 +779,12 @@ a {
 .maison {
   position: relative;
   min-height: 560px;
-  background: var(--ink);
-  color: var(--paper);
+  background: radial-gradient(circle at 75% 50%, #164d32 0%, #0d2f1f 45%, #071c12 100%);
+  color: #f7f5f0;
   overflow: hidden;
   margin-top: 70px;
+  border-top: 1px solid rgba(45, 134, 89, 0.35);
+  border-bottom: 1px solid rgba(45, 134, 89, 0.35);
 }
 .maison-canvas {
   position: absolute;

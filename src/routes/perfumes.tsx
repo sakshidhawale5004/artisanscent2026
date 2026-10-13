@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { products, money, type Product } from "@/lib/products";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import exclusiveFragrance from "@/assets/images/exclusive_fragrance_card_1791888515789.jpg";
 
 export const Route = createFileRoute("/perfumes")({
   head: () => ({
@@ -191,85 +190,6 @@ function PerfumesPage() {
                   </article>
                 );
               })}
-          </div>
-
-          {/* Exclusive Collection Banner (matching image.png middle pane bottom) */}
-          <div className="reveal-on-scroll reveal-slow mt-16 rounded-2xl overflow-hidden border border-[#2d8659]/30 shadow-2xl bg-gradient-to-r from-[#11100e] via-[#23201d] to-[#fefdfb]">
-            <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-              <div className="md:col-span-7 p-8 sm:p-12 reveal-left reveal-delay-100">
-                <div className="text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-2">
-                  LIMITED BATCH
-                </div>
-                <h3 className="font-display text-2xl sm:text-3xl text-[#333333]">
-                  Exclusive Collection
-                </h3>
-                <p className="text-[#666666] text-sm font-light mt-2 max-w-md">
-                  Rare single-harvest oud, Mysore sandalwood, and Damask rose essences reserved for
-                  discerning connoisseurs.
-                </p>
-                <div className="mt-6">
-                  <Button
-                    asChild
-                    className="h-10 px-6 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/40 text-xs"
-                  >
-                    <a href="/products/gold-faceted">Shop Exclusive →</a>
-                  </Button>
-                </div>
-              </div>
-              <div className="md:col-span-5 h-60 md:h-full relative overflow-hidden reveal-right reveal-delay-200">
-                <img
-                  src={exclusiveFragrance}
-                  alt="Exclusive Perfume Bottle"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Shop by Mood (matching image.png middle pane) */}
-          <div className="mt-16">
-            <div className="reveal-on-scroll">
-              <div className="text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-1">
-                CURATED EXPERIENCES
-              </div>
-              <h3 className="font-display text-2xl text-[#333333] mb-6">Shop by Mood</h3>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  title: "Romantic & Sensual",
-                  notes: "Rose & Amber",
-                  bg: "from-[#292622] to-[#181614]",
-                },
-                {
-                  title: "Fresh & Energetic",
-                  notes: "Bergamot & Mint",
-                  bg: "from-[#2f2b27] to-[#1c1917]",
-                },
-                {
-                  title: "Calm & Relaxed",
-                  notes: "Lavender & Woods",
-                  bg: "from-[#36312c] to-[#1f1d1a]",
-                },
-                {
-                  title: "Bold & Confident",
-                  notes: "Smoky Oud & Leather",
-                  bg: "from-[#2b2824] to-[#faf9f7]",
-                },
-              ].map((mood, mIdx) => (
-                <button
-                  key={mood.title}
-                  onClick={() => setQuery(mood.notes.split(" ")[0] || "")}
-                  className={`reveal-on-scroll reveal-delay-${(mIdx + 1) * 100} p-5 rounded-xl border border-[#1b5e3f]/12 bg-gradient-to-br ${mood.bg} text-left transition hover:border-[#1b5e3f]/50 hover:-translate-y-1`}
-                >
-                  <div className="font-display text-base text-[#333333] font-medium">
-                    {mood.title}
-                  </div>
-                  <div className="text-xs text-[#1b5e3f] mt-1 font-light">{mood.notes}</div>
-                </button>
-              ))}
-            </div>
           </div>
         </section>
       </main>
