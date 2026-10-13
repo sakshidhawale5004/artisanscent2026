@@ -22,6 +22,7 @@ const navItems = [
     ],
   },
   { label: "About", href: "/about" },
+  { label: "KEOMC", href: "/keomc" },
   { label: "Contact", href: "/contact" },
 ];
 

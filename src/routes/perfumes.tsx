@@ -136,7 +136,7 @@ function PerfumesPage() {
                     key={p.id}
                     className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#fefdfb] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]`}
                   >
-                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border-b border-[#e0e0e0]">
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border border-[#d4c4b8]">
                       <a
                         href={`/products/${p.id}`}
                         className="w-full h-full flex items-center justify-center"

@@ -63,20 +63,135 @@ function AboutPage() {
 
         <section className="section">
           <div className="max-w-4xl reveal-on-scroll">
-            <h2 className="section-title mb-8">About Artisan Scents</h2>
-            <p className="text-sm leading-relaxed mb-6 text-muted-foreground">
-              Artisan Scents is a premium fragrance brand operating across a diverse portfolio of
-              fragrance products and related solutions. With a focus on the fragrance and flavours
-              sector, the brand brings together products such as essential oils, essence oils,
-              perfumes, car perfumes, soaps, and agarbatti.
-            </p>
-            <p className="text-sm leading-relaxed mb-6 text-muted-foreground">
-              Our approach centres on understanding fragrance preferences, exploring product
-              possibilities, and delivering solutions aligned with evolving customer and business
-              requirements. From everyday fragrance experiences to specialised fragrance and flavour
-              applications, Artisan Scents aims to build meaningful connections through the world of
-              scent.
-            </p>
+            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
+              <span className="w-5 h-[1px] bg-[#d4af37]" />
+              <span>ABOUT US</span>
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-[#333333] mb-8">
+              Artisan Scents
+            </h2>
+
+            <div className="space-y-6 text-base leading-relaxed text-[#666666] font-light">
+              <p>
+                <span className="font-semibold text-[#333333]">ARTISAN SCENTS</span> is a fragrance
+                brand operating across a diverse portfolio of fragrance products and related
+                solutions. With a focus on the fragrance and flavours sector, the brand brings
+                together products such as essential oils, essence oils, perfumes, car perfumes,
+                soaps, and agarbatti.
+              </p>
+
+              <p>
+                Our approach centres on understanding fragrance preferences, exploring product
+                possibilities, and delivering solutions aligned with evolving customer and business
+                requirements. From everyday fragrance experiences to specialised fragrance and
+                flavour applications, Artisan Scents aims to build meaningful connections through
+                the world of scent.
+              </p>
+
+              <div className="my-8 p-6 bg-[#f5f5f0] rounded-xl border border-[#1b5e3f]/15">
+                <h3 className="font-display text-2xl text-[#333333] mb-6">
+                  Our Product Portfolio
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="font-semibold text-[#1b5e3f] mb-3 flex items-center gap-2">
+                      <span className="text-xl">01.</span> Essence Oils
+                    </h4>
+                    <p className="text-sm">
+                      Diverse fragrance profiles including floral, woody, fresh and oriental-inspired
+                      notes designed for fragrance applications across a variety of products and
+                      environments.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-[#1b5e3f] mb-3 flex items-center gap-2">
+                      <span className="text-xl">02.</span> Handcrafted Soaps
+                    </h4>
+                    <p className="text-sm">
+                      Soaps that combine everyday cleansing with an appealing fragrance experience.
+                      Designed to complement daily personal-care routines with refreshing sensory
+                      experiences.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-[#1b5e3f] mb-3 flex items-center gap-2">
+                      <span className="text-xl">03.</span> Scented Agarbatti
+                    </h4>
+                    <p className="text-sm">
+                      Fragrance to traditional rituals through agarbatti range suitable for prayer
+                      spaces, meditation settings, and home ambience with floral, woody and soothing
+                      scent profiles.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-[#1b5e3f] mb-3 flex items-center gap-2">
+                      <span className="text-xl">04.</span> Car Perfumes
+                    </h4>
+                    <p className="text-sm">
+                      Designed to bring pleasant fragrance to vehicle interiors. Compact designs with
+                      fresh, woody and sophisticated fragrance options for the driving experience.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-[#1b5e3f] mb-3 flex items-center gap-2">
+                      <span className="text-xl">05.</span> Luxury Perfumes
+                    </h4>
+                    <p className="text-sm">
+                      Our luxury perfume category celebrates fragrance as an expression of
+                      personality, style, and individuality with distinctive compositions suitable
+                      for personal wear and special occasions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="my-8">
+                <h3 className="font-display text-2xl text-[#333333] mb-4">
+                  Quality & Craftsmanship
+                </h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-4 bg-white rounded-lg border border-[#1b5e3f]/15">
+                    <h4 className="font-semibold text-[#1b5e3f] mb-2">Fragrance & Ingredient Specifications</h4>
+                    <p className="text-sm">
+                      Carefully selected botanical essences meeting highest fragrance standards and
+                      quality specifications.
+                    </p>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border border-[#1b5e3f]/15">
+                    <h4 className="font-semibold text-[#1b5e3f] mb-2">Material Verification</h4>
+                    <p className="text-sm">
+                      Rigorous quality checks on all sourced materials to ensure authenticity and
+                      purity throughout production.
+                    </p>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border border-[#1b5e3f]/15">
+                    <h4 className="font-semibold text-[#1b5e3f] mb-2">Product & Packaging Checks</h4>
+                    <p className="text-sm">
+                      Every product undergoes rigorous quality assurance and sophisticated packaging
+                      verification processes.
+                    </p>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border border-[#1b5e3f]/15">
+                    <h4 className="font-semibold text-[#1b5e3f] mb-2">Sourcing & Procurement</h4>
+                    <p className="text-sm">
+                      Strategic sourcing of premium raw materials from trusted botanical suppliers
+                      worldwide.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p>
+                Every detail of the Artisan Scents experience shapes the product—from careful
+                material selection through production assembly, ensuring that each fragrance tells a
+                story of botanical excellence, artisanal craftsmanship, and unwavering commitment to
+                quality.
+              </p>
+            </div>
           </div>
         </section>
 
