@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowRight, Check, ChevronRight, Heart, Menu, Minus, Pause, Play, Plus, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, ChevronRight, Heart, Minus, Pause, Play, Plus, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, money, type Product } from '@/lib/products';
 import heroPoster from '@/assets/hero-poster.jpg.asset.json';
 import { EntranceLoader } from '@/components/EntranceLoader';
+import { Header } from '@/components/Header';
 
 const ScentSculpture = lazy(() => import('@/components/ScentSculpture'));
 export const Route = createFileRoute("/")({
@@ -60,12 +61,12 @@ function Index() {
   return <>
     <EntranceLoader />
     <div className="announcement">Luxury Fragrances. Botanical Excellence. Artisanal Craftsmanship. <span className="ml-3">✦</span></div>
-    <header className="site-header">
-      <nav className="nav-links" aria-label="Main navigation"><a href="#collection">Collection</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
-      <Button variant="cinema" size="icon" className="md:hidden" aria-label="Open menu" onClick={() => setPanel('menu')}><Menu /></Button>
-      <a className="wordmark" href="#" aria-label="Artisan Scents home">ARTISAN<span className="text-gold">SCENTS</span></a>
-      <div className="flex items-center gap-2 ml-auto"><Button variant="cinema" size="icon" aria-label="Search fragrances" title="Search products" onClick={() => setPanel('search')}><Search /></Button><Button variant="cinema" className="text-[11px]" aria-label={`Shopping bag, ${totalItems} items`} onClick={() => setPanel('bag')}><ShoppingBag /><span className="hidden sm:inline">Bag</span> ({totalItems})</Button></div>
-    </header>
+    <Header
+      currentPage="Home"
+      onSearchClick={() => setPanel('search')}
+      onBagClick={() => setPanel('bag')}
+      totalItems={totalItems}
+    />
     <main>
       <section className="hero text-white" style={{
         minHeight: '620px',
@@ -110,7 +111,7 @@ function Index() {
           {filtered.slice(0, 6).map(p => (
             <article key={p.id}>
               <div className="product-image" style={{backgroundColor: p.category === 'essence-oils' ? '#faf5f0' : p.category === 'car-perfumes' ? '#f0f0f0' : p.category === 'agarbatti' ? '#fef3c7' : '#f5e6d3'}}>
-                <a href={`#${p.id}`} onClick={e => { e.preventDefault(); setSelected(p); }}>
+                <a href={`/products/${p.id}`}>
                   <img src={p.image} alt={`${p.name}`} width={1024} height={1024} loading="lazy" style={{objectFit: 'contain', padding: '20px'}} />
                 </a>
                 <span className="product-badge">{p.badge}</span>
@@ -118,7 +119,7 @@ function Index() {
               </div>
               <div className="product-info">
                 <div>
-                  <a href={`#${p.id}`} onClick={e => {e.preventDefault(); setSelected(p);}} className="product-name">{p.name}</a>
+                  <a href={`/products/${p.id}`} className="product-name">{p.name}</a>
                   <p className="product-notes">{p.notes}</p>
                   <div className="text-[9px] text-muted-foreground capitalize">{p.category.replace('-', ' ')}</div>
                 </div>

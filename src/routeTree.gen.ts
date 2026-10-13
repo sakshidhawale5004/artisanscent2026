@@ -10,6 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as PerfumesRouteImport } from './routes/perfumes'
+import { Route as EssenceOilsRouteImport } from './routes/essence-oils'
+import { Route as CarPerfumesRouteImport } from './routes/car-perfumes'
+import { Route as AgarbattiRouteImport } from './routes/agarbatti'
+import { Route as ProductDetailRouteImport } from './routes/products.$productId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -17,26 +23,86 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const PerfumesRoute = PerfumesRouteImport.update({
+  id: '/perfumes',
+  path: '/perfumes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const EssenceOilsRoute = EssenceOilsRouteImport.update({
+  id: '/essence-oils',
+  path: '/essence-oils',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const CarPerfumesRoute = CarPerfumesRouteImport.update({
+  id: '/car-perfumes',
+  path: '/car-perfumes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const AgarbattiRoute = AgarbattiRouteImport.update({
+  id: '/agarbatti',
+  path: '/agarbatti',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const ProductDetailRoute = ProductDetailRouteImport.update({
+  id: '/products/$productId',
+  path: '/products/$productId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/perfumes': typeof PerfumesRoute
+  '/essence-oils': typeof EssenceOilsRoute
+  '/car-perfumes': typeof CarPerfumesRoute
+  '/agarbatti': typeof AgarbattiRoute
+  '/products/$productId': typeof ProductDetailRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/perfumes': typeof PerfumesRoute
+  '/essence-oils': typeof EssenceOilsRoute
+  '/car-perfumes': typeof CarPerfumesRoute
+  '/agarbatti': typeof AgarbattiRoute
+  '/products/$productId': typeof ProductDetailRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/perfumes': typeof PerfumesRoute
+  '/essence-oils': typeof EssenceOilsRoute
+  '/car-perfumes': typeof CarPerfumesRoute
+  '/agarbatti': typeof AgarbattiRoute
+  '/products/$productId': typeof ProductDetailRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/about' | '/perfumes' | '/essence-oils' | '/car-perfumes' | '/agarbatti' | '/products/$productId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/about' | '/perfumes' | '/essence-oils' | '/car-perfumes' | '/agarbatti' | '/products/$productId'
+  id: '__root__' | '/' | '/about' | '/perfumes' | '/essence-oils' | '/car-perfumes' | '/agarbatti' | '/products/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  PerfumesRoute: typeof PerfumesRoute
+  EssenceOilsRoute: typeof EssenceOilsRoute
+  CarPerfumesRoute: typeof CarPerfumesRoute
+  AgarbattiRoute: typeof AgarbattiRoute
+  ProductDetailRoute: typeof ProductDetailRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +114,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfumes': {
+      id: '/perfumes'
+      path: '/perfumes'
+      fullPath: '/perfumes'
+      preLoaderRoute: typeof PerfumesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/essence-oils': {
+      id: '/essence-oils'
+      path: '/essence-oils'
+      fullPath: '/essence-oils'
+      preLoaderRoute: typeof EssenceOilsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/car-perfumes': {
+      id: '/car-perfumes'
+      path: '/car-perfumes'
+      fullPath: '/car-perfumes'
+      preLoaderRoute: typeof CarPerfumesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agarbatti': {
+      id: '/agarbatti'
+      path: '/agarbatti'
+      fullPath: '/agarbatti'
+      preLoaderRoute: typeof AgarbattiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$productId': {
+      id: '/products/$productId'
+      path: '/products/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof ProductDetailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  PerfumesRoute: PerfumesRoute,
+  EssenceOilsRoute: EssenceOilsRoute,
+  CarPerfumesRoute: CarPerfumesRoute,
+  AgarbattiRoute: AgarbattiRoute,
+  ProductDetailRoute: ProductDetailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

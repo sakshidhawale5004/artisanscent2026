@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ArrowRight, Heart, Plus, Search, ShoppingBag, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, money, type Product } from '@/lib/products';
+import { Header } from '@/components/Header';
 
 export const Route = createFileRoute("/car-perfumes")({
   head: () => ({ meta: [
@@ -30,11 +31,12 @@ function CarPerfumesPage() {
 
   return <>
     <div className="announcement">Premium Automotive Fragrance · Stylish Design · Lasting Aroma <span className="ml-3">✦</span></div>
-    <header className="site-header">
-      <nav className="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
-      <a className="wordmark" href="/" aria-label="Artisan Scents home">ARTISAN<span className="text-gold">SCENTS</span></a>
-      <div className="flex items-center gap-2 ml-auto"><Button variant="cinema" size="icon" aria-label="Search" onClick={() => setPanel('search')}><Search /></Button><Button variant="cinema" className="text-[11px]" aria-label={`Shopping bag, ${totalItems} items`} onClick={() => setPanel('bag')}><ShoppingBag /><span className="hidden sm:inline">Bag</span> ({totalItems})</Button></div>
-    </header>
+    <Header
+      currentPage="Shop"
+      onSearchClick={() => setPanel('search')}
+      onBagClick={() => setPanel('bag')}
+      totalItems={totalItems}
+    />
 
     <main>
       <section className="hero text-white" style={{
@@ -72,7 +74,7 @@ function CarPerfumesPage() {
           {carPerfumes.map(p => (
             <article key={p.id}>
               <div className="product-image" style={{backgroundColor: '#f0f0f0'}}>
-                <a href={`#${p.id}`} onClick={e => { e.preventDefault(); setSelected(p); }}>
+                <a href={`/products/${p.id}`}>
                   <img src={p.image} alt={`${p.name}`} width={1024} height={1024} loading="lazy" style={{objectFit: 'contain', padding: '20px'}} />
                 </a>
                 <span className="product-badge text-slate-700">{p.badge}</span>
@@ -82,7 +84,7 @@ function CarPerfumesPage() {
               </div>
               <div className="product-info">
                 <div>
-                  <a href={`#${p.id}`} onClick={e => {e.preventDefault(); setSelected(p);}} className="product-name">{p.name}</a>
+                  <a href={`/products/${p.id}`} className="product-name">{p.name}</a>
                   <p className="product-notes">{p.notes}</p>
                   <div className="text-[9px] text-muted-foreground mt-1">{p.size || 'HANGING DIFFUSER'}</div>
                 </div>

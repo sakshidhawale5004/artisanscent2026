@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Header } from '@/components/Header';
 
 export const Route = createFileRoute("/about")({
   head: () => ({ meta: [
@@ -13,11 +14,7 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return <>
     <div className="announcement">Crafting Fragrance. Building Dreams. <span className="ml-3">✦</span></div>
-    <header className="site-header">
-      <nav className="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/perfumes">Perfumes</a><a href="/essence-oils">Oils</a></nav>
-      <a className="wordmark" href="/" aria-label="Artisan Scents home">ARTISAN<span className="text-gold">SCENTS</span></a>
-      <div className="flex items-center gap-2 ml-auto"><Button variant="cinema" className="text-[11px]" asChild><a href="/">Home</a></Button></div>
-    </header>
+    <Header currentPage="About" />
 
     <main>
       <section className="hero text-white" style={{
