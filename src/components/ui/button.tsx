@@ -16,8 +16,10 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        luxury: "rounded-none border border-gold bg-gold text-ink hover:bg-paper hover:border-paper text-[10px] uppercase h-11 px-7",
-        editorial: "rounded-none border-b border-foreground bg-transparent text-foreground hover:text-muted-foreground px-0 text-[10px] h-8",
+        luxury:
+          "rounded-none border border-gold bg-gold text-ink hover:bg-paper hover:border-paper text-[10px] uppercase h-11 px-7",
+        editorial:
+          "rounded-none border-b border-foreground bg-transparent text-foreground hover:text-muted-foreground px-0 text-[10px] h-8",
         cinema: "rounded-none text-paper hover:text-gold bg-transparent hover:bg-transparent",
         tab: "rounded-none bg-transparent text-muted-foreground border-b border-transparent data-[active=true]:border-foreground data-[active=true]:text-foreground text-[10px] h-10 px-0",
       },

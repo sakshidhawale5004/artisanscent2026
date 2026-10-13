@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Menu, Search, ShoppingBag, Heart, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Menu, Search, ShoppingBag, Heart, X, ChevronDown } from "lucide-react";
 
 type HeaderProps = {
   currentPage?: string;
@@ -9,20 +9,20 @@ type HeaderProps = {
 };
 
 const navItems = [
-  { label: 'Home', href: '/' },
+  { label: "Home", href: "/" },
   {
-    label: 'Shop',
-    href: '#',
+    label: "Shop",
+    href: "#",
     children: [
-      { label: 'Perfumes', href: '/perfumes' },
-      { label: 'Essence Oils', href: '/essence-oils' },
-      { label: 'Car Perfumes', href: '/car-perfumes' },
-      { label: 'Agarbatti', href: '/agarbatti' },
+      { label: "Perfumes", href: "/perfumes" },
+      { label: "Essence Oils", href: "/essence-oils" },
+      { label: "Car Perfumes", href: "/car-perfumes" },
+      { label: "Agarbatti", href: "/agarbatti" },
     ],
   },
-  { label: 'About', href: '/about' },
-  { label: 'Journal', href: '#' },
-  { label: 'Contact', href: '/contact' },
+  { label: "About", href: "/about" },
+  { label: "Journal", href: "#" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 }: HeaderProps) {
@@ -32,93 +32,89 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu on route change
-  useEffect(() => { setMobileOpen(false); }, [currentPage]);
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [currentPage]);
 
   return (
     <>
       {/* Desktop / Tablet Header */}
       <header
-        className={`luxury-header${scrolled ? ' luxury-header--scrolled' : ''}`}
+        className={`luxury-header${scrolled ? " luxury-header--scrolled" : ""}`}
         role="banner"
       >
-        {/* Left Nav */}
-        <nav className="luxury-nav luxury-nav--left" aria-label="Primary navigation left">
-          {navItems.slice(0, 3).map(item =>
-            item.children ? (
-              <div key={item.label} className="luxury-dropdown-wrapper">
-                <button
-                  className={`luxury-nav-link luxury-dropdown-trigger${currentPage === item.label ? ' active' : ''}`}
-                  onClick={() => setShopOpen(o => !o)}
-                  aria-expanded={shopOpen}
-                  aria-haspopup="true"
-                >
-                  {item.label}
-                  <ChevronDown size={12} className={`luxury-chevron${shopOpen ? ' rotated' : ''}`} />
-                </button>
-                {shopOpen && (
-                  <div className="luxury-dropdown" role="menu">
-                    {item.children.map(child => (
-                      <a
-                        key={child.label}
-                        href={child.href}
-                        className="luxury-dropdown-item"
-                        role="menuitem"
-                        onClick={() => setShopOpen(false)}
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`luxury-nav-link${currentPage === item.label ? ' active' : ''}`}
-              >
-                {item.label}
-              </a>
-            )
-          )}
-        </nav>
-
-        {/* Center Logo */}
+        {/* Left: Circle Logo & Wordmark */}
         <a href="/" className="luxury-logo-link" aria-label="Artisan Scents – home">
-          <img
-            src="/assets/logo.jpeg"
-            alt="Artisan Scents logo"
-            className="luxury-logo-img"
-            width={120}
-            height={60}
-          />
+          <div className="luxury-logo-circle">
+            <img
+              src="/assets/logo.jpeg"
+              alt="Artisan Scents logo"
+              className="luxury-logo-img"
+              width={48}
+              height={48}
+            />
+          </div>
+          <div>
+            <div className="luxury-brand-title">SCENT</div>
+            <div className="luxury-brand-subtitle">MORE THAN A FRAGRANCE</div>
+          </div>
         </a>
 
-        {/* Right Nav */}
-        <div className="luxury-nav luxury-nav--right">
-          {navItems.slice(3).map(item => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`luxury-nav-link${currentPage === item.label ? ' active' : ''}`}
-            >
-              {item.label}
-            </a>
-          ))}
+        {/* Right: Nav Links & Action Icons */}
+        <div className="luxury-nav-cluster">
+          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation">
+            {navItems.map((item) =>
+              item.children ? (
+                <div key={item.label} className="luxury-dropdown-wrapper">
+                  <button
+                    className={`luxury-nav-link luxury-dropdown-trigger${currentPage === item.label ? " active" : ""}`}
+                    onClick={() => setShopOpen((o) => !o)}
+                    aria-expanded={shopOpen}
+                    aria-haspopup="true"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={12}
+                      className={`luxury-chevron${shopOpen ? " rotated" : ""}`}
+                    />
+                  </button>
+                  {shopOpen && (
+                    <div className="luxury-dropdown" role="menu">
+                      {item.children.map((child) => (
+                        <a
+                          key={child.label}
+                          href={child.href}
+                          className="luxury-dropdown-item"
+                          role="menuitem"
+                          onClick={() => setShopOpen(false)}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`luxury-nav-link${currentPage === item.label ? " active" : ""}`}
+                >
+                  {item.label}
+                </a>
+              ),
+            )}
+          </nav>
 
-          {/* Icons */}
+          {/* Icons on far right */}
           <div className="luxury-icons">
             {onSearchClick && (
-              <button
-                className="luxury-icon-btn"
-                aria-label="Search"
-                onClick={onSearchClick}
-              >
+              <button className="luxury-icon-btn" aria-label="Search" onClick={onSearchClick}>
                 <Search size={18} strokeWidth={1.5} />
               </button>
             )}
@@ -133,16 +129,15 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
               <ShoppingBag size={18} strokeWidth={1.5} />
               {totalItems > 0 && <span className="luxury-bag-count">{totalItems}</span>}
             </button>
+            {/* Mobile Hamburger */}
+            <button
+              className="luxury-hamburger md:hidden"
+              aria-label="Open menu"
+              onClick={() => setMobileOpen(true)}
+            >
+              <Menu size={22} />
+            </button>
           </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            className="luxury-hamburger"
-            aria-label="Open menu"
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu size={22} />
-          </button>
         </div>
       </header>
 
@@ -154,7 +149,7 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="luxury-mobile-header">
               <img src="/assets/logo.jpeg" alt="Artisan Scents" className="luxury-mobile-logo" />
@@ -167,15 +162,18 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
               </button>
             </div>
             <ul className="luxury-mobile-links">
-              {navItems.map(item => (
+              {navItems.map((item) => (
                 <li key={item.label}>
                   {item.children ? (
                     <>
                       <span className="luxury-mobile-category">{item.label}</span>
                       <ul className="luxury-mobile-sub">
-                        {item.children.map(child => (
+                        {item.children.map((child) => (
                           <li key={child.label}>
-                            <a href={child.href} className="luxury-mobile-link luxury-mobile-link--sub">
+                            <a
+                              href={child.href}
+                              className="luxury-mobile-link luxury-mobile-link--sub"
+                            >
                               {child.label}
                             </a>
                           </li>
@@ -183,7 +181,9 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
                       </ul>
                     </>
                   ) : (
-                    <a href={item.href} className="luxury-mobile-link">{item.label}</a>
+                    <a href={item.href} className="luxury-mobile-link">
+                      {item.label}
+                    </a>
                   )}
                 </li>
               ))}
