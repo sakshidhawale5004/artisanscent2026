@@ -60,16 +60,16 @@ function PerfumesPage() {
         {/* Category Hero Banner */}
         <section className="relative overflow-hidden border-b border-[#c5a880]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#082016] via-[#0b291d] to-[#061710]">
           <div className="max-w-7xl mx-auto">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>SHOP</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
               Discover Your
               <br />
               <em className="text-[#d4af37] font-serif italic">Signature Scent</em>
             </h1>
-            <p className="mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
               Explore our curated collection of luxury perfumes, crafted for every mood, every
               moment. Hand-blended with high-concentration essential essences.
             </p>
@@ -77,7 +77,7 @@ function PerfumesPage() {
         </section>
 
         {/* Filter Bar & Controls */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-10 pb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10">
+        <div className="reveal-fade max-w-7xl mx-auto px-6 sm:px-8 pt-10 pb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10">
           <div className="flex flex-wrap items-center gap-2">
             {["All", "Floral", "Woody", "Amber", "Oriental"].map((mood) => (
               <button
@@ -109,82 +109,92 @@ function PerfumesPage() {
                     p.family.toLowerCase().includes(query.toLowerCase())
                   : true,
               )
-              .map((p) => (
-                <article
-                  key={p.id}
-                  className="group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#09261c]"
-                >
-                  <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#05160f]/90 border-b border-white/5">
-                    <a
-                      href={`/products/${p.id}`}
-                      className="w-full h-full flex items-center justify-center"
-                    >
-                      <img
-                        src={p.image}
-                        alt={`${p.name} perfume bottle`}
-                        width={600}
-                        height={600}
-                        loading="lazy"
-                        className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </a>
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#c5a880]/30 backdrop-blur-sm">
-                      {p.badge}
-                    </span>
-                    <button
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#d4af37] transition"
-                      aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
-                      onClick={() => toggleSaved(p.id)}
-                    >
-                      <Heart
-                        size={15}
-                        fill={saved.includes(p.id) ? "#d4af37" : "none"}
-                        className={saved.includes(p.id) ? "text-[#d4af37]" : ""}
-                      />
-                    </button>
-                  </div>
-
-                  <div className="p-5 flex flex-col flex-1 justify-between">
-                    <div>
-                      <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
-                        {"★★★★★"}
-                        <span className="text-[11px] text-white/50 ml-1 font-light">(124)</span>
-                      </div>
+              .map((p, idx) => {
+                const delayClass =
+                  idx % 4 === 0
+                    ? "reveal-delay-50"
+                    : idx % 4 === 1
+                      ? "reveal-delay-150"
+                      : idx % 4 === 2
+                        ? "reveal-delay-250"
+                        : "reveal-delay-350";
+                return (
+                  <article
+                    key={p.id}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#09261c]`}
+                  >
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#05160f]/90 border-b border-white/5">
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-lg text-[#f4ede4] group-hover:text-[#d4af37] transition-colors block"
+                        className="w-full h-full flex items-center justify-center"
                       >
-                        {p.name}
+                        <img
+                          src={p.image}
+                          alt={`${p.name} perfume bottle`}
+                          width={600}
+                          height={600}
+                          loading="lazy"
+                          className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                        />
                       </a>
-                      <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
-                        {p.notes}
-                      </p>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                        Eau de Parfum · 50ml
-                      </div>
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#c5a880]/30 backdrop-blur-sm">
+                        {p.badge}
+                      </span>
+                      <button
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#d4af37] transition"
+                        aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
+                        onClick={() => toggleSaved(p.id)}
+                      >
+                        <Heart
+                          size={15}
+                          fill={saved.includes(p.id) ? "#d4af37" : "none"}
+                          className={saved.includes(p.id) ? "text-[#d4af37]" : ""}
+                        />
+                      </button>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="font-mono text-base font-semibold text-[#f4ede4]">
-                        {money(p.price)}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#c5a880]/40 text-xs font-medium"
-                        onClick={() => add(p)}
-                      >
-                        Add to Cart <Plus size={13} className="ml-1 text-[#d4af37]" />
-                      </Button>
+                    <div className="p-5 flex flex-col flex-1 justify-between">
+                      <div>
+                        <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
+                          {"★★★★★"}
+                          <span className="text-[11px] text-white/50 ml-1 font-light">(124)</span>
+                        </div>
+                        <a
+                          href={`/products/${p.id}`}
+                          className="font-display text-lg text-[#f4ede4] group-hover:text-[#d4af37] transition-colors block"
+                        >
+                          {p.name}
+                        </a>
+                        <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
+                          {p.notes}
+                        </p>
+                        <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
+                          Eau de Parfum · 50ml
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span className="font-mono text-base font-semibold text-[#f4ede4]">
+                          {money(p.price)}
+                        </span>
+                        <Button
+                          size="sm"
+                          className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#c5a880]/40 text-xs font-medium"
+                          onClick={() => add(p)}
+                        >
+                          Add to Cart <Plus size={13} className="ml-1 text-[#d4af37]" />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
           </div>
 
           {/* Exclusive Collection Banner (matching image.png middle pane bottom) */}
-          <div className="mt-16 rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#04140d] via-[#09291e] to-[#04140d]">
+          <div className="reveal-on-scroll reveal-slow mt-16 rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#04140d] via-[#09291e] to-[#04140d]">
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-              <div className="md:col-span-7 p-8 sm:p-12">
+              <div className="md:col-span-7 p-8 sm:p-12 reveal-left reveal-delay-100">
                 <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-2">
                   LIMITED BATCH
                 </div>
@@ -204,7 +214,7 @@ function PerfumesPage() {
                   </Button>
                 </div>
               </div>
-              <div className="md:col-span-5 h-60 md:h-full relative overflow-hidden">
+              <div className="md:col-span-5 h-60 md:h-full relative overflow-hidden reveal-right reveal-delay-200">
                 <img
                   src="/src/assets/images/exclusive_fragrance_card_1791888515789.jpg"
                   alt="Exclusive Perfume Bottle"
@@ -217,10 +227,12 @@ function PerfumesPage() {
 
           {/* Shop by Mood (matching image.png middle pane) */}
           <div className="mt-16">
-            <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-1">
-              CURATED EXPERIENCES
+            <div className="reveal-on-scroll">
+              <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-1">
+                CURATED EXPERIENCES
+              </div>
+              <h3 className="font-display text-2xl text-[#f4ede4] mb-6">Shop by Mood</h3>
             </div>
-            <h3 className="font-display text-2xl text-[#f4ede4] mb-6">Shop by Mood</h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 {
@@ -243,11 +255,11 @@ function PerfumesPage() {
                   notes: "Smoky Oud & Leather",
                   bg: "from-[#1a2e23] to-[#081811]",
                 },
-              ].map((mood) => (
+              ].map((mood, mIdx) => (
                 <button
                   key={mood.title}
                   onClick={() => setQuery(mood.notes.split(" ")[0] || "")}
-                  className={`p-5 rounded-xl border border-[#c5a880]/20 bg-gradient-to-br ${mood.bg} text-left transition hover:border-[#c5a880]/60 hover:-translate-y-1`}
+                  className={`reveal-on-scroll reveal-delay-${(mIdx + 1) * 100} p-5 rounded-xl border border-[#c5a880]/20 bg-gradient-to-br ${mood.bg} text-left transition hover:border-[#c5a880]/60 hover:-translate-y-1`}
                 >
                   <div className="font-display text-base text-[#f4ede4] font-medium">
                     {mood.title}
@@ -261,7 +273,7 @@ function PerfumesPage() {
       </main>
 
       <footer className="footer" style={{ marginTop: "70px" }}>
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="/" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>

@@ -149,7 +149,7 @@ function ProductDetailPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             {/* Left Column: Gallery & Main Showcase */}
-            <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
+            <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4 reveal-scale">
               {/* Thumbnails */}
               <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-visible shrink-0">
                 {images.map((img, i) => (
@@ -200,7 +200,7 @@ function ProductDetailPage() {
             </div>
 
             {/* Right Column: Contiguous Purchase Module */}
-            <div className="lg:col-span-5 flex flex-col justify-start">
+            <div className="lg:col-span-5 flex flex-col justify-start reveal-on-scroll reveal-delay-100">
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-2">
                 <span>{product.family}</span>
                 <span>·</span>
@@ -302,7 +302,7 @@ function ProductDetailPage() {
               </div>
 
               {/* Trust Badges Bar */}
-              <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
+              <div className="reveal-on-scroll reveal-delay-150 mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
                 <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                   <div className="text-base mb-1">🚚</div>
                   <div className="text-[11px] text-white/80 font-medium">Free Shipping</div>
@@ -321,7 +321,7 @@ function ProductDetailPage() {
               </div>
 
               {/* Accordions (Details, Fragrance Notes, Shipping) */}
-              <div className="mt-8 space-y-3">
+              <div className="reveal-on-scroll reveal-delay-200 mt-8 space-y-3">
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
                   <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
                     <span>Product Specifications</span>
@@ -384,7 +384,7 @@ function ProductDetailPage() {
         {/* Related Products in Matching Emerald Shade */}
         {related.length > 0 && (
           <section className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 border-t border-white/10">
-            <div className="flex items-center justify-between mb-8">
+            <div className="reveal-on-scroll flex items-center justify-between mb-8">
               <div>
                 <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium">
                   YOU MAY ALSO LIKE
@@ -407,63 +407,73 @@ function ProductDetailPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {related.map((p) => (
-                <article
-                  key={p.id}
-                  className="group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70"
-                >
-                  <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#05160f]/90 border-b border-white/5">
-                    <a
-                      href={`/products/${p.id}`}
-                      className="w-full h-full flex items-center justify-center"
-                    >
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        width={600}
-                        height={600}
-                        loading="lazy"
-                        className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </a>
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#c5a880]/30 backdrop-blur-sm">
-                      {p.badge}
-                    </span>
-                  </div>
-                  <div className="p-4 flex flex-col flex-1 justify-between">
-                    <div>
+              {related.map((p, idx) => {
+                const delayClass =
+                  idx % 4 === 0
+                    ? "reveal-delay-50"
+                    : idx % 4 === 1
+                      ? "reveal-delay-150"
+                      : idx % 4 === 2
+                        ? "reveal-delay-250"
+                        : "reveal-delay-350";
+                return (
+                  <article
+                    key={p.id}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70`}
+                  >
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#05160f]/90 border-b border-white/5">
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-base text-[#f4ede4] group-hover:text-[#d4af37] transition-colors block"
+                        className="w-full h-full flex items-center justify-center"
                       >
-                        {p.name}
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          width={600}
+                          height={600}
+                          loading="lazy"
+                          className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                        />
                       </a>
-                      <p className="text-xs text-white/50 line-clamp-1 mt-0.5 font-light">
-                        {p.notes}
-                      </p>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-                      <span className="font-mono text-sm font-semibold text-[#f4ede4]">
-                        {money(p.price)}
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#c5a880]/30 backdrop-blur-sm">
+                        {p.badge}
                       </span>
-                      <Button
-                        size="sm"
-                        className="h-8 px-3 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#c5a880]/30 text-xs"
-                        onClick={() => addToBag(p)}
-                      >
-                        Add <Plus size={12} className="ml-0.5" />
-                      </Button>
                     </div>
-                  </div>
-                </article>
-              ))}
+                    <div className="p-4 flex flex-col flex-1 justify-between">
+                      <div>
+                        <a
+                          href={`/products/${p.id}`}
+                          className="font-display text-base text-[#f4ede4] group-hover:text-[#d4af37] transition-colors block"
+                        >
+                          {p.name}
+                        </a>
+                        <p className="text-xs text-white/50 line-clamp-1 mt-0.5 font-light">
+                          {p.notes}
+                        </p>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
+                        <span className="font-mono text-sm font-semibold text-[#f4ede4]">
+                          {money(p.price)}
+                        </span>
+                        <Button
+                          size="sm"
+                          className="h-8 px-3 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#c5a880]/30 text-xs"
+                          onClick={() => addToBag(p)}
+                        >
+                          Add <Plus size={12} className="ml-0.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
         )}
       </main>
 
       <footer className="footer" style={{ marginTop: "70px" }}>
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="/" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>

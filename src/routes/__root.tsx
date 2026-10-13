@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -125,6 +126,63 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+
+    const SELECTORS = ".reveal-on-scroll, .reveal-fade, .reveal-scale, .reveal-left, .reveal-right";
+    const UNREVEALED_SELECTORS =
+      ".reveal-on-scroll:not(.is-revealed), .reveal-fade:not(.is-revealed), .reveal-scale:not(.is-revealed), .reveal-left:not(.is-revealed), .reveal-right:not(.is-revealed)";
+
+    // Respect user's motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(SELECTORS).forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.08,
+      },
+    );
+
+    const observePending = () => {
+      const pending = document.querySelectorAll(UNREVEALED_SELECTORS);
+      pending.forEach((el) => observer.observe(el));
+    };
+
+    // Run observation immediately
+    observePending();
+
+    // Re-check after a tick to catch any layout changes or lazily loaded elements
+    const rafId = requestAnimationFrame(() => {
+      observePending();
+    });
+
+    // Also observe new elements mounted during tab switches or dynamic DOM updates
+    const mutationObserver = new MutationObserver(() => {
+      observePending();
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>

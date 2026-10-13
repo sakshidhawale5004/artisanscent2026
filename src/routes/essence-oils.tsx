@@ -60,16 +60,16 @@ function EssenceOilsPage() {
         {/* Category Hero Banner - Botanical Eucalyptus & Sage Green */}
         <section className="relative overflow-hidden border-b border-[#c5a880]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#0c2e21] via-[#103a2a] to-[#071d15]">
           <div className="max-w-7xl mx-auto">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>BOTANICAL COLLECTION</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
               Pure Essential
               <br />
               <em className="text-[#a4d4b4] font-serif italic">Oils & Essences</em>
             </h1>
-            <p className="mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
               Pure aromatic extracts from the world's finest medicinal flora. Sourced with KEOMC
               botanical stewardship, steam-distilled traditionally, and bottled unadulterated.
             </p>
@@ -77,7 +77,7 @@ function EssenceOilsPage() {
         </section>
 
         {/* Botanical Highlights Pill Bar */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-10 pb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10">
+        <div className="reveal-fade max-w-7xl mx-auto px-6 sm:px-8 pt-10 pb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10">
           <div className="flex flex-wrap items-center gap-2">
             {["All Essences", "Lavender", "Rosemary", "Patchouli", "Lemongrass", "Mint"].map(
               (tag) => (
@@ -111,85 +111,95 @@ function EssenceOilsPage() {
                     p.notes.toLowerCase().includes(query.toLowerCase())
                   : true,
               )
-              .map((p) => (
-                <article
-                  key={p.id}
-                  className="group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0e3123] to-[#061811] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#a4d4b4]/70 hover:shadow-2xl hover:shadow-[#0e3123]"
-                >
-                  <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#071d15]/90 border-b border-white/5">
-                    <a
-                      href={`/products/${p.id}`}
-                      className="w-full h-full flex items-center justify-center"
-                    >
-                      <img
-                        src={p.image}
-                        alt={`${p.name} bottle`}
-                        width={600}
-                        height={600}
-                        loading="lazy"
-                        className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </a>
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#a4d4b4] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#a4d4b4]/30 backdrop-blur-sm">
-                      {p.badge}
-                    </span>
-                    <button
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#a4d4b4] transition"
-                      aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
-                      onClick={() => toggleSaved(p.id)}
-                    >
-                      <Heart
-                        size={15}
-                        fill={saved.includes(p.id) ? "#a4d4b4" : "none"}
-                        className={saved.includes(p.id) ? "text-[#a4d4b4]" : ""}
-                      />
-                    </button>
-                  </div>
-
-                  <div className="p-5 flex flex-col flex-1 justify-between">
-                    <div>
-                      <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
-                        {"★★★★★"}
-                        <span className="text-[11px] text-white/50 ml-1 font-light">(98)</span>
-                      </div>
+              .map((p, idx) => {
+                const delayClass =
+                  idx % 4 === 0
+                    ? "reveal-delay-50"
+                    : idx % 4 === 1
+                      ? "reveal-delay-150"
+                      : idx % 4 === 2
+                        ? "reveal-delay-250"
+                        : "reveal-delay-350";
+                return (
+                  <article
+                    key={p.id}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0e3123] to-[#061811] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#a4d4b4]/70 hover:shadow-2xl hover:shadow-[#0e3123]`}
+                  >
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#071d15]/90 border-b border-white/5">
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-lg text-[#f4ede4] group-hover:text-[#a4d4b4] transition-colors block"
+                        className="w-full h-full flex items-center justify-center"
                       >
-                        {p.name}
+                        <img
+                          src={p.image}
+                          alt={`${p.name} bottle`}
+                          width={600}
+                          height={600}
+                          loading="lazy"
+                          className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                        />
                       </a>
-                      {p.botanicalName && (
-                        <p className="text-[11px] text-[#a4d4b4] italic mt-0.5 font-serif">
-                          {p.botanicalName}
-                        </p>
-                      )}
-                      <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
-                        {p.notes}
-                      </p>
-                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                        {p.size || "100 ml"} · Pure Extract
-                      </div>
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#a4d4b4] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#a4d4b4]/30 backdrop-blur-sm">
+                        {p.badge}
+                      </span>
+                      <button
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#a4d4b4] transition"
+                        aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
+                        onClick={() => toggleSaved(p.id)}
+                      >
+                        <Heart
+                          size={15}
+                          fill={saved.includes(p.id) ? "#a4d4b4" : "none"}
+                          className={saved.includes(p.id) ? "text-[#a4d4b4]" : ""}
+                        />
+                      </button>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="font-mono text-base font-semibold text-[#f4ede4]">
-                        {money(p.price)}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#a4d4b4]/40 text-xs font-medium"
-                        onClick={() => add(p)}
-                      >
-                        Add to Cart <Plus size={13} className="ml-1 text-[#a4d4b4]" />
-                      </Button>
+                    <div className="p-5 flex flex-col flex-1 justify-between">
+                      <div>
+                        <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
+                          {"★★★★★"}
+                          <span className="text-[11px] text-white/50 ml-1 font-light">(98)</span>
+                        </div>
+                        <a
+                          href={`/products/${p.id}`}
+                          className="font-display text-lg text-[#f4ede4] group-hover:text-[#a4d4b4] transition-colors block"
+                        >
+                          {p.name}
+                        </a>
+                        {p.botanicalName && (
+                          <p className="text-[11px] text-[#a4d4b4] italic mt-0.5 font-serif">
+                            {p.botanicalName}
+                          </p>
+                        )}
+                        <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
+                          {p.notes}
+                        </p>
+                        <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
+                          {p.size || "100 ml"} · Pure Extract
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span className="font-mono text-base font-semibold text-[#f4ede4]">
+                          {money(p.price)}
+                        </span>
+                        <Button
+                          size="sm"
+                          className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#a4d4b4]/40 text-xs font-medium"
+                          onClick={() => add(p)}
+                        >
+                          Add to Cart <Plus size={13} className="ml-1 text-[#a4d4b4]" />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
           </div>
 
           {/* Educational Distillation Banner */}
-          <div className="mt-16 rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#061c14] via-[#0f382a] to-[#061c14] p-8 sm:p-12">
+          <div className="reveal-on-scroll reveal-slow mt-16 rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#061c14] via-[#0f382a] to-[#061c14] p-8 sm:p-12">
             <div className="max-w-2xl">
               <div className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-2">
                 KEOMC BOTANICAL LABS
@@ -207,19 +217,19 @@ function EssenceOilsPage() {
         </section>
 
         <section className="section bg-green-50">
-          <h2 className="section-title mb-8">Sample Pack Options</h2>
+          <h2 className="section-title mb-8 reveal-on-scroll">Sample Pack Options</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg border border-green-200">
+            <div className="reveal-on-scroll reveal-delay-100 bg-white p-6 rounded-lg border border-green-200">
               <h3 className="font-display text-xl mb-2">Starter Sample Kit</h3>
               <p className="text-sm mb-3">5 Oils × 5 ml each</p>
               <p className="text-2xl font-bold text-green-700">₹999</p>
             </div>
-            <div className="bg-white p-6 rounded-lg border border-green-200">
+            <div className="reveal-on-scroll reveal-delay-200 bg-white p-6 rounded-lg border border-green-200">
               <h3 className="font-display text-xl mb-2">Professional Sample Kit</h3>
               <p className="text-sm mb-3">10 Oils × 5 ml each</p>
               <p className="text-2xl font-bold text-green-700">₹1,799</p>
             </div>
-            <div className="bg-white p-6 rounded-lg border border-green-200">
+            <div className="reveal-on-scroll reveal-delay-300 bg-white p-6 rounded-lg border border-green-200">
               <h3 className="font-display text-xl mb-2">Premium Perfumery Kit</h3>
               <p className="text-sm mb-3">5 Premium Oils</p>
               <p className="text-2xl font-bold text-green-700">₹2,499</p>
@@ -229,7 +239,7 @@ function EssenceOilsPage() {
       </main>
 
       <footer className="footer" style={{ marginTop: "70px" }}>
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="/" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>

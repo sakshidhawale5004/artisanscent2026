@@ -61,16 +61,16 @@ function CarPerfumesPage() {
         {/* Category Hero Banner - Modern Jade & Cypress Velvet Green */}
         <section className="relative overflow-hidden border-b border-[#c5a880]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#0e3124] via-[#123d2d] to-[#081e17]">
           <div className="max-w-7xl mx-auto">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>AUTOMOTIVE COLLECTION</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
               Elevate Your
               <br />
               <em className="text-[#8cd1b0] font-serif italic">Driving Atmosphere</em>
             </h1>
-            <p className="mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
               Refined car diffusers and wooden bottle flacons designed to transform your vehicle's
               interior into a calm botanical sanctuary.
             </p>
@@ -80,95 +80,105 @@ function CarPerfumesPage() {
         {/* Product Grid - Modern Jade Green Cards */}
         <section className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-            {carPerfumes.map((p) => (
-              <article
-                key={p.id}
-                className="group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#11382a] to-[#071912] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#8cd1b0]/70 hover:shadow-2xl hover:shadow-[#11382a]"
-              >
-                <div className="relative aspect-square w-full p-8 flex items-center justify-center bg-[#09221a]/90 border-b border-white/5">
-                  <a
-                    href={`/products/${p.id}`}
-                    className="w-full h-full flex items-center justify-center"
-                  >
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      width={600}
-                      height={600}
-                      loading="lazy"
-                      className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </a>
-                  <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#8cd1b0] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#8cd1b0]/30 backdrop-blur-sm">
-                    {p.badge}
-                  </span>
-                  <button
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#8cd1b0] transition"
-                    aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
-                    onClick={() => toggleSaved(p.id)}
-                  >
-                    <Heart
-                      size={15}
-                      fill={saved.includes(p.id) ? "#8cd1b0" : "none"}
-                      className={saved.includes(p.id) ? "text-[#8cd1b0]" : ""}
-                    />
-                  </button>
-                </div>
-
-                <div className="p-5 flex flex-col flex-1 justify-between">
-                  <div>
-                    <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
-                      {"★★★★★"}
-                      <span className="text-[11px] text-white/50 ml-1 font-light">(82)</span>
-                    </div>
+            {carPerfumes.map((p, idx) => {
+              const delayClass =
+                idx % 3 === 0
+                  ? "reveal-delay-50"
+                  : idx % 3 === 1
+                    ? "reveal-delay-150"
+                    : "reveal-delay-250";
+              return (
+                <article
+                  key={p.id}
+                  className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#11382a] to-[#071912] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#8cd1b0]/70 hover:shadow-2xl hover:shadow-[#11382a]`}
+                >
+                  <div className="relative aspect-square w-full p-8 flex items-center justify-center bg-[#09221a]/90 border-b border-white/5">
                     <a
                       href={`/products/${p.id}`}
-                      className="font-display text-lg text-[#f4ede4] group-hover:text-[#8cd1b0] transition-colors block"
+                      className="w-full h-full flex items-center justify-center"
                     >
-                      {p.name}
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        width={600}
+                        height={600}
+                        loading="lazy"
+                        className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                      />
                     </a>
-                    <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">{p.notes}</p>
-                    <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                      {p.size || "Hanging Wooden Cap"} · 60-Day Scent
-                    </div>
+                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#8cd1b0] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#8cd1b0]/30 backdrop-blur-sm">
+                      {p.badge}
+                    </span>
+                    <button
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#8cd1b0] transition"
+                      aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
+                      onClick={() => toggleSaved(p.id)}
+                    >
+                      <Heart
+                        size={15}
+                        fill={saved.includes(p.id) ? "#8cd1b0" : "none"}
+                        className={saved.includes(p.id) ? "text-[#8cd1b0]" : ""}
+                      />
+                    </button>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="font-mono text-base font-semibold text-[#f4ede4]">
-                      {money(p.price)}
-                    </span>
-                    <Button
-                      size="sm"
-                      className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#8cd1b0]/40 text-xs font-medium"
-                      onClick={() => add(p)}
-                    >
-                      Add to Cart <Plus size={13} className="ml-1 text-[#8cd1b0]" />
-                    </Button>
+                  <div className="p-5 flex flex-col flex-1 justify-between">
+                    <div>
+                      <div className="flex items-center gap-1 text-[#d4af37] text-xs mb-1.5">
+                        {"★★★★★"}
+                        <span className="text-[11px] text-white/50 ml-1 font-light">(82)</span>
+                      </div>
+                      <a
+                        href={`/products/${p.id}`}
+                        className="font-display text-lg text-[#f4ede4] group-hover:text-[#8cd1b0] transition-colors block"
+                      >
+                        {p.name}
+                      </a>
+                      <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
+                        {p.notes}
+                      </p>
+                      <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
+                        {p.size || "Hanging Wooden Cap"} · 60-Day Scent
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                      <span className="font-mono text-base font-semibold text-[#f4ede4]">
+                        {money(p.price)}
+                      </span>
+                      <Button
+                        size="sm"
+                        className="h-9 px-4 rounded-full bg-[#144733] hover:bg-[#1a573f] text-[#f4ede4] border border-[#8cd1b0]/40 text-xs font-medium"
+                        onClick={() => add(p)}
+                      >
+                        Add to Cart <Plus size={13} className="ml-1 text-[#8cd1b0]" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </section>
 
         <section className="section bg-blue-50">
-          <h2 className="section-title mb-8">Why Choose Artisan Car Perfumes?</h2>
+          <h2 className="section-title mb-8 reveal-on-scroll">Why Choose Artisan Car Perfumes?</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg border border-blue-200">
+            <div className="reveal-on-scroll reveal-delay-100 bg-white p-6 rounded-lg border border-blue-200">
               <h3 className="font-display text-lg mb-2">🎨 Stylish Design</h3>
               <p className="text-sm text-muted-foreground">
                 Compact and beautiful diffuser formats that complement any vehicle interior
                 aesthetic.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-lg border border-blue-200">
+            <div className="reveal-on-scroll reveal-delay-200 bg-white p-6 rounded-lg border border-blue-200">
               <h3 className="font-display text-lg mb-2">⏱️ Long-Lasting</h3>
               <p className="text-sm text-muted-foreground">
                 Premium fragrance formulations provide continuous aroma for weeks of driving
                 pleasure.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-lg border border-blue-200">
+            <div className="reveal-on-scroll reveal-delay-300 bg-white p-6 rounded-lg border border-blue-200">
               <h3 className="font-display text-lg mb-2">🌿 Natural Ingredients</h3>
               <p className="text-sm text-muted-foreground">
                 Crafted from natural aromatic essences and botanical extracts.
@@ -179,7 +189,7 @@ function CarPerfumesPage() {
       </main>
 
       <footer className="footer" style={{ marginTop: "70px" }}>
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="/" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>

@@ -144,12 +144,12 @@ function Index() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               {/* Left Column: Headline & Action */}
               <div className="lg:col-span-6 flex flex-col justify-center">
-                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-4">
+                <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-4">
                   <span className="w-6 h-[1px] bg-[#d4af37]" />
                   <span>LUXURY PERFUMES</span>
                 </div>
 
-                <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-normal leading-[1.08] tracking-tight text-[#f4ede4]">
+                <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-normal leading-[1.08] tracking-tight text-[#f4ede4]">
                   Timeless
                   <br />
                   Elegance in
@@ -157,12 +157,12 @@ function Index() {
                   <em className="text-[#d4af37] italic font-serif">every Drop</em>
                 </h1>
 
-                <p className="mt-5 text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-lg">
+                <p className="reveal-on-scroll reveal-delay-200 mt-5 text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-lg">
                   Luxury perfumes crafted for those who appreciate the extraordinary. Handcrafted
                   botanical compositions and rare essences born from artisanal dedication.
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center gap-4">
                   <Button
                     asChild
                     className="h-12 px-7 bg-[#0d3324] hover:bg-[#144733] text-white border border-[#c5a880]/40 rounded-full font-medium tracking-wide shadow-lg transition-all"
@@ -198,7 +198,7 @@ function Index() {
               </div>
 
               {/* Right Column: Hero Visual Showcase (Video & Photo Switcher) */}
-              <div className="lg:col-span-6">
+              <div className="lg:col-span-6 reveal-scale reveal-delay-150">
                 <div className="relative rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-[#092219]/70 backdrop-blur-md p-2 sm:p-3">
                   {/* Mode Selector Tabs */}
                   <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 p-1 bg-black/60 backdrop-blur-md rounded-full border border-white/15">
@@ -291,8 +291,8 @@ function Index() {
             </div>
 
             {/* Trust Badges Strip (matching image.png) */}
-            <div className="mt-14 pt-8 border-t border-[#c5a880]/20 grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
-              <div className="flex items-center gap-3 justify-center md:justify-start">
+            <div className="mt-14 pt-8 border-t border-[#c5a880]/20 grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left reveal-on-scroll">
+              <div className="flex items-center gap-3 justify-center md:justify-start reveal-on-scroll reveal-delay-50">
                 <div className="w-10 h-10 rounded-full bg-[#0d3324] border border-[#c5a880]/30 flex items-center justify-center text-[#d4af37] shrink-0">
                   <ShieldCheck size={20} />
                 </div>
@@ -304,7 +304,7 @@ function Index() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 justify-center md:justify-start">
+              <div className="flex items-center gap-3 justify-center md:justify-start reveal-on-scroll reveal-delay-150">
                 <div className="w-10 h-10 rounded-full bg-[#0d3324] border border-[#c5a880]/30 flex items-center justify-center text-[#d4af37] shrink-0">
                   <Sparkles size={18} />
                 </div>
@@ -316,7 +316,7 @@ function Index() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 justify-center md:justify-start">
+              <div className="flex items-center gap-3 justify-center md:justify-start reveal-on-scroll reveal-delay-250">
                 <div className="w-10 h-10 rounded-full bg-[#0d3324] border border-[#c5a880]/30 flex items-center justify-center text-[#d4af37] shrink-0">
                   <Truck size={18} />
                 </div>
@@ -328,7 +328,7 @@ function Index() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 justify-center md:justify-start">
+              <div className="flex items-center gap-3 justify-center md:justify-start reveal-on-scroll reveal-delay-350">
                 <div className="w-10 h-10 rounded-full bg-[#0d3324] border border-[#c5a880]/30 flex items-center justify-center text-[#d4af37] shrink-0">
                   <Lock size={18} />
                 </div>
@@ -344,7 +344,7 @@ function Index() {
         </section>
 
         <section id="collection" className="section">
-          <div className="section-heading">
+          <div className="section-heading reveal-on-scroll">
             <div>
               <div className="eyebrow text-muted-foreground">OUR COLLECTION</div>
               <h2 className="section-title">Five Categories of Luxury</h2>
@@ -359,7 +359,11 @@ function Index() {
             </Button>
           </div>
 
-          <div className="collection-tabs" role="tablist" aria-label="Product category">
+          <div
+            className="collection-tabs reveal-fade reveal-delay-100"
+            role="tablist"
+            aria-label="Product category"
+          >
             {["All Products", "Perfumes", "Oils", "Car Perfumes", "Agarbatti"].map((f) => (
               <Button
                 key={f}
@@ -375,64 +379,72 @@ function Index() {
           </div>
 
           <div className="product-grid">
-            {filtered.slice(0, 6).map((p) => (
-              <article key={p.id}>
-                <div
-                  className="product-image"
-                  style={{
-                    backgroundColor:
-                      p.category === "essence-oils"
-                        ? "#faf5f0"
-                        : p.category === "car-perfumes"
-                          ? "#f0f0f0"
-                          : p.category === "agarbatti"
-                            ? "#fef3c7"
-                            : "#f5e6d3",
-                  }}
-                >
-                  <a href={`/products/${p.id}`}>
-                    <img
-                      src={p.image}
-                      alt={`${p.name}`}
-                      width={1024}
-                      height={1024}
-                      loading="lazy"
-                      style={{ objectFit: "contain", padding: "20px" }}
-                    />
-                  </a>
-                  <span className="product-badge">{p.badge}</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-2 top-2"
-                    aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
-                    aria-pressed={saved.includes(p.id)}
-                    onClick={() => toggleSaved(p.id)}
+            {filtered.slice(0, 6).map((p, idx) => {
+              const delayClass =
+                idx % 3 === 0
+                  ? "reveal-delay-100"
+                  : idx % 3 === 1
+                    ? "reveal-delay-200"
+                    : "reveal-delay-300";
+              return (
+                <article key={p.id} className={`reveal-on-scroll ${delayClass}`}>
+                  <div
+                    className="product-image"
+                    style={{
+                      backgroundColor:
+                        p.category === "essence-oils"
+                          ? "#faf5f0"
+                          : p.category === "car-perfumes"
+                            ? "#f0f0f0"
+                            : p.category === "agarbatti"
+                              ? "#fef3c7"
+                              : "#f5e6d3",
+                    }}
                   >
-                    <Heart className={saved.includes(p.id) ? "fill-foreground" : ""} />
-                  </Button>
-                </div>
-                <div className="product-info">
-                  <div>
-                    <a href={`/products/${p.id}`} className="product-name">
-                      {p.name}
+                    <a href={`/products/${p.id}`}>
+                      <img
+                        src={p.image}
+                        alt={`${p.name}`}
+                        width={1024}
+                        height={1024}
+                        loading="lazy"
+                        style={{ objectFit: "contain", padding: "20px" }}
+                      />
                     </a>
-                    <p className="product-notes">{p.notes}</p>
-                    <div className="text-[9px] text-muted-foreground capitalize">
-                      {p.category.replace("-", " ")}
-                    </div>
+                    <span className="product-badge">{p.badge}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 top-2"
+                      aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
+                      aria-pressed={saved.includes(p.id)}
+                      onClick={() => toggleSaved(p.id)}
+                    >
+                      <Heart className={saved.includes(p.id) ? "fill-foreground" : ""} />
+                    </Button>
                   </div>
-                  <span className="product-price">{money(p.price)}</span>
-                </div>
-                <Button variant="editorial" className="mt-3 w-full" onClick={() => add(p)}>
-                  Add to bag <Plus size={14} />
-                </Button>
-              </article>
-            ))}
+                  <div className="product-info">
+                    <div>
+                      <a href={`/products/${p.id}`} className="product-name">
+                        {p.name}
+                      </a>
+                      <p className="product-notes">{p.notes}</p>
+                      <div className="text-[9px] text-muted-foreground capitalize">
+                        {p.category.replace("-", " ")}
+                      </div>
+                    </div>
+                    <span className="product-price">{money(p.price)}</span>
+                  </div>
+                  <Button variant="editorial" className="mt-3 w-full" onClick={() => add(p)}>
+                    Add to bag <Plus size={14} />
+                  </Button>
+                </article>
+              );
+            })}
           </div>
         </section>
 
-        <section className="ritual-strip">
+        <section className="ritual-strip reveal-fade">
           <span>
             <Sparkles size={16} strokeWidth={1} /> Handcrafted with Care
           </span>
@@ -447,7 +459,7 @@ function Index() {
         {/* Our Product Categories Section - Bespoke Shades of Luxury Green */}
         <section className="section bg-[#051710] text-[#f4ede4] border-y border-[#c5a880]/15 py-20">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14">
+            <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
                 <span className="w-5 h-[1px] bg-[#d4af37]" />
                 <span>ARTISANAL PORTFOLIO</span>
@@ -466,7 +478,7 @@ function Index() {
               {/* Category 1: Perfumes - Royal Emerald */}
               <a
                 href="/perfumes"
-                className="group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#09261c]"
+                className="reveal-on-scroll reveal-delay-100 group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#09261c] to-[#04140d] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#09261c]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#04150e]/80 border border-white/5 p-4 flex items-center justify-center mb-4">
                   <img
@@ -497,7 +509,7 @@ function Index() {
               {/* Category 2: Essence Oils - Botanical Sage & Eucalyptus Green */}
               <a
                 href="/essence-oils"
-                className="group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0e3123] to-[#061811] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#0e3123]"
+                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0e3123] to-[#061811] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#0e3123]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#061911]/80 border border-white/5 p-4 flex items-center justify-center mb-4">
                   <img
@@ -528,7 +540,7 @@ function Index() {
               {/* Category 3: Car Perfumes - Jade Cypress Green */}
               <a
                 href="/car-perfumes"
-                className="group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#133729] to-[#081c15] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#133729]"
+                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#133729] to-[#081c15] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#133729]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#081d16]/80 border border-white/5 p-4 flex items-center justify-center mb-4">
                   <img
@@ -559,7 +571,7 @@ function Index() {
               {/* Category 4: Agarbatti & Dhoop - Sacred Cypress & Amber Green */}
               <a
                 href="/agarbatti"
-                className="group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#183d2d] to-[#0a1e16] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#183d2d]"
+                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#183d2d] to-[#0a1e16] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#183d2d]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#091f16]/80 border border-white/5 p-4 flex items-center justify-center mb-4">
                   <img
@@ -592,7 +604,7 @@ function Index() {
               {/* Category 5: About - Heritage Velvet Forest Green */}
               <a
                 href="/about"
-                className="group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0b241a] to-[#04120d] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#0b241a]"
+                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#c5a880]/25 bg-gradient-to-b from-[#0b241a] to-[#04120d] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#c5a880]/70 hover:shadow-2xl hover:shadow-[#0b241a]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#05140d]/80 border border-white/5 p-4 flex items-center justify-center mb-4">
                   <img
@@ -626,9 +638,9 @@ function Index() {
         {/* Editorial Story Spotlight (matching image.png bottom-left) */}
         <section className="section py-16 bg-[#071b13] text-white border-b border-[#c5a880]/15">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="relative rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#04140d] via-[#092419] to-[#04140d]">
+            <div className="reveal-on-scroll reveal-slow relative rounded-2xl overflow-hidden border border-[#c5a880]/30 shadow-2xl bg-gradient-to-r from-[#04140d] via-[#092419] to-[#04140d]">
               <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                <div className="lg:col-span-7 p-8 sm:p-12 lg:p-16 z-10">
+                <div className="lg:col-span-7 p-8 sm:p-12 lg:p-16 z-10 reveal-left reveal-delay-100">
                   <div className="eyebrow text-[#d4af37] mb-3">OUR PHILOSOPHY</div>
                   <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f4ede4] leading-tight">
                     More Than a Fragrance
@@ -650,7 +662,7 @@ function Index() {
                     </a>
                   </Button>
                 </div>
-                <div className="lg:col-span-5 h-72 lg:h-full relative overflow-hidden">
+                <div className="lg:col-span-5 h-72 lg:h-full relative overflow-hidden reveal-right reveal-delay-200">
                   <img
                     src="/src/assets/images/perfume_story_editorial_1791888489737.jpg"
                     alt="Artisan Scents editorial portrait"
@@ -664,7 +676,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="maison" className="maison">
+        <section id="maison" className="maison reveal-on-scroll">
           <div className="maison-canvas">
             {mounted && (
               <Suspense fallback={null}>
@@ -672,7 +684,7 @@ function Index() {
               </Suspense>
             )}
           </div>
-          <div className="maison-copy">
+          <div className="maison-copy reveal-on-scroll reveal-delay-150">
             <div className="eyebrow text-gold">THE ARTISAN SCENTS MISSION</div>
             <h2 className="section-title">
               More than a fragrance.
@@ -701,9 +713,10 @@ function Index() {
             width={1024}
             height={1024}
             loading="lazy"
+            className="reveal-scale"
             style={{ objectFit: "contain" }}
           />
-          <div>
+          <div className="reveal-on-scroll reveal-delay-150">
             <div className="eyebrow text-muted-foreground">THE ARTISAN DIFFERENCE</div>
             <h2 className="section-title">
               Crafted with
@@ -722,7 +735,7 @@ function Index() {
         </section>
       </main>
       <footer className="footer">
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="#" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>

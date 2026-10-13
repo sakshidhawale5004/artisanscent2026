@@ -38,13 +38,13 @@ function AboutPage() {
         >
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative h-full flex items-center z-10">
-            <div className="px-[7%] max-w-3xl">
-              <div className="eyebrow text-gold">OUR STORY</div>
-              <h1 className="hero-title text-white">
+            <div className="px-[7%] max-w-3xl reveal-on-scroll">
+              <div className="reveal-fade eyebrow text-gold">OUR STORY</div>
+              <h1 className="reveal-on-scroll reveal-delay-100 hero-title text-white">
                 Artisan Scents &<br />
                 <em className="text-gold">The KEOMC Legacy</em>
               </h1>
-              <p className="hero-copy">
+              <p className="reveal-on-scroll reveal-delay-200 hero-copy">
                 Premium fragrance crafted with botanical expertise and a commitment to
                 sustainability and artisanal excellence.
               </p>
@@ -53,7 +53,7 @@ function AboutPage() {
         </section>
 
         <section className="section">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl reveal-on-scroll">
             <h2 className="section-title mb-8">About Artisan Scents</h2>
             <p className="text-sm leading-relaxed mb-6 text-muted-foreground">
               Artisan Scents is a premium fragrance brand operating across a diverse portfolio of
@@ -72,7 +72,7 @@ function AboutPage() {
         </section>
 
         <section className="section bg-stone-50">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl reveal-on-scroll">
             <h2 className="section-title mb-8">About KEOMC</h2>
             <p className="text-sm leading-relaxed mb-6 text-muted-foreground font-semibold">
               Kulswami Essence Oil Manufacturing Company (KEOMC)
@@ -127,10 +127,10 @@ function AboutPage() {
         </section>
 
         <section className="section">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl reveal-on-scroll">
             <h2 className="section-title mb-8">Our Product Range</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div>
+              <div className="reveal-on-scroll reveal-delay-100">
                 <h3 className="font-display text-xl mb-4">Essence Oils</h3>
                 <ul className="space-y-2 text-sm">
                   <li>✦ Lavender Oil - Calming, versatile</li>
@@ -144,7 +144,7 @@ function AboutPage() {
                   <li>✦ Menthol Mint Oil - Cooling, refreshing</li>
                 </ul>
               </div>
-              <div>
+              <div className="reveal-on-scroll reveal-delay-200">
                 <h3 className="font-display text-xl mb-4">Luxury Fragrances</h3>
                 <ul className="space-y-2 text-sm">
                   <li>✦ Premium Perfumes - Sophisticated compositions</li>
@@ -159,7 +159,7 @@ function AboutPage() {
         </section>
 
         <section className="section bg-green-50">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl reveal-on-scroll">
             <h2 className="section-title mb-8">Pricing & Wholesale</h2>
 
             <div className="mb-8">
@@ -300,10 +300,10 @@ function AboutPage() {
         </section>
 
         <section className="section">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl reveal-on-scroll">
             <h2 className="section-title mb-8">Wholesale Partner Eligibility</h2>
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-stone-50 p-6 rounded-lg">
+              <div className="reveal-on-scroll reveal-delay-100 bg-stone-50 p-6 rounded-lg">
                 <h3 className="font-display text-lg mb-3">We Welcome</h3>
                 <ul className="space-y-2 text-sm">
                   <li>✦ Distributors</li>
@@ -315,7 +315,7 @@ function AboutPage() {
                   <li>✦ Research Institutions</li>
                 </ul>
               </div>
-              <div className="bg-amber-50 p-6 rounded-lg">
+              <div className="reveal-on-scroll reveal-delay-200 bg-amber-50 p-6 rounded-lg">
                 <h3 className="font-display text-lg mb-3">Our Commitment</h3>
                 <ul className="space-y-2 text-sm">
                   <li>✦ Highest Quality Standards</li>
@@ -332,7 +332,7 @@ function AboutPage() {
         </section>
 
         <section className="section bg-gradient-to-r from-amber-900 to-amber-800 text-white">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center reveal-on-scroll">
             <h2 className="section-title text-white mb-4">Ready to Collaborate?</h2>
             <p className="text-white opacity-90 mb-6">
               Connect with our team for wholesale partnerships, consultancy, or custom fragrance
@@ -348,7 +348,7 @@ function AboutPage() {
       </main>
 
       <footer className="footer" style={{ marginTop: "70px" }}>
-        <div className="footer-top">
+        <div className="footer-top reveal-on-scroll">
           <div>
             <a href="/" className="wordmark">
               ARTISAN<span className="text-gold">SCENTS</span>
