@@ -51,9 +51,22 @@ export function EntranceLoader() {
       className="entrance-loader"
       data-phase={phase}
       role="status"
-      aria-label="Loading Aurel fragrances"
+      aria-label="Loading Artisan Scents fragrances"
       aria-live="polite"
     >
+      {/* 3D Logo with perspective */}
+      <div className="entrance-logo-container" aria-hidden="true">
+        <div className="entrance-logo-3d">
+          <img
+            src="/assets/logo.jpeg"
+            alt="Artisan Scents"
+            className="entrance-logo-img"
+            width={80}
+            height={80}
+          />
+        </div>
+      </div>
+
       <div className="entrance-sculpture" aria-hidden="true">
         {mounted && (
           <Suspense fallback={null}>
@@ -61,10 +74,13 @@ export function EntranceLoader() {
           </Suspense>
         )}
       </div>
+
       <div className="entrance-brand">
         ARTISAN SCENT<span>.</span>
       </div>
+
       <div className="entrance-caption">Luxury Fragrances</div>
+
       <div className="entrance-progress" aria-hidden="true">
         <span />
       </div>
