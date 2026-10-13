@@ -18,8 +18,11 @@ import { Route as EssenceOilsRouteImport } from './routes/essence-oils'
 import { Route as ExhibitionsRouteImport } from './routes/exhibitions'
 import { Route as KeomcRouteImport } from './routes/keomc'
 import { Route as PerfumesRouteImport } from './routes/perfumes'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ProjectSitesRouteImport } from './routes/project-sites'
+import { Route as ReturnPolicyRouteImport } from './routes/return-policy'
 import { Route as SoapsRouteImport } from './routes/soaps'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as ProductsProductIdRouteImport } from './routes/products.$productId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -67,14 +70,29 @@ const PerfumesRoute = PerfumesRouteImport.update({
   path: '/perfumes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectSitesRoute = ProjectSitesRouteImport.update({
   id: '/project-sites',
   path: '/project-sites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReturnPolicyRoute = ReturnPolicyRouteImport.update({
+  id: '/return-policy',
+  path: '/return-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SoapsRoute = SoapsRouteImport.update({
   id: '/soaps',
   path: '/soaps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
@@ -93,8 +111,11 @@ export interface FileRoutesByFullPath {
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
   '/perfumes': typeof PerfumesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/project-sites': typeof ProjectSitesRoute
+  '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesByTo {
@@ -107,8 +128,11 @@ export interface FileRoutesByTo {
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
   '/perfumes': typeof PerfumesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/project-sites': typeof ProjectSitesRoute
+  '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesById {
@@ -122,8 +146,11 @@ export interface FileRoutesById {
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
   '/perfumes': typeof PerfumesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/project-sites': typeof ProjectSitesRoute
+  '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRouteTypes {
@@ -138,8 +165,11 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/keomc'
     | '/perfumes'
+    | '/privacy-policy'
     | '/project-sites'
+    | '/return-policy'
     | '/soaps'
+    | '/terms-and-conditions'
     | '/products/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,8 +182,11 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/keomc'
     | '/perfumes'
+    | '/privacy-policy'
     | '/project-sites'
+    | '/return-policy'
     | '/soaps'
+    | '/terms-and-conditions'
     | '/products/$productId'
   id:
     | '__root__'
@@ -166,8 +199,11 @@ export interface FileRouteTypes {
     | '/exhibitions'
     | '/keomc'
     | '/perfumes'
+    | '/privacy-policy'
     | '/project-sites'
+    | '/return-policy'
     | '/soaps'
+    | '/terms-and-conditions'
     | '/products/$productId'
   fileRoutesById: FileRoutesById
 }
@@ -181,8 +217,11 @@ export interface RootRouteChildren {
   ExhibitionsRoute: typeof ExhibitionsRoute
   KeomcRoute: typeof KeomcRoute
   PerfumesRoute: typeof PerfumesRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProjectSitesRoute: typeof ProjectSitesRoute
+  ReturnPolicyRoute: typeof ReturnPolicyRoute
   SoapsRoute: typeof SoapsRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   ProductsProductIdRoute: typeof ProductsProductIdRoute
 }
 
@@ -251,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PerfumesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/project-sites': {
       id: '/project-sites'
       path: '/project-sites'
@@ -258,11 +304,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectSitesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/return-policy': {
+      id: '/return-policy'
+      path: '/return-policy'
+      fullPath: '/return-policy'
+      preLoaderRoute: typeof ReturnPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/soaps': {
       id: '/soaps'
       path: '/soaps'
       fullPath: '/soaps'
       preLoaderRoute: typeof SoapsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$productId': {
@@ -285,8 +345,11 @@ const rootRouteChildren: RootRouteChildren = {
   ExhibitionsRoute: ExhibitionsRoute,
   KeomcRoute: KeomcRoute,
   PerfumesRoute: PerfumesRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProjectSitesRoute: ProjectSitesRoute,
+  ReturnPolicyRoute: ReturnPolicyRoute,
   SoapsRoute: SoapsRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
   ProductsProductIdRoute: ProductsProductIdRoute,
 }
 export const routeTree = rootRouteImport

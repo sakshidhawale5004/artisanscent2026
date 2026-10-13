@@ -24,6 +24,7 @@ import { Footer } from "@/components/Footer";
 import perfumeStory from "@/assets/images/perfume_story_editorial_1791888489737.jpg";
 
 const ScentSculpture = lazy(() => import("@/components/ScentSculpture"));
+const FloatingSprinkles = lazy(() => import("@/components/FloatingSprinkles"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -461,56 +462,70 @@ function Index() {
           </div>
         </section>
 
-        {/* Curated Masterpieces */}
-        <section className="py-20 px-6 sm:px-8 bg-[#0d0c0b] text-white border-b border-[#2d8659]/20">
-          <div className="max-w-7xl mx-auto">
+        {/* Curated Masterpieces - The Signature Icons (Luxury Green & 3D Floating Sprinkles) */}
+        <section className="relative overflow-hidden py-24 px-6 sm:px-8 bg-gradient-to-b from-[#04150c] via-[#09291a] to-[#04150c] text-white border-y border-[#2d8659]/30">
+          {/* Ambient Emerald & Gold Radial Glows */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[#1b5e3f]/25 blur-[140px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-10 right-10 w-[500px] h-[350px] bg-[#d4af37]/12 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-10 left-10 w-[450px] h-[300px] bg-[#34d399]/10 blur-[100px] rounded-full pointer-events-none" />
+
+          {/* 3D Floating Sprinkles Background */}
+          {mounted && (
+            <Suspense fallback={null}>
+              <FloatingSprinkles />
+            </Suspense>
+          )}
+
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
-                <span className="w-5 h-[1px] bg-[#d4af37]" />
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[#86efac] font-medium mb-3">
+                <span className="w-6 h-[1px] bg-[#d4af37]" />
                 <span>CURATED MASTERPIECES</span>
-                <span className="w-5 h-[1px] bg-[#d4af37]" />
+                <span className="w-6 h-[1px] bg-[#d4af37]" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white">
                 The Signature Icons
               </h2>
-              <p className="text-[#a09890] text-sm mt-3 font-light leading-relaxed">
+              <p className="text-[#c1d3c8] text-sm mt-3 font-light leading-relaxed">
                 Four formulations that define the house — composed in small batches and pursued for
                 their depth, distinction, and enduring sillage.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {signatureIcons.map((p, idx) => (
                 <a
                   key={p.id}
                   href={`/products/${p.id}`}
-                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group relative rounded-2xl overflow-hidden border border-white/10 bg-[#1a1815] flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d4af37]/40 hover:shadow-2xl hover:shadow-[#d4af37]/10`}
+                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group relative rounded-2xl overflow-hidden border border-[#2d8659]/35 bg-gradient-to-b from-[#0b2b1c]/85 to-[#051a10]/95 backdrop-blur-md flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:border-[#d4af37]/70 hover:shadow-[0_20px_50px_rgba(27,94,63,0.35)] shadow-lg`}
                 >
-                  {/* Image area */}
-                  <div className="relative h-52 w-full overflow-hidden bg-[#f5e6d3]/10 flex items-center justify-center p-6">
+                  {/* Image Showcase area with soft pedestal glow */}
+                  <div className="relative h-56 w-full overflow-hidden bg-gradient-to-b from-[#133d28]/60 via-[#0a2618]/50 to-transparent flex items-center justify-center p-6 border-b border-[#2d8659]/20">
                     <img
                       src={p.image}
                       alt={p.name}
-                      className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1815]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 border border-[#d4af37]/30 font-semibold px-2.5 py-0.5 rounded-full backdrop-blur-sm">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#051a10]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-[#04150c]/90 border border-[#d4af37]/40 font-semibold px-2.5 py-0.5 rounded-full backdrop-blur-md shadow-md">
                       {p.badge}
                     </span>
                   </div>
-                  {/* Info */}
-                  <div className="p-4 flex flex-col flex-1 justify-between">
+
+                  {/* Info Block */}
+                  <div className="p-5 flex flex-col flex-1 justify-between">
                     <div>
-                      <h3 className="font-display text-base text-white group-hover:text-[#d4af37] transition-colors leading-tight">
+                      <h3 className="font-display text-lg text-white group-hover:text-[#d4af37] transition-colors leading-snug">
                         {p.name}
                       </h3>
-                      <p className="text-[11px] text-[#a09890] mt-1 font-light line-clamp-1">{p.notes}</p>
+                      <p className="text-xs text-[#a3b8ac] mt-1 font-light line-clamp-1">{p.notes}</p>
                     </div>
-                    <div className="mt-3 flex items-center justify-between pt-3 border-t border-white/10">
-                      <span className="font-mono text-sm text-[#d4af37] font-semibold">{money(p.price)}</span>
-                      <span className="text-[10px] text-[#86efac] uppercase tracking-widest font-medium group-hover:text-white transition-colors">
-                        Shop →
+
+                    <div className="mt-4 flex items-center justify-between pt-3 border-t border-[#2d8659]/30">
+                      <span className="font-mono text-base text-[#d4af37] font-semibold">{money(p.price)}</span>
+                      <span className="inline-flex items-center gap-1 text-[11px] text-[#86efac] group-hover:text-white uppercase tracking-wider font-medium transition-colors">
+                        Shop Now <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
                       </span>
                     </div>
                   </div>
@@ -518,12 +533,12 @@ function Index() {
               ))}
             </div>
 
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center mt-12">
               <a
                 href="/perfumes"
-                className="inline-flex items-center gap-3 h-12 px-8 rounded-full border border-[#d4af37]/40 bg-transparent hover:bg-[#d4af37] hover:text-[#0d0c0b] text-[#d4af37] text-sm font-medium tracking-wide transition-all duration-300"
+                className="inline-flex items-center gap-3 h-12 px-8 rounded-full border border-[#d4af37] bg-[#d4af37]/10 hover:bg-[#d4af37] hover:text-[#05170e] text-[#d4af37] text-sm font-semibold tracking-wide transition-all duration-300 shadow-[0_0_25px_rgba(212,175,55,0.2)] hover:shadow-[0_0_35px_rgba(212,175,55,0.4)]"
               >
-                Explore Full Collection <ArrowRight size={15} />
+                Explore Full Collection <ArrowRight size={16} />
               </a>
             </div>
           </div>
