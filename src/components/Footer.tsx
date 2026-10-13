@@ -13,7 +13,6 @@ const shopLinks: FooterLink[] = [
 ];
 
 const exploreLinks: FooterLink[] = [
-  ["Journal", "/journal"],
   ["Exhibitions", "/exhibitions"],
   ["Project Sites", "/project-sites"],
 ];

@@ -249,7 +249,7 @@ function Index() {
             role="tablist"
             aria-label="Product category"
           >
-            {["All Products", "Perfumes", "Oils", "Car Perfumes"].map((f) => (
+            {["All Products", "Perfumes", "Oils", "Car Perfumes", "Agarbatti", "Soaps"].map((f) => (
               <Button
                 key={f}
                 variant="tab"
@@ -358,7 +358,7 @@ function Index() {
           </span>
         </section>
 
-        {/* Our Product Categories Section - Bespoke Shades of Luxury Green */}
+        {/* Our Product Categories Section */}
         <section className="section bg-[#fafaf8] text-[#333333] border-y border-[#2d8659]/15 py-20">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
@@ -371,223 +371,160 @@ function Index() {
                 Our Product Categories
               </h2>
               <p className="text-[#666666] text-sm mt-3 font-light leading-relaxed">
-                Explore our distinct scent worlds, each formulated with rare botanical essences and
-                presented in curated luxury green palettes.
+                Five distinct scent worlds, each crafted with rare botanical essences and artisanal dedication.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
-              {/* Category 1: Perfumes */}
-              <a
-                href="/perfumes"
-                className="reveal-on-scroll reveal-delay-100 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="/assets/perfumes/Luxury Perfume Collection in Gold and Glass.png"
-                    alt="Luxury Perfumes"
-                    className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                    Extrait
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                    Perfumes
-                  </h3>
-                  <p className="text-xs text-[#666666] mt-1 font-light">Luxury compositions</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#1b5e3f]/15">
-                    <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
+            {/* Category Cards – 2 col grid with shopimages */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  href: "/perfumes",
+                  img: "/assets/shopimages/perfume sectionimage.png",
+                  badge: "Extrait",
+                  title: "Perfumes",
+                  desc: "Luxury high-concentration fragrances crafted for lasting presence.",
+                  delay: "reveal-delay-100",
+                  accent: "#1b5e3f",
+                },
+                {
+                  href: "/essence-oils",
+                  img: "/assets/shopimages/essenceoil section image.png",
+                  badge: "100% Pure",
+                  title: "Essence Oils",
+                  desc: "Steam-distilled botanical extracts. Unadulterated & therapeutic grade.",
+                  delay: "reveal-delay-200",
+                  accent: "#1b5e3f",
+                },
+                {
+                  href: "/car-perfumes",
+                  img: "/assets/shopimages/carsectionimagw.png",
+                  badge: "Wood Cap",
+                  title: "Car Perfumes",
+                  desc: "Hanging diffusers that transform your cabin into a scented sanctuary.",
+                  delay: "reveal-delay-300",
+                  accent: "#1b5e3f",
+                },
+                {
+                  href: "/agarbatti",
+                  img: "/assets/shopimages/agarbatti section image.png",
+                  badge: "Sacred",
+                  title: "Agarbatti",
+                  desc: "Charcoal-free handcrafted incense for prayer, meditation & calm.",
+                  delay: "reveal-delay-400",
+                  accent: "#1b5e3f",
+                },
+                {
+                  href: "/soaps",
+                  img: "/assets/shopimages/soap sectionimage.jpg",
+                  badge: "Handcrafted",
+                  title: "Soaps",
+                  desc: "Cold-process botanical bathing bars enriched with pure essential oils.",
+                  delay: "reveal-delay-500",
+                  accent: "#1b5e3f",
+                },
+              ].map((cat) => (
+                <a
+                  key={cat.href}
+                  href={cat.href}
+                  className={`reveal-on-scroll ${cat.delay} group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-2xl hover:shadow-[#1b5e3f]/8`}
+                >
+                  {/* Image */}
+                  <div className="relative h-52 w-full overflow-hidden">
+                    <img
+                      src={cat.img}
+                      alt={cat.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <span className="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                      {cat.badge}
+                    </span>
                   </div>
-                </div>
-              </a>
-
-              {/* Category 2: Essence Oils */}
-              <a
-                href="/essence-oils"
-                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="/assets/essence oil/Amber Rosemary Oil Bottle.png"
-                    alt="Essence Oils"
-                    className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                    100% Pure
+                  {/* Info */}
+                  <div className="p-5 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors mb-1">
+                        {cat.title}
+                      </h3>
+                      <p className="text-xs text-[#666666] font-light leading-relaxed">{cat.desc}</p>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-semibold pt-3 border-t border-[#e8e2d8]">
+                      <span>Explore Collection</span>
+                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                    Essence Oils
-                  </h3>
-                  <p className="text-xs text-[#666666] mt-1 font-light">Pure botanical extracts</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
-                    <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </a>
-
-              {/* Category 3: Car Perfumes */}
-              <a
-                href="/car-perfumes"
-                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="/assets/car perfume/Minimalist Hanging Green Diffuser Bottle.png"
-                    alt="Car Perfumes"
-                    className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                    Wood Cap
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                    Car Perfumes
-                  </h3>
-                  <p className="text-xs text-[#666666] mt-1 font-light">Stylish hanging diffusers</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
-                    <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </a>
-
-              {/* Category 4: Agarbatti & Dhoop */}
-              <a
-                href="/agarbatti"
-                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="/assets/agarbatti/Pyramid of Premium Dhoop Sticks.png"
-                    alt="Agarbatti and Dhoop"
-                    className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                    Sacred
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                    Agarbatti
-                  </h3>
-                  <p className="text-xs text-[#666666] mt-1 font-light">
-                    Sacred handcrafted incense
-                  </p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
-                    <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </a>
-
-              {/* Category 5: Soaps */}
-              <a
-                href="/soaps"
-                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="/assets/soaps/soap.png"
-                    alt="Handcrafted Soaps"
-                    className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2.5 left-2.5 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                    Handcrafted
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                    Soaps
-                  </h3>
-                  <p className="text-xs text-[#666666] mt-1 font-light">Artisan bathing bars</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
-                    <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </a>
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Curated Masterpieces */}
-        <section className="section bg-[#fafaf8] text-[#333333] border-b border-[#2d8659]/15">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12 reveal-on-scroll">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
+        <section className="py-20 px-6 sm:px-8 bg-[#0d0c0b] text-white border-b border-[#2d8659]/20">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#d4af37] font-medium mb-3">
                 <span className="w-5 h-[1px] bg-[#d4af37]" />
                 <span>CURATED MASTERPIECES</span>
                 <span className="w-5 h-[1px] bg-[#d4af37]" />
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#1a1a1a]">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white">
                 The Signature Icons
               </h2>
-              <p className="text-[#666666] text-sm mt-3 font-light leading-relaxed">
+              <p className="text-[#a09890] text-sm mt-3 font-light leading-relaxed">
                 Four formulations that define the house — composed in small batches and pursued for
                 their depth, distinction, and enduring sillage.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
               {signatureIcons.map((p, idx) => (
                 <a
                   key={p.id}
                   href={`/products/${p.id}`}
-                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white p-4 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl`}
+                  className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group relative rounded-2xl overflow-hidden border border-white/10 bg-[#1a1815] flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d4af37]/40 hover:shadow-2xl hover:shadow-[#d4af37]/10`}
                 >
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#fcfbf9] border border-[#e8e2d8] p-5 flex items-center justify-center mb-4">
+                  {/* Image area */}
+                  <div className="relative h-52 w-full overflow-hidden bg-[#f5e6d3]/10 flex items-center justify-center p-6">
                     <img
                       src={p.image}
                       alt={p.name}
-                      className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-110"
                       loading="lazy"
                     />
-                    <span className="absolute top-2 left-2 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1815]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#d4af37] bg-black/60 border border-[#d4af37]/30 font-semibold px-2.5 py-0.5 rounded-full backdrop-blur-sm">
                       {p.badge}
                     </span>
                   </div>
-                  <div>
-                    <h3 className="font-display text-lg text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors">
-                      {p.name}
-                    </h3>
-                    <p className="text-xs text-[#666666] mt-1 font-light">{p.notes}</p>
-                    <div className="mt-3 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-[#e8e2d8]">
-                      <span>{money(p.price)}</span>
-                      <ArrowRight
-                        size={14}
-                        className="transition-transform group-hover:translate-x-1"
-                      />
+                  {/* Info */}
+                  <div className="p-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 className="font-display text-base text-white group-hover:text-[#d4af37] transition-colors leading-tight">
+                        {p.name}
+                      </h3>
+                      <p className="text-[11px] text-[#a09890] mt-1 font-light line-clamp-1">{p.notes}</p>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between pt-3 border-t border-white/10">
+                      <span className="font-mono text-sm text-[#d4af37] font-semibold">{money(p.price)}</span>
+                      <span className="text-[10px] text-[#86efac] uppercase tracking-widest font-medium group-hover:text-white transition-colors">
+                        Shop →
+                      </span>
                     </div>
                   </div>
                 </a>
               ))}
+            </div>
+
+            <div className="flex justify-center mt-10">
+              <a
+                href="/perfumes"
+                className="inline-flex items-center gap-3 h-12 px-8 rounded-full border border-[#d4af37]/40 bg-transparent hover:bg-[#d4af37] hover:text-[#0d0c0b] text-[#d4af37] text-sm font-medium tracking-wide transition-all duration-300"
+              >
+                Explore Full Collection <ArrowRight size={15} />
+              </a>
             </div>
           </div>
         </section>
@@ -723,8 +660,8 @@ function Index() {
 
         <section id="journal" className="section journal">
           <img
-            src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85"
-            alt="Premium fragrance collection"
+            src="/assets/crafted-with.jpg"
+            alt="Crafted with intention - Artisan Scents"
             width={1200}
             height={900}
             loading="lazy"
