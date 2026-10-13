@@ -132,11 +132,10 @@ function Index() {
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 pb-14 lg:pt-24 lg:pb-20">
-            <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="max-w-4xl flex flex-col items-start">
               <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#86efac] font-medium mb-4">
                 <span className="w-6 h-[1px] bg-[#d4af37]" />
                 <span>LUXURY PERFUMES &amp; BOTANICAL ESSENCES</span>
-                <span className="w-6 h-[1px] bg-[#d4af37]" />
               </div>
 
               <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-6xl md:text-7xl font-normal leading-[1.08] tracking-tight text-white max-w-3xl">
@@ -150,7 +149,7 @@ function Index() {
                 botanical compositions and rare essences born from artisanal dedication.
               </p>
 
-              <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
+              <div className="reveal-on-scroll reveal-delay-300 mt-8 flex flex-wrap items-center gap-4">
                 <Button
                   asChild
                   className="h-12 px-8 bg-[#1b5e3f] hover:bg-[#23734e] text-white border border-[#2d8659]/50 rounded-full font-medium tracking-wide shadow-xl transition-all"
