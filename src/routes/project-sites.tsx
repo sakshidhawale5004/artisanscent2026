@@ -52,19 +52,19 @@ function ProjectSitesPage() {
       </div>
       <Header currentPage="Project Sites" />
 
-      <main className="bg-[#161412] text-[#f4ede4] min-h-screen">
-        <section className="relative overflow-hidden border-b border-[#2d8659]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#211e1b] via-[#26221e] to-[#161412]">
+      <main className="bg-[#f5f5f0] text-[#333333] min-h-screen">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#e0ddd8] via-[#d5d1ca] to-[#f5f5f0]">
           <div className="max-w-7xl mx-auto">
-            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>PROJECT SITES</span>
             </div>
-            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#333333]">
               From Garden
               <br />
-              <em className="text-[#c4f0db] font-serif italic">to Flacon</em>
+              <em className="text-[#1b5e3f] font-serif italic">to Flacon</em>
             </h1>
-            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-white/70 font-light max-w-2xl leading-relaxed">
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-[#666666] font-light max-w-2xl leading-relaxed">
               A look at the botanical gardens, distillation fields, and installations that form the
               backbone of our sourcing and manufacturing network with KEOMC.
             </p>
@@ -79,7 +79,7 @@ function ProjectSitesPage() {
                 src={src}
                 alt={`Artisan Scents project site ${idx + 1}`}
                 loading="lazy"
-                className={`reveal-on-scroll reveal-delay-${((idx % 3) + 1) * 100} mb-5 w-full rounded-xl border border-[#2d8659]/20 object-cover`}
+                className={`reveal-on-scroll reveal-delay-${((idx % 3) + 1) * 100} mb-5 w-full rounded-xl border border-[#1b5e3f]/12 object-cover`}
               />
             ))}
           </div>
@@ -90,4 +90,8 @@ function ProjectSitesPage() {
     </>
   );
 }
+
+
+
+
 

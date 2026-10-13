@@ -55,3 +55,4 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
 ScrollReveal.displayName = "ScrollReveal";
 
 export default ScrollReveal;
+

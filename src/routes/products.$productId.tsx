@@ -126,23 +126,23 @@ function ProductDetailPage() {
       </div>
       <Header currentPage="Shop" onBagClick={() => setPanel("bag")} totalItems={totalItems} />
 
-      <main className="min-h-screen bg-[#151311] text-[#f4ede4] pb-16">
+      <main className="min-h-screen bg-[#151311] text-[#333333] pb-16">
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-6 pb-4">
           <nav className="flex items-center gap-2 text-xs text-white/50" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-[#c4f0db] transition-colors">
+            <a href="/" className="hover:text-[#1b5e3f] transition-colors">
               Home
             </a>
             <span className="text-white/30">›</span>
             {crumb && (
               <>
-                <a href={crumb.href} className="hover:text-[#c4f0db] transition-colors">
+                <a href={crumb.href} className="hover:text-[#1b5e3f] transition-colors">
                   {crumb.label}
                 </a>
                 <span className="text-white/30">›</span>
               </>
             )}
-            <span className="text-[#c4f0db] font-medium">{product.name}</span>
+            <span className="text-[#1b5e3f] font-medium">{product.name}</span>
           </nav>
         </div>
 
@@ -156,7 +156,7 @@ function ProductDetailPage() {
                 {images.map((img, i) => (
                   <button
                     key={i}
-                    className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border p-2 bg-[#1e1b18]/90 transition-all ${
+                    className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border p-2 bg-[#f0ede8]/95 transition-all ${
                       activeImg === i
                         ? "border-[#d4af37] shadow-lg ring-1 ring-[#d4af37]/40"
                         : "border-white/10 opacity-70 hover:opacity-100"
@@ -184,8 +184,8 @@ function ProductDetailPage() {
                   className="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-500 hover:scale-105"
                 />
                 <button
-                  className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#c4f0db] transition ${
-                    saved.includes(product.id) ? "text-[#c4f0db]" : ""
+                  className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-[#444444] hover:text-[#1b5e3f] transition ${
+                    saved.includes(product.id) ? "text-[#1b5e3f]" : ""
                   }`}
                   aria-label={
                     saved.includes(product.id) ? "Remove from wishlist" : "Add to wishlist"
@@ -194,7 +194,7 @@ function ProductDetailPage() {
                 >
                   <Heart size={18} fill={saved.includes(product.id) ? "#d4af37" : "none"} />
                 </button>
-                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-widest text-[#c4f0db] bg-black/60 px-3 py-1 rounded-full border border-[#2d8659]/20">
+                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-black/60 px-3 py-1 rounded-full border border-[#1b5e3f]/12">
                   {product.badge}
                 </div>
               </div>
@@ -202,13 +202,13 @@ function ProductDetailPage() {
 
             {/* Right Column: Contiguous Purchase Module */}
             <div className="lg:col-span-5 flex flex-col justify-start reveal-on-scroll reveal-delay-100">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-2">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-2">
                 <span>{product.family}</span>
                 <span>·</span>
                 <span>{product.category.replace("-", " ").toUpperCase()}</span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f4ede4] tracking-tight">
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-[#333333] tracking-tight">
                 {product.name}
               </h1>
 
@@ -216,26 +216,26 @@ function ProductDetailPage() {
                 <StarRating />
               </div>
 
-              <div className="font-mono text-3xl font-semibold text-[#f4ede4] mt-4">
+              <div className="font-mono text-3xl font-semibold text-[#333333] mt-4">
                 {money(product.price)}
               </div>
 
-              <p className="text-white/75 text-sm sm:text-base font-light mt-4 leading-relaxed">
+              <p className="text-[#555555] text-sm sm:text-base font-light mt-4 leading-relaxed">
                 {product.description}
               </p>
 
               {/* Fragrance Notes Breakdown with Structure */}
               <div className="mt-6 p-4 rounded-xl border border-white/10 bg-[#1e1b18]/60">
-                <div className="text-xs uppercase tracking-widest text-[#c4f0db] font-medium mb-3">
+                <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-medium mb-3">
                   Fragrance Composition
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {product.notes.split(" · ").map((note, index) => (
                     <span
                       key={note}
-                      className="px-3 py-1 rounded-full text-xs bg-[#322e29] border border-[#2d8659]/25 text-[#f4ede4]"
+                      className="px-3 py-1 rounded-full text-xs bg-[#322e29] border border-[#1b5e3f]/15 text-[#333333]"
                     >
-                      <span className="text-[#c4f0db] font-serif mr-1">
+                      <span className="text-[#1b5e3f] font-serif mr-1">
                         {index === 0 ? "Top:" : index === 1 ? "Heart:" : "Base:"}
                       </span>
                       {note}
@@ -246,21 +246,21 @@ function ProductDetailPage() {
 
               {/* Botanical Name if applicable */}
               {product.botanicalName && (
-                <p className="text-xs italic text-[#d3c2ae] mt-3 font-serif">
+                <p className="text-xs italic text-[#1b5e3f] mt-3 font-serif">
                   Botanical specimen: <em>{product.botanicalName}</em>
                 </p>
               )}
 
               {/* Size Selector */}
               <div className="mt-6">
-                <div className="text-xs uppercase tracking-wider text-white/60 mb-2">
+                <div className="text-xs uppercase tracking-wider text-[#777777] mb-2">
                   Select Flacon Size
                 </div>
                 <div className="flex items-center gap-3">
-                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-[#d4af37] bg-[#1b5e3f] text-[#f4ede4]">
+                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-[#d4af37] bg-[#1b5e3f] text-[#333333]">
                     {product.size || "50 ml"}
                   </button>
-                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-white/15 bg-white/5 text-white/60 hover:text-white hover:border-white/30">
+                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-white/15 bg-white/5 text-[#777777] hover:text-white hover:border-white/30">
                     100 ml (Extrait)
                   </button>
                 </div>
@@ -271,15 +271,15 @@ function ProductDetailPage() {
                 {/* Stepper */}
                 <div className="flex items-center border border-white/20 rounded-full bg-white/5 p-1">
                   <button
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#666666] hover:text-white hover:bg-white/10 transition"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
                   >
                     <Minus size={14} />
                   </button>
-                  <span className="w-9 text-center font-mono text-sm text-[#f4ede4]">{qty}</span>
+                  <span className="w-9 text-center font-mono text-sm text-[#333333]">{qty}</span>
                   <button
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#666666] hover:text-white hover:bg-white/10 transition"
                     onClick={() => setQty((q) => q + 1)}
                     aria-label="Increase quantity"
                   >
@@ -289,14 +289,14 @@ function ProductDetailPage() {
 
                 {/* Add to Bag Button */}
                 <Button
-                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#1b5e3f] text-[#f4ede4] border border-[#2d8659]/50 font-medium tracking-wide shadow-lg text-sm flex items-center justify-center gap-2"
+                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#1b5e3f] text-[#333333] border border-[#1b5e3f]/40 font-medium tracking-wide shadow-lg text-sm flex items-center justify-center gap-2"
                   onClick={() => addToBag(product, qty)}
                 >
                   {addedFlash ? (
                     "✓ Added to Bag"
                   ) : (
                     <>
-                      Add to Cart <ShoppingBag size={16} className="text-[#c4f0db]" />
+                      Add to Cart <ShoppingBag size={16} className="text-[#1b5e3f]" />
                     </>
                   )}
                 </Button>
@@ -306,17 +306,17 @@ function ProductDetailPage() {
               <div className="reveal-on-scroll reveal-delay-150 mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
                 <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                   <div className="text-base mb-1">🚚</div>
-                  <div className="text-[11px] text-white/80 font-medium">Free Shipping</div>
+                  <div className="text-[11px] text-[#444444] font-medium">Free Shipping</div>
                   <div className="text-[9px] text-white/50">Above ₹999</div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                   <div className="text-base mb-1">↩</div>
-                  <div className="text-[11px] text-white/80 font-medium">7-Day Returns</div>
+                  <div className="text-[11px] text-[#444444] font-medium">7-Day Returns</div>
                   <div className="text-[9px] text-white/50">Easy & Hassle-free</div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                   <div className="text-base mb-1">🛡️</div>
-                  <div className="text-[11px] text-white/80 font-medium">100% Authentic</div>
+                  <div className="text-[11px] text-[#444444] font-medium">100% Authentic</div>
                   <div className="text-[9px] text-white/50">Original KEOMC</div>
                 </div>
               </div>
@@ -324,13 +324,13 @@ function ProductDetailPage() {
               {/* Accordions (Details, Fragrance Notes, Shipping) */}
               <div className="reveal-on-scroll reveal-delay-200 mt-8 space-y-3">
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
                     <span>Product Specifications</span>
-                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
+                    <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-white/70 space-y-2 border-t border-white/5 font-light leading-relaxed">
+                  <div className="p-4 pt-0 text-xs text-[#666666] space-y-2 border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>{product.description}</p>
                     {product.botanicalName && (
                       <p>
@@ -347,13 +347,13 @@ function ProductDetailPage() {
                 </details>
 
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
                     <span>Fragrance Notes & Longevity</span>
-                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
+                    <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-white/70 border-t border-white/5 font-light leading-relaxed">
+                  <div className="p-4 pt-0 text-xs text-[#666666] border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>{product.notes}</p>
                     <p className="mt-2 text-white/50">
                       Concentration: High Extrait de Parfum. Longevity: 8–12 hours on skin and
@@ -363,13 +363,13 @@ function ProductDetailPage() {
                 </details>
 
                 <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#f4ede4] font-medium flex items-center justify-between list-none">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
                     <span>Shipping & Returns</span>
-                    <span className="text-[#c4f0db] group-open:rotate-180 transition-transform">
+                    <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-white/70 border-t border-white/5 font-light leading-relaxed">
+                  <div className="p-4 pt-0 text-xs text-[#666666] border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>
                       Free standard courier shipping on orders above ₹999 across India. Dispatched
                       within 24 hours.
@@ -387,10 +387,10 @@ function ProductDetailPage() {
           <section className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 border-t border-white/10">
             <div className="reveal-on-scroll flex items-center justify-between mb-8">
               <div>
-                <div className="text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium">
+                <div className="text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium">
                   YOU MAY ALSO LIKE
                 </div>
-                <h2 className="font-display text-2xl sm:text-3xl text-[#f4ede4] mt-1">
+                <h2 className="font-display text-2xl sm:text-3xl text-[#333333] mt-1">
                   Related Fragrances
                 </h2>
               </div>
@@ -398,10 +398,10 @@ function ProductDetailPage() {
                 <Button
                   asChild
                   size="sm"
-                  className="bg-transparent border border-white/20 text-[#f4ede4] hover:border-[#d4af37] text-xs rounded-full"
+                  className="bg-transparent border border-white/20 text-[#333333] hover:border-[#d4af37] text-xs rounded-full"
                 >
                   <a href={crumb.href} className="flex items-center gap-1.5">
-                    View All <ArrowRight size={13} className="text-[#c4f0db]" />
+                    View All <ArrowRight size={13} className="text-[#1b5e3f]" />
                   </a>
                 </Button>
               )}
@@ -420,9 +420,9 @@ function ProductDetailPage() {
                 return (
                   <article
                     key={p.id}
-                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#2d8659]/25 bg-gradient-to-b from-[#211e1b] to-[#11100e] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#2d8659]/70`}
+                    className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#fefdfb] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60`}
                   >
-                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border-b border-white/5">
+                    <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#131110]/90 border-b border-[#e0e0e0]">
                       <a
                         href={`/products/${p.id}`}
                         className="w-full h-full flex items-center justify-center"
@@ -436,7 +436,7 @@ function ProductDetailPage() {
                           className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
                         />
                       </a>
-                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#c4f0db] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#2d8659]/30 backdrop-blur-sm">
+                      <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#2d8659]/30 backdrop-blur-sm">
                         {p.badge}
                       </span>
                     </div>
@@ -444,7 +444,7 @@ function ProductDetailPage() {
                       <div>
                         <a
                           href={`/products/${p.id}`}
-                          className="font-display text-base text-[#f4ede4] group-hover:text-[#c4f0db] transition-colors block"
+                          className="font-display text-base text-[#333333] group-hover:text-[#1b5e3f] transition-colors block"
                         >
                           {p.name}
                         </a>
@@ -453,12 +453,12 @@ function ProductDetailPage() {
                         </p>
                       </div>
                       <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-                        <span className="font-mono text-sm font-semibold text-[#f4ede4]">
+                        <span className="font-mono text-sm font-semibold text-[#333333]">
                           {money(p.price)}
                         </span>
                         <Button
                           size="sm"
-                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#f4ede4] border border-[#2d8659]/30 text-xs"
+                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#333333] border border-[#2d8659]/30 text-xs"
                           onClick={() => addToBag(p)}
                         >
                           Add <Plus size={12} className="ml-0.5" />
@@ -555,4 +555,8 @@ function ProductDetailPage() {
     </>
   );
 }
+
+
+
+
 

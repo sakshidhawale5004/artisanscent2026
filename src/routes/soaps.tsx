@@ -58,20 +58,20 @@ function SoapsPage() {
         totalItems={totalItems}
       />
 
-      <main className="bg-[#171513] text-[#f4ede4] min-h-screen">
+      <main className="bg-[#f7f5f2] text-[#333333] min-h-screen">
         {/* Category Hero Banner */}
-        <section className="relative overflow-hidden border-b border-[#2d8659]/20 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#211e1b] via-[#26221e] to-[#171513]">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/12 py-16 px-6 sm:px-12 bg-gradient-to-b from-[#e0ddd8] via-[#d5d1ca] to-[#171513]">
           <div className="max-w-7xl mx-auto">
-            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#c4f0db] font-medium mb-3">
+            <div className="reveal-fade inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>PERSONAL CARE</span>
             </div>
-            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#f4ede4]">
+            <h1 className="reveal-on-scroll reveal-delay-100 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#333333]">
               Handcrafted
               <br />
-              <em className="text-[#c4f0db] font-serif italic">Artisan Soaps</em>
+              <em className="text-[#1b5e3f] font-serif italic">Artisan Soaps</em>
             </h1>
-            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-white/70 font-light max-w-xl leading-relaxed">
+            <p className="reveal-on-scroll reveal-delay-200 mt-4 text-sm sm:text-base text-[#666666] font-light max-w-xl leading-relaxed">
               Cold-processed bathing bars enriched with pure botanical essential oils. Gentle on the
               skin, generous in lather, and quietly luxurious in fragrance.
             </p>
@@ -91,9 +91,9 @@ function SoapsPage() {
               return (
                 <article
                   key={p.id}
-                  className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#2d8659]/25 bg-gradient-to-b from-[#242019] to-[#131110] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#2d8659]/70 hover:shadow-2xl hover:shadow-[#242019]`}
+                  className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#242019] to-[#fefdfb] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]`}
                 >
-                  <div className="relative aspect-square w-full p-8 flex items-center justify-center bg-[#1a1816]/90 border-b border-white/5">
+                  <div className="relative aspect-square w-full p-8 flex items-center justify-center bg-[#f8f6f3]/90 border-b border-[#e0e0e0]">
                     <a
                       href={`/products/${p.id}`}
                       className="w-full h-full flex items-center justify-center"
@@ -107,35 +107,35 @@ function SoapsPage() {
                         className="w-full h-full object-contain filter drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
                       />
                     </a>
-                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#c4f0db] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#d4af37]/30 backdrop-blur-sm">
+                    <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-black/60 px-2.5 py-0.5 rounded-full border border-[#d4af37]/30 backdrop-blur-sm">
                       {p.badge}
                     </span>
                     <button
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-white/80 hover:text-[#c4f0db] transition"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 border border-white/15 flex items-center justify-center text-[#444444] hover:text-[#1b5e3f] transition"
                       aria-label={`${saved.includes(p.id) ? "Unsave" : "Save"} ${p.name}`}
                       onClick={() => toggleSaved(p.id)}
                     >
                       <Heart
                         size={15}
                         fill={saved.includes(p.id) ? "#d4af37" : "none"}
-                        className={saved.includes(p.id) ? "text-[#c4f0db]" : ""}
+                        className={saved.includes(p.id) ? "text-[#1b5e3f]" : ""}
                       />
                     </button>
                   </div>
 
                   <div className="p-5 flex flex-col flex-1 justify-between">
                     <div>
-                      <div className="flex items-center gap-1 text-[#c4f0db] text-xs mb-1.5">
+                      <div className="flex items-center gap-1 text-[#1b5e3f] text-xs mb-1.5">
                         {"★★★★★"}
                         <span className="text-[11px] text-white/50 ml-1 font-light">(87)</span>
                       </div>
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-lg text-[#f4ede4] group-hover:text-[#c4f0db] transition-colors block"
+                        className="font-display text-lg text-[#333333] group-hover:text-[#1b5e3f] transition-colors block"
                       >
                         {p.name}
                       </a>
-                      <p className="text-xs text-white/60 line-clamp-1 mt-1 font-light">
+                      <p className="text-xs text-[#777777] line-clamp-1 mt-1 font-light">
                         {p.notes}
                       </p>
                       <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
@@ -144,15 +144,15 @@ function SoapsPage() {
                     </div>
 
                     <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="font-mono text-base font-semibold text-[#f4ede4]">
+                      <span className="font-mono text-base font-semibold text-[#333333]">
                         {money(p.price)}
                       </span>
                       <Button
                         size="sm"
-                        className="h-9 px-4 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#f4ede4] border border-[#d4af37]/40 text-xs font-medium"
+                        className="h-9 px-4 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-[#333333] border border-[#d4af37]/40 text-xs font-medium"
                         onClick={() => add(p)}
                       >
-                        Add to Cart <Plus size={13} className="ml-1 text-[#c4f0db]" />
+                        Add to Cart <Plus size={13} className="ml-1 text-[#1b5e3f]" />
                       </Button>
                     </div>
                   </div>
@@ -165,23 +165,23 @@ function SoapsPage() {
         <section className="section">
           <h2 className="section-title mb-8 reveal-on-scroll">The Craft of Cold-Process</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="reveal-on-scroll reveal-delay-100 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
-              <h3 className="font-display text-lg mb-2 text-[#f4ede4]">🌿 Pure Botanicals</h3>
-              <p className="text-sm text-white/70">
+            <div className="reveal-on-scroll reveal-delay-100 bg-white/5 p-6 rounded-lg border border-[#1b5e3f]/12">
+              <h3 className="font-display text-lg mb-2 text-[#333333]">🌿 Pure Botanicals</h3>
+              <p className="text-sm text-[#666666]">
                 Formulated with plant-derived butters and pure essential oils — no harsh synthetic
                 lathering agents.
               </p>
             </div>
-            <div className="reveal-on-scroll reveal-delay-200 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
-              <h3 className="font-display text-lg mb-2 text-[#f4ede4]">🤲 Hand-Poured</h3>
-              <p className="text-sm text-white/70">
+            <div className="reveal-on-scroll reveal-delay-200 bg-white/5 p-6 rounded-lg border border-[#1b5e3f]/12">
+              <h3 className="font-display text-lg mb-2 text-[#333333]">🤲 Hand-Poured</h3>
+              <p className="text-sm text-[#666666]">
                 Each bar is cured slowly in small batches, preserving the integrity of every
                 fragrance note.
               </p>
             </div>
-            <div className="reveal-on-scroll reveal-delay-300 bg-white/5 p-6 rounded-lg border border-[#2d8659]/20">
-              <h3 className="font-display text-lg mb-2 text-[#f4ede4]">✦ Skin Kind</h3>
-              <p className="text-sm text-white/70">
+            <div className="reveal-on-scroll reveal-delay-300 bg-white/5 p-6 rounded-lg border border-[#1b5e3f]/12">
+              <h3 className="font-display text-lg mb-2 text-[#333333]">✦ Skin Kind</h3>
+              <p className="text-sm text-[#666666]">
                 Creamy, balanced lather that cleanses gently and leaves a soft, lingering scent.
               </p>
             </div>
@@ -319,4 +319,8 @@ function SoapsPage() {
     </>
   );
 }
+
+
+
+
 

@@ -236,3 +236,4 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
     </>
   );
 }
+

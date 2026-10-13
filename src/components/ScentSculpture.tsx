@@ -89,3 +89,4 @@ export default function ScentSculpture({ compact = false }: { compact?: boolean 
     </Canvas>
   );
 }
+
