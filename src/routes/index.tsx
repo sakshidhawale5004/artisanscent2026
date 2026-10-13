@@ -174,18 +174,6 @@ function Index() {
               </div>
             </div>
 
-            {/* Dark Overlay Section with ScentSculpture */}
-            <div className="mt-12 relative rounded-2xl overflow-hidden bg-[#000000] h-80 lg:h-96 flex items-center justify-center">
-              <div className="absolute inset-0 opacity-30" aria-hidden="true">
-                {/* Dark overlay background */}
-              </div>
-              <div className="relative z-10 text-center">
-                <Suspense fallback={null}>
-                  <ScentSculpture compact />
-                </Suspense>
-              </div>
-            </div>
-
             {/* Trust Badges Strip (matching image.png) */}
             <div className="mt-14 pt-8 border-t border-[#1b5e3f]/12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left reveal-on-scroll">
               <div className="flex items-center gap-3 justify-center md:justify-start reveal-on-scroll reveal-delay-50">
@@ -370,7 +358,7 @@ function Index() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {/* Category 1: Perfumes - Royal Emerald */}
               <a
                 href="/perfumes"
@@ -405,7 +393,7 @@ function Index() {
               {/* Category 2: Essence Oils - Botanical Sage & Eucalyptus Green */}
               <a
                 href="/essence-oils"
-                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#2b2723] to-[#faf9f7] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
+                className="reveal-on-scroll reveal-delay-200 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#faf9f7] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f5f5f0]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
                   <img
@@ -436,7 +424,7 @@ function Index() {
               {/* Category 3: Car Perfumes - Jade Cypress Green */}
               <a
                 href="/car-perfumes"
-                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#312d28] to-[#191714] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
+                className="reveal-on-scroll reveal-delay-300 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#fafaf8] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f9f7f4]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
                   <img
@@ -467,7 +455,7 @@ function Index() {
               {/* Category 4: Agarbatti & Dhoop - Sacred Cypress & Amber Green */}
               <a
                 href="/agarbatti"
-                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#37322d] to-[#1b1816] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
+                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#1b5e3f]/8 to-[#faf9f7] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
               >
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#e9e6e1]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
                   <img
@@ -500,9 +488,9 @@ function Index() {
               {/* Category 5: Soaps */}
               <a
                 href="/soaps"
-                className="reveal-on-scroll reveal-delay-400 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#2b2824] to-[#16130f] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
+                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#e0ddd8] to-[#faf9f7] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
               >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#161413]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#f8f6f4]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
                   <img
                     src="/assets/soaps/soap.png"
                     alt="Handcrafted Soaps"
@@ -520,37 +508,6 @@ function Index() {
                   <p className="text-xs text-[#777777] mt-1 font-light">Artisan bathing bars</p>
                   <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-white/10">
                     <span>Explore</span>
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </a>
-
-              {/* Category 6: About - Heritage */}
-              <a
-                href="/about"
-                className="reveal-on-scroll reveal-delay-500 group relative rounded-2xl overflow-hidden border border-[#1b5e3f]/15 bg-gradient-to-b from-[#201d1a] to-[#100e0d] p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/60 hover:shadow-2xl hover:shadow-[#ddd]"
-              >
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#11100e]/80 border border-[#e0e0e0] p-4 flex items-center justify-center mb-4">
-                  <img
-                    src={perfumeStory}
-                    alt="Artisan Scents Heritage & KEOMC"
-                    className="w-full h-full object-cover rounded-lg filter drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2 left-2 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-black/40 px-2 py-0.5 rounded-full backdrop-blur-sm">
-                    Heritage
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-[#333333] group-hover:text-[#1b5e3f] transition-colors">
-                    Our Story
-                  </h3>
-                  <p className="text-xs text-[#777777] mt-1 font-light">Artisan craft & KEOMC</p>
-                  <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-medium pt-3 border-t border-white/10">
-                    <span>Discover</span>
                     <ArrowRight
                       size={14}
                       className="transition-transform group-hover:translate-x-1"
