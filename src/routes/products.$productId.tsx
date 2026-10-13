@@ -225,17 +225,17 @@ function ProductDetailPage() {
               </p>
 
               {/* Fragrance Notes Breakdown with Structure */}
-              <div className="mt-6 p-4 rounded-xl border border-[#e0e0e0] bg-[#f9f7f4]">
-                <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-medium mb-3">
+              <div className="mt-6 p-4 rounded-xl border border-[#1b5e3f]/20 bg-[#f5f5f0]">
+                <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-semibold mb-3">
                   Fragrance Composition
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {product.notes.split(" · ").map((note, index) => (
                     <span
                       key={note}
-                      className="px-3 py-1 rounded-full text-xs bg-[#322e29] border border-[#1b5e3f]/15 text-[#333333]"
+                      className="px-3 py-1.5 rounded-full text-xs bg-white border border-[#1b5e3f]/20 text-[#333333]"
                     >
-                      <span className="text-[#1b5e3f] font-serif mr-1">
+                      <span className="text-[#1b5e3f] font-semibold mr-1.5">
                         {index === 0 ? "Top:" : index === 1 ? "Heart:" : "Base:"}
                       </span>
                       {note}
@@ -246,21 +246,21 @@ function ProductDetailPage() {
 
               {/* Botanical Name if applicable */}
               {product.botanicalName && (
-                <p className="text-xs italic text-[#1b5e3f] mt-3 font-serif">
-                  Botanical specimen: <em>{product.botanicalName}</em>
+                <p className="text-xs italic text-[#1b5e3f] mt-4 font-light leading-relaxed">
+                  <span className="font-semibold">Botanical specimen:</span> {product.botanicalName}
                 </p>
               )}
 
               {/* Size Selector */}
               <div className="mt-6">
-                <div className="text-xs uppercase tracking-wider text-[#777777] mb-2">
+                <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-semibold mb-3">
                   Select Flacon Size
                 </div>
                 <div className="flex items-center gap-3">
-                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-[#d4af37] bg-[#1b5e3f] text-[#333333]">
+                  <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f] bg-[#1b5e3f] text-white hover:bg-[#164a31] transition-all">
                     {product.size || "50 ml"}
                   </button>
-                  <button className="px-5 py-2 rounded-lg text-xs font-medium border border-white/15 bg-white/5 text-[#777777] hover:text-white hover:border-white/30">
+                  <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f]/20 bg-white text-[#333333] hover:border-[#1b5e3f]/50 transition-all">
                     100 ml (Extrait)
                   </button>
                 </div>
@@ -269,112 +269,113 @@ function ProductDetailPage() {
               {/* Quantity Stepper & Add to Cart */}
               <div className="mt-8 flex items-center gap-4">
                 {/* Stepper */}
-                <div className="flex items-center border border-white/20 rounded-full bg-white/5 p-1">
+                <div className="flex items-center border border-[#1b5e3f]/30 rounded-full bg-[#f5f5f0] p-1">
                   <button
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#666666] hover:text-white hover:bg-white/10 transition"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
                   >
-                    <Minus size={14} />
+                    <Minus size={16} />
                   </button>
-                  <span className="w-9 text-center font-mono text-sm text-[#333333]">{qty}</span>
+                  <span className="w-10 text-center font-mono text-base text-[#333333] font-semibold">{qty}</span>
                   <button
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#666666] hover:text-white hover:bg-white/10 transition"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
                     onClick={() => setQty((q) => q + 1)}
                     aria-label="Increase quantity"
                   >
-                    <Plus size={14} />
+                    <Plus size={16} />
                   </button>
                 </div>
 
                 {/* Add to Bag Button */}
                 <Button
-                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#1b5e3f] text-[#333333] border border-[#1b5e3f]/40 font-medium tracking-wide shadow-lg text-sm flex items-center justify-center gap-2"
+                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/40 font-semibold tracking-wide shadow-lg text-sm flex items-center justify-center gap-2 transition-all"
                   onClick={() => addToBag(product, qty)}
                 >
                   {addedFlash ? (
                     "✓ Added to Bag"
                   ) : (
                     <>
-                      Add to Cart <ShoppingBag size={16} className="text-[#1b5e3f]" />
+                      Add to Cart <ShoppingBag size={16} className="text-[#86efac]" />
                     </>
                   )}
                 </Button>
               </div>
 
               {/* Trust Badges Bar */}
-              <div className="reveal-on-scroll reveal-delay-150 mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
-                <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
-                  <div className="text-base mb-1">🚚</div>
-                  <div className="text-[11px] text-[#444444] font-medium">Free Shipping</div>
-                  <div className="text-[9px] text-white/50">Above ₹999</div>
+              <div className="reveal-on-scroll reveal-delay-150 mt-8 pt-6 border-t border-[#e0e0e0] grid grid-cols-3 gap-3">
+                <div className="p-3 rounded-lg bg-[#f5f5f0] border border-[#e0e0e0]">
+                  <div className="text-lg mb-1">🚚</div>
+                  <div className="text-[10px] text-[#333333] font-semibold">Free Shipping</div>
+                  <div className="text-[9px] text-[#666666]">Above ₹999</div>
                 </div>
-                <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
-                  <div className="text-base mb-1">↩</div>
-                  <div className="text-[11px] text-[#444444] font-medium">7-Day Returns</div>
-                  <div className="text-[9px] text-white/50">Easy & Hassle-free</div>
+                <div className="p-3 rounded-lg bg-[#f5f5f0] border border-[#e0e0e0]">
+                  <div className="text-lg mb-1">↩</div>
+                  <div className="text-[10px] text-[#333333] font-semibold">7-Day Returns</div>
+                  <div className="text-[9px] text-[#666666]">Easy & Hassle-free</div>
                 </div>
-                <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
-                  <div className="text-base mb-1">🛡️</div>
-                  <div className="text-[11px] text-[#444444] font-medium">100% Authentic</div>
-                  <div className="text-[9px] text-white/50">Original KEOMC</div>
+                <div className="p-3 rounded-lg bg-[#f5f5f0] border border-[#e0e0e0]">
+                  <div className="text-lg mb-1">🛡️</div>
+                  <div className="text-[10px] text-[#333333] font-semibold">100% Authentic</div>
+                  <div className="text-[9px] text-[#666666]">Original KEOMC</div>
                 </div>
               </div>
 
               {/* Accordions (Details, Fragrance Notes, Shipping) */}
-              <div className="reveal-on-scroll reveal-delay-200 mt-8 space-y-3">
-                <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
+              <div className="reveal-on-scroll reveal-delay-200 mt-8 space-y-2">
+                <details className="rounded-xl border border-[#1b5e3f]/20 bg-white overflow-hidden group">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-semibold flex items-center justify-between list-none hover:bg-[#f5f5f0] transition-colors">
                     <span>Product Specifications</span>
                     <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-[#666666] space-y-2 border-t border-[#e0e0e0] font-light leading-relaxed">
+                  <div className="p-4 pt-2 text-xs text-[#555555] space-y-2 border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>{product.description}</p>
                     {product.botanicalName && (
                       <p>
-                        <strong>Botanical:</strong> {product.botanicalName}
+                        <strong className="text-[#333333]">Botanical:</strong> {product.botanicalName}
                       </p>
                     )}
                     <p>
-                      <strong>Size:</strong> {product.size || "100 ml"}
+                      <strong className="text-[#333333]">Size:</strong> {product.size || "100 ml"}
                     </p>
                     <p>
-                      <strong>Category:</strong> {product.category.replace("-", " ")}
+                      <strong className="text-[#333333]">Category:</strong> {product.category.replace("-", " ")}
                     </p>
                   </div>
                 </details>
 
-                <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
+                <details className="rounded-xl border border-[#1b5e3f]/20 bg-white overflow-hidden group">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-semibold flex items-center justify-between list-none hover:bg-[#f5f5f0] transition-colors">
                     <span>Fragrance Notes & Longevity</span>
                     <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-[#666666] border-t border-[#e0e0e0] font-light leading-relaxed">
+                  <div className="p-4 pt-2 text-xs text-[#555555] border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>{product.notes}</p>
-                    <p className="mt-2 text-white/50">
-                      Concentration: High Extrait de Parfum. Longevity: 8–12 hours on skin and
-                      fabrics.
+                    <p className="mt-2 text-[#777777]">
+                      <strong className="text-[#333333]">Concentration:</strong> High Extrait de Parfum. <br />
+                      <strong className="text-[#333333]">Longevity:</strong> 8–12 hours on skin and fabrics.
                     </p>
                   </div>
                 </details>
 
-                <details className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
-                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-medium flex items-center justify-between list-none">
+                <details className="rounded-xl border border-[#1b5e3f]/20 bg-white overflow-hidden group">
+                  <summary className="p-4 cursor-pointer text-xs uppercase tracking-wider text-[#333333] font-semibold flex items-center justify-between list-none hover:bg-[#f5f5f0] transition-colors">
                     <span>Shipping & Returns</span>
                     <span className="text-[#1b5e3f] group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="p-4 pt-0 text-xs text-[#666666] border-t border-[#e0e0e0] font-light leading-relaxed">
+                  <div className="p-4 pt-2 text-xs text-[#555555] border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>
-                      Free standard courier shipping on orders above ₹999 across India. Dispatched
-                      within 24 hours.
+                      <strong className="text-[#333333]">Shipping:</strong> Free standard courier shipping on orders above ₹999 across India. Dispatched within 24 hours.
                     </p>
-                    <p className="mt-1">7-day return guarantee if tamper seal remains unbroken.</p>
+                    <p className="mt-2">
+                      <strong className="text-[#333333]">Returns:</strong> 7-day return guarantee if tamper seal remains unbroken.
+                    </p>
                   </div>
                 </details>
               </div>
