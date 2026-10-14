@@ -16,7 +16,8 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products, money, type Product } from "@/lib/products";
+import { useProducts, money, type Product } from "@/lib/products";
+import { useWishlist, useShoppingBag } from "@/lib/store";
 import heroPoster from "@/assets/hero-poster.jpg.asset.json";
 import { EntranceLoader } from "@/components/EntranceLoader";
 import { Header } from "@/components/Header";
@@ -48,12 +49,13 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const products = useProducts();
   const [filter, setFilter] = useState("All Products");
   const [selected, setSelected] = useState<Product>();
-  const [bag, setBag] = useState<Record<string, number>>({});
+  const { bag, addToBag, updateQty: update, totalItems } = useShoppingBag();
+  const { saved, toggleSaved, wishlistCount } = useWishlist();
   const [panel, setPanel] = useState<"bag" | "search" | "menu" | "story" | null>(null);
   const [query, setQuery] = useState("");
-  const [saved, setSaved] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
   const [checkout, setCheckout] = useState(false);
   const close = () => {
@@ -61,7 +63,6 @@ function Index() {
     setSelected(undefined);
     setCheckout(false);
   };
-  const totalItems = Object.values(bag).reduce((a, b) => a + b, 0);
   const total = products.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
   useEffect(() => {
     setMounted(true);
@@ -80,15 +81,11 @@ function Index() {
     };
   }, [panel, selected]);
   const add = (p: Product) => {
-    setBag((old) => ({ ...old, [p.id]: (old[p.id] || 0) + 1 }));
+    addToBag(p.id, 1);
     setSelected(undefined);
     setPanel("bag");
     setCheckout(false);
   };
-  const update = (id: string, amount: number) =>
-    setBag((old) => ({ ...old, [id]: Math.max(0, (old[id] || 0) + amount) }));
-  const toggleSaved = (id: string) =>
-    setSaved((old) => (old.includes(id) ? old.filter((x) => x !== id) : [...old, id]));
   const filtered = products.filter((p) => {
     if (filter === "All Products") return true;
     if (filter === "Perfumes") return p.category === "perfumes";
@@ -114,6 +111,7 @@ function Index() {
         onSearchClick={() => setPanel("search")}
         onBagClick={() => setPanel("bag")}
         totalItems={totalItems}
+        wishlistCount={wishlistCount}
       />
       <main>
         {/* Luxury Hero Section */}

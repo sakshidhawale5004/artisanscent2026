@@ -4,6 +4,7 @@ require_once __DIR__ . '/header.php';
 $products = get_products();
 $orders = get_orders();
 $customers = get_customers();
+$inquiries = get_inquiries();
 
 // Compute real-time accurate KPIs (No fake additions, no duplicate info)
 $grossRevenue = 0;
@@ -223,6 +224,47 @@ foreach ($orders as $o) {
         </a>
       </div>
     </div>
+  </div>
+
+  <!-- Card 3: Recent Contact Inquiries & Form Submissions -->
+  <div class="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 class="font-display text-xl text-[#111111]">Atelier Contact Inquiries &amp; Leads</h3>
+        <p class="text-xs text-[#666666] font-light">Direct submissions received from the storefront Contact &amp; Concierge form.</p>
+      </div>
+      <a href="inquiries.php" class="text-xs text-[#1b5e3f] hover:underline font-medium">All Inquiries (<?php echo count($inquiries); ?>) →</a>
+    </div>
+
+    <?php if (empty($inquiries)): ?>
+      <div class="py-10 text-center text-[#777777] text-xs bg-[#fbfaf8] rounded-xl border border-dashed border-[#dcd6cb]">
+        No contact inquiries received yet. When visitors fill out the Contact form on the storefront, their submissions will appear here.
+      </div>
+    <?php else: ?>
+      <div class="divide-y divide-[#f2efe9]">
+        <?php foreach (array_slice(array_reverse($inquiries), 0, 5) as $inq): ?>
+          <div class="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <div>
+              <div class="font-medium text-[#111111] flex items-center gap-2">
+                <span><?php echo htmlspecialchars($inq['name']); ?></span>
+                <span class="text-[10px] text-[#777777] font-mono"><?php echo htmlspecialchars($inq['email']); ?></span>
+                <?php if (!empty($inq['phone'])): ?>
+                  <span class="text-[10px] text-[#888888]"><?php echo htmlspecialchars($inq['phone']); ?></span>
+                <?php endif; ?>
+              </div>
+              <p class="text-xs text-[#555555] mt-1 font-light italic">"<?php echo htmlspecialchars($inq['message']); ?>"</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <?php echo htmlspecialchars($inq['interest'] ?? 'General'); ?>
+              </span>
+              <span class="text-[#888888] text-[11px] font-mono"><?php echo htmlspecialchars($inq['date']); ?></span>
+              <a href="mailto:<?php echo urlencode($inq['email']); ?>" class="text-[#1b5e3f] hover:underline text-xs font-medium">Reply →</a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
 

@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { ArrowRight, Heart, Plus, Search, ShoppingBag, X, SlidersHorizontal, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products as initialProducts, money, type Product } from "@/lib/products";
+import { useProducts, money, type Product } from "@/lib/products";
+import { useWishlist, useShoppingBag } from "@/lib/store";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -34,46 +35,26 @@ export function AllProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFamily, setSelectedFamily] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "name">("featured");
-  const [bag, setBag] = useState<Record<string, number>>({});
   const [panel, setPanel] = useState<"bag" | "search" | null>(null);
-  const [saved, setSaved] = useState<string[]>([]);
   const [addedFlashId, setAddedFlashId] = useState<string | null>(null);
 
-  // Load custom products added via Admin CRM if available in localStorage
-  const allProductsList = useMemo(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const stored = localStorage.getItem("artisanscent_custom_products");
-        if (stored) {
-          const custom = JSON.parse(stored);
-          if (Array.isArray(custom) && custom.length > 0) {
-            return [...initialProducts, ...custom];
-          }
-        }
-      } catch (e) {
-        // Fallback to static products
-      }
-    }
-    return initialProducts;
-  }, []);
+  // Live Products catalog synced with CRM
+  const allProductsList = useProducts();
 
-  const totalItems = Object.values(bag).reduce((a, b) => a + b, 0);
+  // Shared Wishlist & Shopping Bag
+  const { saved, toggleSaved, isSaved, wishlistCount } = useWishlist();
+  const { bag, addToBag, updateQty: update, totalItems } = useShoppingBag();
+
   const total = allProductsList.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
 
   const close = () => setPanel(null);
 
   const add = (p: Product) => {
-    setBag((old) => ({ ...old, [p.id]: (old[p.id] || 0) + 1 }));
+    addToBag(p.id, 1);
     setAddedFlashId(p.id);
     setTimeout(() => setAddedFlashId(null), 1200);
     setPanel("bag");
   };
-
-  const update = (id: string, amount: number) =>
-    setBag((old) => ({ ...old, [id]: Math.max(0, (old[id] || 0) + amount) }));
-
-  const toggleSaved = (id: string) =>
-    setSaved((old) => (old.includes(id) ? old.filter((x) => x !== id) : [...old, id]));
 
   // Filter & Sort
   const filteredProducts = useMemo(() => {
@@ -124,6 +105,7 @@ export function AllProductsPage() {
         onSearchClick={() => setPanel("search")}
         onBagClick={() => setPanel("bag")}
         totalItems={totalItems}
+        wishlistCount={wishlistCount}
       />
 
       <main className="bg-[#fafaf8] text-[#333333] min-h-screen">
@@ -418,7 +400,7 @@ export function AllProductsPage() {
 
       {/* Shopping Bag & Search Slide-overs */}
       {panel && (
-        <div className="bag-overlay" onClick={close}>
+        <div className="overlay bag-overlay" onClick={close}>
           <div className="bag-panel" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-display text-2xl">{panel === "bag" ? "Shopping Bag" : "Search Catalogue"}</h2>

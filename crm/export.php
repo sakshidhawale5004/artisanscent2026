@@ -109,6 +109,33 @@ if ($type === 'products') {
 
     fclose($output);
     exit;
+} elseif ($type === 'inquiries') {
+    $inquiries = get_inquiries();
+    $filename = "artisanscent_contact_inquiries_{$date}.csv";
+
+    header('Content-Type: text/csv; charset=utf-8');
+    header("Content-Disposition: attachment; filename=\"{$filename}\"");
+
+    $output = fopen('php://output', 'w');
+    fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+    fputcsv($output, ['Inquiry ID', 'Name', 'Email', 'Phone', 'Interest Area', 'Message', 'Status', 'Date Received']);
+
+    foreach ($inquiries as $inq) {
+        fputcsv($output, [
+            $inq['id'] ?? '',
+            $inq['name'] ?? '',
+            $inq['email'] ?? '',
+            $inq['phone'] ?? '',
+            $inq['interest'] ?? 'General',
+            $inq['message'] ?? '',
+            $inq['status'] ?? 'New',
+            $inq['date'] ?? ''
+        ]);
+    }
+
+    fclose($output);
+    exit;
 } else {
     header('Location: dashboard.php');
     exit;

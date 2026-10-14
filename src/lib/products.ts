@@ -32,6 +32,8 @@ const agarbatti3 = "/assets/agarbatti/Pyramid of Premium Dhoop Sticks.png";
 const soap1 = "/assets/soaps/soap.png";
 const soap2 = "/assets/soaps/Varad Aromatics Soap Ring.png";
 
+import { useState, useEffect } from "react";
+
 export type Product = {
   id: string;
   name: string;
@@ -39,12 +41,16 @@ export type Product = {
   family: string;
   category: "perfumes" | "essence-oils" | "car-perfumes" | "agarbatti" | "soaps";
   price: number;
+  salePrice?: number | undefined;
   image: string;
   badge: string;
   description: string;
   botanicalName?: string | undefined;
   size?: string | undefined;
   applications?: string[] | undefined;
+  stock?: number | undefined;
+  rating?: number | undefined;
+  sku?: string | undefined;
 };
 
 export const products: Product[] = [
@@ -371,3 +377,65 @@ export const products: Product[] = [
 ];
 
 export const money = (amount: number) => `₹${amount}`;
+
+export const PRODUCTS_STORAGE_KEY = "artisanscent_live_catalog";
+export const PRODUCTS_UPDATED_EVENT = "artisanscent:products-updated";
+
+export function getStoredProducts(): Product[] {
+  if (typeof window === "undefined") return products;
+  try {
+    const raw = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+    if (!raw) return products;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed;
+    }
+  } catch {
+    // fallback to initial
+  }
+  return products;
+}
+
+export function saveStoredProducts(updatedList: Product[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(updatedList));
+    window.dispatchEvent(new CustomEvent(PRODUCTS_UPDATED_EVENT, { detail: updatedList }));
+  } catch (e) {
+    console.error("Failed to save products to localStorage", e);
+  }
+}
+
+export function useProducts(): Product[] {
+  const [currentProducts, setCurrentProducts] = useState<Product[]>(products);
+
+  useEffect(() => {
+    // Sync on mount
+    setCurrentProducts(getStoredProducts());
+
+    const handleUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<Product[]>;
+      if (customEvent.detail && Array.isArray(customEvent.detail)) {
+        setCurrentProducts(customEvent.detail);
+      } else {
+        setCurrentProducts(getStoredProducts());
+      }
+    };
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === PRODUCTS_STORAGE_KEY) {
+        setCurrentProducts(getStoredProducts());
+      }
+    };
+
+    window.addEventListener(PRODUCTS_UPDATED_EVENT, handleUpdate);
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener(PRODUCTS_UPDATED_EVENT, handleUpdate);
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
+
+  return currentProducts;
+}

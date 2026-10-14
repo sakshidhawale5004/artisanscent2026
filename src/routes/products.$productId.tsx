@@ -12,13 +12,15 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products, money, type Product } from "@/lib/products";
+import { products, useProducts, getStoredProducts, money, type Product } from "@/lib/products";
+import { useWishlist, useShoppingBag } from "@/lib/store";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export const Route = createFileRoute("/products/$productId")({
   head: ({ params }) => {
-    const product = products.find((p) => p.id === params.productId);
+    const list = getStoredProducts();
+    const product = list.find((p) => p.id === params.productId) || products.find((p) => p.id === params.productId);
     return {
       meta: [
         { title: product ? `${product.name} | Artisan Scents` : "Product | Artisan Scents" },
@@ -34,7 +36,7 @@ const categoryBreadcrumb: Record<string, { label: string; href: string }> = {
   "essence-oils": { label: "Essence Oils", href: "/essence-oils" },
   "car-perfumes": { label: "Car Perfumes", href: "/car-perfumes" },
   agarbatti: { label: "Agarbatti", href: "/agarbatti" },
-  soaps: { label: "Soaps", href: "/" },
+  soaps: { label: "Soaps", href: "/soaps" },
 };
 
 const categoryBg: Record<string, string> = {
@@ -65,39 +67,36 @@ function StarRating({ rating = 4.5, count = 124 }: { rating?: number; count?: nu
 
 function ProductDetailPage() {
   const { productId } = Route.useParams();
-  const [bag, setBag] = useState<Record<string, number>>({});
+  const allProducts = useProducts();
+  const { saved, toggleSaved, isSaved, wishlistCount } = useWishlist();
+  const { bag, addToBag: storeAddToBag, updateQty, totalItems } = useShoppingBag();
+
   const [panel, setPanel] = useState<"bag" | null>(null);
-  const [saved, setSaved] = useState<string[]>([]);
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const [addedFlash, setAddedFlash] = useState(false);
 
-  const product = products.find((p) => p.id === productId);
-  const related = products
+  const product = allProducts.find((p) => p.id === productId);
+  const related = allProducts
     .filter((p) => p.category === product?.category && p.id !== productId)
     .slice(0, 4);
-  const totalItems = Object.values(bag).reduce((a, b) => a + b, 0);
-  const total = products.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
+  const total = allProducts.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
 
   const closeBag = () => setPanel(null);
 
   const addToBag = (p: Product, quantity = 1) => {
-    setBag((old) => ({ ...old, [p.id]: (old[p.id] || 0) + quantity }));
+    storeAddToBag(p.id, quantity);
     setAddedFlash(true);
     setPanel("bag");
     setTimeout(() => setAddedFlash(false), 1500);
   };
 
-  const update = (id: string, amount: number) =>
-    setBag((old) => ({ ...old, [id]: Math.max(0, (old[id] || 0) + amount) }));
-
-  const toggleSaved = (id: string) =>
-    setSaved((old) => (old.includes(id) ? old.filter((x) => x !== id) : [...old, id]));
+  const update = (id: string, amount: number) => updateQty(id, amount);
 
   if (!product) {
     return (
       <>
-        <Header />
+        <Header totalItems={totalItems} wishlistCount={wishlistCount} />
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
           <h1 className="font-display text-5xl mb-4">Product Not Found</h1>
           <p className="text-muted-foreground mb-8">
@@ -124,7 +123,12 @@ function ProductDetailPage() {
       <div className="announcement">
         Free Shipping on Orders Above ₹999 <span className="ml-3">✦</span> 7-Day Returns
       </div>
-      <Header currentPage="Shop" onBagClick={() => setPanel("bag")} totalItems={totalItems} />
+      <Header
+        currentPage="Shop"
+        onBagClick={() => setPanel("bag")}
+        totalItems={totalItems}
+        wishlistCount={wishlistCount}
+      />
 
       <main className="min-h-screen bg-[#ffffff] text-[#333333] pb-16">
         {/* Breadcrumb Navigation */}

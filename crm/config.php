@@ -77,6 +77,21 @@ function save_customers($customers) {
     return file_put_contents($file, json_encode($customers, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 }
 
+// Inquiries Storage Helpers
+function get_inquiries() {
+    $file = DATA_DIR . '/inquiries.json';
+    if (!file_exists($file)) {
+        return [];
+    }
+    $json = file_get_contents($file);
+    return json_decode($json, true) ?: [];
+}
+
+function save_inquiries($inquiries) {
+    $file = DATA_DIR . '/inquiries.json';
+    return file_put_contents($file, json_encode($inquiries, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+}
+
 // Currency Formatter
 function format_inr($amount) {
     return '₹' . number_format((float)$amount, 0, '.', ',');

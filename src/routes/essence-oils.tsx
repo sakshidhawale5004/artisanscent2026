@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, Heart, Plus, Search, ShoppingBag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products, money, type Product } from "@/lib/products";
+import { useProducts, money, type Product } from "@/lib/products";
+import { useWishlist, useShoppingBag } from "@/lib/store";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -21,29 +22,26 @@ export const Route = createFileRoute("/essence-oils")({
 });
 
 function EssenceOilsPage() {
+  const allProducts = useProducts();
+  const { saved, toggleSaved, isSaved, wishlistCount } = useWishlist();
+  const { bag, addToBag, updateQty: update, totalItems } = useShoppingBag();
+
   const [selected, setSelected] = useState<Product>();
-  const [bag, setBag] = useState<Record<string, number>>({});
   const [panel, setPanel] = useState<"bag" | "search" | null>(null);
   const [query, setQuery] = useState("");
-  const [saved, setSaved] = useState<string[]>([]);
 
-  const essenceOils = products.filter((p) => p.category === "essence-oils");
+  const essenceOils = allProducts.filter((p) => p.category === "essence-oils");
   const close = () => {
     setPanel(null);
     setSelected(undefined);
   };
-  const totalItems = Object.values(bag).reduce((a, b) => a + b, 0);
-  const total = products.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
+  const total = allProducts.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
 
   const add = (p: Product) => {
-    setBag((old) => ({ ...old, [p.id]: (old[p.id] || 0) + 1 }));
+    addToBag(p.id, 1);
     setSelected(undefined);
     setPanel("bag");
   };
-  const update = (id: string, amount: number) =>
-    setBag((old) => ({ ...old, [id]: Math.max(0, (old[id] || 0) + amount) }));
-  const toggleSaved = (id: string) =>
-    setSaved((old) => (old.includes(id) ? old.filter((x) => x !== id) : [...old, id]));
 
   return (
     <>
@@ -55,6 +53,7 @@ function EssenceOilsPage() {
         onSearchClick={() => setPanel("search")}
         onBagClick={() => setPanel("bag")}
         totalItems={totalItems}
+        wishlistCount={wishlistCount}
       />
 
       <main className="bg-[#fafaf8] text-[#333333] min-h-screen">
@@ -351,7 +350,7 @@ function EssenceOilsPage() {
                       </Button>
                     </div>
                   ) : (
-                    products
+                    allProducts
                       .filter((p) => (bag[p.id] || 0) > 0)
                       .map((p) => (
                         <div className="bag-item" key={p.id}>

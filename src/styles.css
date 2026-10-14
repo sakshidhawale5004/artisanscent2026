@@ -541,6 +541,9 @@ a {
   align-items: center;
   justify-content: center;
 }
+.luxury-wishlist-badge {
+  background: #e11d48 !important;
+}
 
 /* Hamburger (mobile only) */
 .luxury-hamburger {
@@ -968,16 +971,40 @@ a {
   width: 100%;
 }
 .bag-overlay {
-  justify-content: flex-end;
-  padding: 0;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background: var(--veil, rgba(10, 9, 8, 0.65)) !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: flex-end !important;
+  padding: 0 !important;
 }
 .bag-panel {
-  height: 100dvh;
-  max-height: 100dvh;
-  width: min(460px, 100%);
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
+  background: #ffffff !important;
+  color: #111111 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  width: min(480px, 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 26px 28px !important;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25) !important;
+  z-index: 100000 !important;
+  overflow-y: auto !important;
+  position: relative !important;
+  animation: slideDrawerInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDrawerInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 .bag-list {
   flex: 1;

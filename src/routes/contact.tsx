@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Mail, Phone, MapPin, MessageCircle, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { addInquiryToCRM } from "@/lib/store";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -39,8 +40,33 @@ const interests = [
 function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [interest, setInterest] = useState(interests[0]);
+  const [phone, setPhone] = useState("");
+  const [interest, setInterest] = useState<string>(interests[0] || "Product enquiry");
   const [message, setMessage] = useState("");
+  const [submittedInquiry, setSubmittedInquiry] = useState<{ id: string; name: string } | null>(null);
+  const [formError, setFormError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim()) {
+      setFormError("Please enter your name and email address.");
+      return;
+    }
+    setFormError("");
+    const inquiry = addInquiryToCRM({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim() || "+91 (unspecified)",
+      interest: interest || "Product enquiry",
+      message: message.trim() || "Direct atelier inquiry submitted.",
+    });
+
+    setSubmittedInquiry({ id: inquiry.id, name: inquiry.name });
+    setName("");
+    setEmail("");
+    setPhone("");
+    setMessage("");
+  };
 
   const body = useMemo(
     () =>
@@ -182,32 +208,68 @@ function ContactPage() {
                 <div className="eyebrow text-[#1b5e3f] font-semibold mb-1">ATELIER CONCIERGE &amp; INQUIRIES</div>
                 <h2 className="font-display text-2xl text-[#1a1a1a] mb-6">Let&rsquo;s find your signature.</h2>
 
-                <div className="space-y-5">
+                {submittedInquiry && (
+                  <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 flex items-start gap-3">
+                    <CheckCircle2 size={20} className="text-emerald-700 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-sm">✦ Inquiry Logged in CRM Dashboard!</div>
+                      <div className="text-xs text-emerald-900 mt-1 leading-relaxed">
+                        Thank you, <strong>{submittedInquiry.name}</strong>. Your inquiry (Reference: <code>{submittedInquiry.id}</code>) has been recorded in the Staff CRM Dashboard. Our concierge will connect with you shortly.
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {formError && (
+                  <div className="mb-4 p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium">
+                    {formError}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-2">
-                      Your name
+                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-1.5">
+                      Your name *
                     </label>
                     <input
+                      required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Full name"
                       className="w-full bg-[#fcfbf9] border border-[#dcd6cb] rounded-xl px-4 py-3 text-sm text-[#222222] placeholder:text-[#999999] outline-none focus:border-[#1b5e3f] focus:ring-1 focus:ring-[#1b5e3f] transition-all"
                     />
                   </div>
-                  <div>
-                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-2">
-                      Email address
-                    </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className="w-full bg-[#fcfbf9] border border-[#dcd6cb] rounded-xl px-4 py-3 text-sm text-[#222222] placeholder:text-[#999999] outline-none focus:border-[#1b5e3f] focus:ring-1 focus:ring-[#1b5e3f] transition-all"
-                    />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-1.5">
+                        Email address *
+                      </label>
+                      <input
+                        required
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        className="w-full bg-[#fcfbf9] border border-[#dcd6cb] rounded-xl px-4 py-3 text-sm text-[#222222] placeholder:text-[#999999] outline-none focus:border-[#1b5e3f] focus:ring-1 focus:ring-[#1b5e3f] transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-1.5">
+                        Phone number
+                      </label>
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+91 98202 52868"
+                        className="w-full bg-[#fcfbf9] border border-[#dcd6cb] rounded-xl px-4 py-3 text-sm text-[#222222] placeholder:text-[#999999] outline-none focus:border-[#1b5e3f] focus:ring-1 focus:ring-[#1b5e3f] transition-all"
+                      />
+                    </div>
                   </div>
+
                   <div>
-                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-2">
+                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-1.5">
                       I&rsquo;m interested in
                     </label>
                     <select
@@ -222,41 +284,50 @@ function ContactPage() {
                       ))}
                     </select>
                   </div>
+
                   <div>
-                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-2">
+                    <label className="block text-[11px] uppercase tracking-widest text-[#555555] font-semibold mb-1.5">
                       Your message
                     </label>
                     <textarea
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      rows={4}
+                      rows={3}
                       placeholder="Tell us what you have in mind…"
                       className="w-full bg-[#fcfbf9] border border-[#dcd6cb] rounded-xl px-4 py-3 text-sm text-[#222222] placeholder:text-[#999999] outline-none focus:border-[#1b5e3f] focus:ring-1 focus:ring-[#1b5e3f] transition-all resize-none"
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <a
-                      href={mailtoHref}
-                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-sm font-medium tracking-wide shadow-md transition-all w-full sm:w-auto"
+                  <div className="pt-2 flex flex-col gap-2.5">
+                    <button
+                      type="submit"
+                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white text-sm font-medium tracking-wide shadow-md transition-all w-full cursor-pointer"
                     >
-                      Compose email <ArrowRight size={15} className="text-[#86efac]" />
-                    </a>
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-sm font-medium tracking-wide shadow-sm transition-all w-full sm:w-auto"
-                    >
-                      <MessageCircle size={15} className="text-[#1b5e3f]" /> Send via WhatsApp
-                    </a>
+                      Submit Inquiry to Maison CRM <ArrowRight size={15} className="text-[#86efac]" />
+                    </button>
+
+                    <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="h-11 px-5 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-xs font-medium tracking-wide shadow-xs transition-all flex-1"
+                      >
+                        <MessageCircle size={15} className="text-[#1b5e3f]" /> Instant WhatsApp Concierge
+                      </a>
+                      <a
+                        href={mailtoHref}
+                        className="h-11 px-5 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-xs font-medium tracking-wide shadow-xs transition-all flex-1"
+                      >
+                        <Mail size={15} className="text-[#1b5e3f]" /> Compose Email App
+                      </a>
+                    </div>
                   </div>
 
                   <p className="text-[11px] text-[#777777] leading-relaxed pt-1">
-                    Your enquiry opens in your email app. We do not collect or store this form on the
-                    website.
+                    Your inquiry is logged instantly into the Artisan Scent Staff CRM Hub. Our perfumery concierge will contact you within 24 hours.
                   </p>
-                </div>
+                </form>
               </div>
             </div>
           </div>

@@ -22,9 +22,21 @@ import {
   ExternalLink,
   ShieldCheck,
   Sparkles,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products as initialProducts, money, type Product } from "@/lib/products";
+import {
+  products as initialProducts,
+  money,
+  type Product,
+  getStoredProducts,
+  saveStoredProducts,
+} from "@/lib/products";
+import {
+  type Inquiry,
+  getStoredInquiries,
+  saveStoredInquiries,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -40,108 +52,31 @@ export const Route = createFileRoute("/admin")({
   component: AdminHubPage,
 });
 
-// Sample Initial Orders
-const initialOrders = [
-  {
-    id: "ORD-9401",
-    customer: "Aarav Sharma",
-    email: "aarav.sharma@example.com",
-    items: "Golden Essence (50ml) × 1",
-    total: 5999,
-    status: "Completed",
-    date: "2026-10-12",
-  },
-  {
-    id: "ORD-9402",
-    customer: "Meera Singhania",
-    email: "meera.singhania@luxurymail.com",
-    items: "Midnight Mystery (50ml) × 1, Vetiver Pure Oil (15ml) × 1",
-    total: 7498,
-    status: "Processing",
-    date: "2026-10-13",
-  },
-  {
-    id: "ORD-9403",
-    customer: "Rohan Kapoor",
-    email: "rohan.k@zenithcorp.in",
-    items: "Hanging Wooden Amber Diffuser × 2",
-    total: 1998,
-    status: "Shipped",
-    date: "2026-10-13",
-  },
-  {
-    id: "ORD-9404",
-    customer: "Ananya Deshmukh",
-    email: "ananya.d@botanica.org",
-    items: "Handcrafted Herbal Soap Ring × 3, Sacred Sandal Dhoop × 2",
-    total: 2695,
-    status: "Pending",
-    date: "2026-10-14",
-  },
-  {
-    id: "ORD-9405",
-    customer: "Vikram Malhotra",
-    email: "v.malhotra@atelier.in",
-    items: "Jeweled Collection Extrait × 1",
-    total: 6499,
-    status: "Processing",
-    date: "2026-10-14",
-  },
-];
+export type Order = {
+  id: string;
+  customer: string;
+  email: string;
+  items: string;
+  total: number;
+  status: "Completed" | "Processing" | "Shipped" | "Pending";
+  date: string;
+};
 
-// Sample Initial CRM Customers
-const initialCustomers = [
-  {
-    id: "CUST-101",
-    name: "Aarav Sharma",
-    email: "aarav.sharma@example.com",
-    phone: "+91 98201 44521",
-    segment: "VIP Reserve",
-    ordersCount: 6,
-    totalSpend: 38450,
-    lastOrder: "2026-10-12",
-  },
-  {
-    id: "CUST-102",
-    name: "Meera Singhania",
-    email: "meera.singhania@luxurymail.com",
-    phone: "+91 98112 90123",
-    segment: "High LTV",
-    ordersCount: 4,
-    totalSpend: 29800,
-    lastOrder: "2026-10-13",
-  },
-  {
-    id: "CUST-103",
-    name: "Rohan Kapoor",
-    email: "rohan.k@zenithcorp.in",
-    phone: "+91 98900 11223",
-    segment: "Frequent Patron",
-    ordersCount: 5,
-    totalSpend: 15400,
-    lastOrder: "2026-10-13",
-  },
-  {
-    id: "CUST-104",
-    name: "Ananya Deshmukh",
-    email: "ananya.d@botanica.org",
-    phone: "+91 97654 32109",
-    segment: "New Client",
-    ordersCount: 1,
-    totalSpend: 2695,
-    lastOrder: "2026-10-14",
-  },
-  {
-    id: "CUST-105",
-    name: "Vikram Malhotra",
-    email: "v.malhotra@atelier.in",
-    phone: "+91 98220 78901",
-    segment: "VIP Reserve",
-    ordersCount: 8,
-    totalSpend: 54200,
-    lastOrder: "2026-10-14",
-  },
-];
+export type Customer = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  segment: string;
+  ordersCount: number;
+  totalSpend: number;
+  lastOrder: string;
+  inquiryInterest?: string | undefined;
+};
+
+// Start with empty real-world CRM state (no dummy entries)
+const initialOrders: Order[] = [];
+const initialCustomers: Customer[] = [];
 
 type ExtendedProduct = Product & {
   salePrice?: number | undefined;
@@ -158,12 +93,13 @@ export function AdminHubPage() {
   const [authError, setAuthError] = useState<string>("");
 
   // Navigation View Tab
-  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "orders" | "customers">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "orders" | "customers" | "inquiries">("dashboard");
 
   // CRM State
   const [productList, setProductList] = useState<ExtendedProduct[]>([]);
-  const [ordersList, setOrdersList] = useState(initialOrders);
-  const [customerList, setCustomerList] = useState(initialCustomers);
+  const [ordersList, setOrdersList] = useState<Order[]>(initialOrders);
+  const [customerList, setCustomerList] = useState<Customer[]>(initialCustomers);
+  const [inquiriesList, setInquiriesList] = useState<Inquiry[]>([]);
 
   // Search & Filter state
   const [productSearch, setProductSearch] = useState("");
@@ -197,37 +133,72 @@ export function AdminHubPage() {
     setTimeout(() => setFeedbackMsg(null), 3500);
   };
 
-  // Check login on mount
+  // Check login & load live data on mount
   useEffect(() => {
     const isLogged = localStorage.getItem("artisanscent_admin_logged");
     if (isLogged === "true") {
       setIsAuthenticated(true);
     }
 
-    // Load custom products from localStorage or initialize with defaults
+    // Load live central products catalog
+    const loaded = getStoredProducts();
+    setProductList(
+      loaded.map((p) => ({
+        ...p,
+        stock: p.stock ?? 35,
+        rating: p.rating ?? 4.9,
+        sku: p.sku ?? `ART-${p.id.toUpperCase()}`,
+      }))
+    );
+
+    // Load CRM patron customers
     try {
-      const stored = localStorage.getItem("artisanscent_custom_products");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setProductList([...initialProducts, ...parsed]);
-      } else {
-        setProductList(
-          initialProducts.map((p) => ({
-            ...p,
-            stock: 35,
-            rating: 4.9,
-            sku: `ART-${p.id.toUpperCase()}`,
-          }))
-        );
+      const storedCust = localStorage.getItem("artisanscent_crm_customers");
+      if (storedCust) {
+        setCustomerList(JSON.parse(storedCust));
       }
     } catch {
-      setProductList(initialProducts);
+      setCustomerList([]);
     }
+
+    // Load customer orders
+    try {
+      const storedOrders = localStorage.getItem("artisanscent_crm_orders");
+      if (storedOrders) {
+        setOrdersList(JSON.parse(storedOrders));
+      }
+    } catch {
+      setOrdersList([]);
+    }
+
+    // Load contact inquiries
+    setInquiriesList(getStoredInquiries());
+
+    const handleSync = () => {
+      setInquiriesList(getStoredInquiries());
+      try {
+        const storedCust = localStorage.getItem("artisanscent_crm_customers");
+        if (storedCust) setCustomerList(JSON.parse(storedCust));
+      } catch {}
+      try {
+        const storedOrders = localStorage.getItem("artisanscent_crm_orders");
+        if (storedOrders) setOrdersList(JSON.parse(storedOrders));
+      } catch {}
+    };
+
+    window.addEventListener("artisanscent:inquiries-updated", handleSync);
+    window.addEventListener("artisanscent:customers-updated", handleSync);
+    window.addEventListener("artisanscent:orders-updated", handleSync);
+
+    return () => {
+      window.removeEventListener("artisanscent:inquiries-updated", handleSync);
+      window.removeEventListener("artisanscent:customers-updated", handleSync);
+      window.removeEventListener("artisanscent:orders-updated", handleSync);
+    };
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default admin credentials
     if (authUsername === "admin" && (authPassword === "artisan2026" || authPassword === "admin123")) {
       setIsAuthenticated(true);
       localStorage.setItem("artisanscent_admin_logged", "true");
@@ -289,9 +260,10 @@ export function AdminHubPage() {
     e.preventDefault();
     if (!formName.trim()) return;
 
+    let updated: ExtendedProduct[];
     if (editingProduct) {
       // Update existing product
-      const updated = productList.map((p) =>
+      updated = productList.map((p) =>
         p.id === editingProduct.id
           ? {
               ...p,
@@ -310,11 +282,10 @@ export function AdminHubPage() {
             }
           : p
       );
-      setProductList(updated);
       showFeedback(`Product "${formName}" updated successfully.`);
     } else {
       // Create new product
-      const newId = `custom-${Date.now()}`;
+      const newId = `prod-${Date.now().toString().slice(-6)}`;
       const newProduct: ExtendedProduct = {
         id: newId,
         name: formName,
@@ -329,26 +300,15 @@ export function AdminHubPage() {
         badge: formBadge,
         stock: Number(formStock),
         description: formDescription,
-        sku: `ART-${newId.slice(-6).toUpperCase()}`,
+        sku: `ART-${newId.toUpperCase()}`,
       };
-
-      const updated = [newProduct, ...productList];
-      setProductList(updated);
-
-      // Persist custom creations in localStorage
-      try {
-        const stored = localStorage.getItem("artisanscent_custom_products");
-        const existingCustom = stored ? JSON.parse(stored) : [];
-        localStorage.setItem(
-          "artisanscent_custom_products",
-          JSON.stringify([newProduct, ...existingCustom])
-        );
-      } catch (err) {
-        console.error("Storage error:", err);
-      }
-
+      updated = [newProduct, ...productList];
       showFeedback(`New product "${formName}" added to catalog.`);
     }
+
+    setProductList(updated);
+    // Persist live catalog across entire website
+    saveStoredProducts(updated);
 
     setIsAddModalOpen(false);
     resetForm();
@@ -358,20 +318,35 @@ export function AdminHubPage() {
     if (window.confirm(`Are you sure you want to delete "${name}" from catalog?`)) {
       const updated = productList.filter((p) => p.id !== id);
       setProductList(updated);
-
-      // Also clean up from localStorage if custom
-      try {
-        const stored = localStorage.getItem("artisanscent_custom_products");
-        if (stored) {
-          const custom = JSON.parse(stored);
-          const filtered = custom.filter((p: any) => p.id !== id);
-          localStorage.setItem("artisanscent_custom_products", JSON.stringify(filtered));
-        }
-      } catch (err) {
-        console.error("Storage error:", err);
-      }
-
+      saveStoredProducts(updated);
       showFeedback(`Product "${name}" deleted from catalog.`);
+    }
+  };
+
+  const handleResetCatalog = () => {
+    if (window.confirm("Reset catalog formulations back to default Maison master list?")) {
+      setProductList(initialProducts);
+      saveStoredProducts(initialProducts);
+      showFeedback("Catalog formulations reset to default master list.");
+    }
+  };
+
+  // Inquiry actions
+  const handleUpdateInquiryStatus = (id: string, status: Inquiry["status"]) => {
+    const updated = inquiriesList.map((inq) =>
+      inq.id === id ? { ...inq, status } : inq
+    );
+    setInquiriesList(updated);
+    saveStoredInquiries(updated);
+    showFeedback(`Inquiry ${id} status updated to "${status}".`);
+  };
+
+  const handleDeleteInquiry = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this contact submission?")) {
+      const updated = inquiriesList.filter((inq) => inq.id !== id);
+      setInquiriesList(updated);
+      saveStoredInquiries(updated);
+      showFeedback("Inquiry record removed.");
     }
   };
 
@@ -426,6 +401,31 @@ export function AdminHubPage() {
     link.click();
     document.body.removeChild(link);
     showFeedback("Orders CSV exported successfully.");
+  };
+
+  const exportInquiriesCSV = () => {
+    const headers = ["ID", "Name", "Email", "Phone", "Interest", "Message", "Date", "Time", "Status"];
+    const rows = inquiriesList.map((i) => [
+      `"${i.id}"`,
+      `"${i.name.replace(/"/g, '""')}"`,
+      `"${i.email}"`,
+      `"${i.phone}"`,
+      `"${i.interest}"`,
+      `"${i.message.replace(/"/g, '""')}"`,
+      `"${i.date}"`,
+      `"${i.time}"`,
+      `"${i.status}"`,
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `artisanscent_inquiries_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showFeedback("Inquiries CSV exported successfully.");
   };
 
   const exportCustomersCSV = () => {
@@ -648,7 +648,15 @@ export function AdminHubPage() {
                 activeTab === "customers" ? "bg-[#1b5e3f] text-white shadow-xs" : "text-[#a3b8ac] hover:text-white"
               }`}
             >
-              CRM Customers ({customerList.length})
+              CRM Patrons ({customerList.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("inquiries")}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                activeTab === "inquiries" ? "bg-[#1b5e3f] text-white shadow-xs" : "text-[#a3b8ac] hover:text-white"
+              }`}
+            >
+              Inquiries ({inquiriesList.length})
             </button>
           </nav>
 
@@ -675,7 +683,7 @@ export function AdminHubPage() {
 
         {/* Mobile Navigation bar */}
         <div className="flex md:hidden items-center gap-1 mt-3 pt-3 border-t border-[#1b5e3f]/40 overflow-x-auto no-scrollbar">
-          {(["dashboard", "products", "orders", "customers"] as const).map((tab) => (
+          {(["dashboard", "products", "orders", "customers", "inquiries"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -901,6 +909,84 @@ export function AdminHubPage() {
                 </div>
               </div>
             </div>
+
+            {/* Card 3: Recent Contact Inquiries & Form Submissions */}
+            <div className="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                <div>
+                  <h3 className="font-display text-xl text-[#111111] flex items-center gap-2">
+                    <Mail size={18} className="text-[#1b5e3f]" />
+                    Atelier Contact Inquiries &amp; Form Submissions
+                  </h3>
+                  <p className="text-xs text-[#666666] font-light">
+                    Incoming concierge leads and bespoke inquiries submitted through the Contact page form.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setActiveTab("inquiries")}
+                    className="text-xs text-[#1b5e3f] hover:underline cursor-pointer"
+                  >
+                    View All Inquiries ({inquiriesList.length}) →
+                  </Button>
+                </div>
+              </div>
+
+              {inquiriesList.length === 0 ? (
+                <div className="py-10 text-center text-xs text-[#777777] border border-dashed border-[#dcd6cb] rounded-xl bg-[#faf9f7]">
+                  <Mail className="mx-auto mb-2 text-[#aaa7a0] opacity-50" size={26} />
+                  <div className="font-medium text-[#222222]">No Contact Submissions Recorded Yet</div>
+                  <div className="text-[11px] text-[#888888] mt-1 max-w-md mx-auto">
+                    When visitors submit the consultation inquiry form on the Contact page, their message, phone, and olfactory requirements will appear here in real-time.
+                  </div>
+                </div>
+              ) : (
+                <div className="divide-y divide-[#f2efe9]">
+                  {inquiriesList.slice(0, 5).map((inq) => (
+                    <div key={inq.id} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-mono text-xs font-bold text-[#111111]">{inq.id}</span>
+                          <span className="font-medium text-xs text-[#111111]">{inq.name}</span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#e8f5f0] text-[#1b5e3f] border border-[#1b5e3f]/20">
+                            {inq.interest}
+                          </span>
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                            inq.status === "New" ? "bg-amber-100 text-amber-900 border border-amber-300" : "bg-neutral-100 text-neutral-700"
+                          }`}>
+                            {inq.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#444444] mt-1 line-clamp-1 italic">
+                          "{inq.message}"
+                        </p>
+                        <div className="text-[10px] text-[#888888] mt-1 flex items-center gap-3 flex-wrap">
+                          <span>Email: <strong className="text-[#333333] font-normal">{inq.email}</strong></span>
+                          <span>Phone: <strong className="text-[#333333] font-normal">{inq.phone}</strong></span>
+                          <span>Received: {inq.date} ({inq.time})</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <a
+                          href={`mailto:${inq.email}?subject=Re:%20Your%20Artisan%20Scent%20Inquiry%20(${encodeURIComponent(inq.interest)})`}
+                          className="px-3 py-1 rounded-full border border-[#dcd6cb] bg-white hover:bg-[#f5f3ef] text-xs font-medium text-[#222222] transition-colors"
+                        >
+                          Reply Email
+                        </a>
+                        <button
+                          onClick={() => setActiveTab("inquiries")}
+                          className="text-xs text-[#1b5e3f] hover:underline font-medium cursor-pointer"
+                        >
+                          Open Details →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -1090,50 +1176,66 @@ export function AdminHubPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#f2efe9]">
-                    {ordersList.map((o) => (
-                      <tr key={o.id} className="hover:bg-[#faf9f7] transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">{o.id}</td>
-                        <td className="py-3.5 px-4">
-                          <div className="font-medium text-[#111111]">{o.customer}</div>
-                          <div className="text-[11px] text-[#777777]">{o.email}</div>
-                        </td>
-                        <td className="py-3.5 px-4 text-[#444444] max-w-sm">{o.items}</td>
-                        <td className="py-3.5 px-4 font-mono font-semibold text-[#111111]">
-                          {money(o.total)}
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <select
-                            value={o.status}
-                            onChange={(e) => {
-                              const newStatus = e.target.value;
-                              setOrdersList((prev) =>
-                                prev.map((item) =>
-                                  item.id === o.id ? { ...item, status: newStatus } : item
-                                )
-                              );
-                              showFeedback(`Order ${o.id} updated to ${newStatus}.`);
-                            }}
-                            className="bg-[#f5f4f0] border border-[#dcd6cb] rounded-lg px-2.5 py-1 text-xs cursor-pointer focus:outline-none focus:border-[#1b5e3f]"
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Processing">Processing</option>
-                            <option value="Shipped">Shipped</option>
-                            <option value="Completed">Completed</option>
-                          </select>
-                        </td>
-                        <td className="py-3.5 px-4 text-[#777777]">{o.date}</td>
-                        <td className="py-3.5 px-4 text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-xs text-[#1b5e3f] h-7 px-2"
-                            onClick={() => showFeedback(`Receipt dispatched for ${o.id}`)}
-                          >
-                            Send Receipt
-                          </Button>
+                    {ordersList.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="py-14 text-center text-[#777777]">
+                          <ShoppingBag className="mx-auto mb-2 text-[#aaa7a0] opacity-50" size={32} />
+                          <div className="font-medium text-sm text-[#222222]">No Customer Orders Registered Yet</div>
+                          <div className="text-xs text-[#888888] mt-1 max-w-sm mx-auto">
+                            Customer orders placed through store checkout will register here with instant status workflows and CSV export.
+                          </div>
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      ordersList.map((o) => (
+                        <tr key={o.id} className="hover:bg-[#faf9f7] transition-colors">
+                          <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">{o.id}</td>
+                          <td className="py-3.5 px-4">
+                            <div className="font-medium text-[#111111]">{o.customer}</div>
+                            <div className="text-[11px] text-[#777777]">{o.email}</div>
+                          </td>
+                          <td className="py-3.5 px-4 text-[#444444] max-w-sm">{o.items}</td>
+                          <td className="py-3.5 px-4 font-mono font-semibold text-[#111111]">
+                            {money(o.total)}
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <select
+                              value={o.status}
+                              onChange={(e) => {
+                                const newStatus = e.target.value as Order["status"];
+                                setOrdersList((prev) => {
+                                  const next = prev.map((item) =>
+                                    item.id === o.id ? { ...item, status: newStatus } : item
+                                  );
+                                  try {
+                                    localStorage.setItem("artisanscent_crm_orders", JSON.stringify(next));
+                                  } catch {}
+                                  return next;
+                                });
+                                showFeedback(`Order ${o.id} updated to ${newStatus}.`);
+                              }}
+                              className="bg-[#f5f4f0] border border-[#dcd6cb] rounded-lg px-2.5 py-1 text-xs cursor-pointer focus:outline-none focus:border-[#1b5e3f]"
+                            >
+                              <option value="Pending">Pending</option>
+                              <option value="Processing">Processing</option>
+                              <option value="Shipped">Shipped</option>
+                              <option value="Completed">Completed</option>
+                            </select>
+                          </td>
+                          <td className="py-3.5 px-4 text-[#777777]">{o.date}</td>
+                          <td className="py-3.5 px-4 text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-xs text-[#1b5e3f] h-7 px-2"
+                              onClick={() => showFeedback(`Receipt dispatched for ${o.id}`)}
+                            >
+                              Send Receipt
+                            </Button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -1148,7 +1250,7 @@ export function AdminHubPage() {
               <div>
                 <h1 className="font-display text-3xl text-[#111111] font-normal">Patron CRM Directory</h1>
                 <p className="text-xs text-[#666666] mt-0.5 font-light">
-                  Customer lifetime value (LTV), buying tier segmentation, and private reserve memberships.
+                  Customer lifetime value (LTV), buying tier segmentation, and concierge leads.
                 </p>
               </div>
 
@@ -1177,49 +1279,164 @@ export function AdminHubPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#f2efe9]">
-                    {customerList.map((c) => (
-                      <tr key={c.id} className="hover:bg-[#faf9f7] transition-colors">
-                        <td className="py-3.5 px-4 font-medium text-[#111111] flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-full bg-[#1b5e3f]/10 border border-[#1b5e3f]/30 flex items-center justify-center font-display font-semibold text-[#1b5e3f]">
-                            {c.name.slice(0, 1)}
+                    {customerList.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="py-14 text-center text-[#777777]">
+                          <Users className="mx-auto mb-2 text-[#aaa7a0] opacity-50" size={32} />
+                          <div className="font-medium text-sm text-[#222222]">No Patron Profiles Recorded Yet</div>
+                          <div className="text-xs text-[#888888] mt-1 max-w-sm mx-auto">
+                            Customer contacts and leads submitted through the Contact page form will appear here automatically.
                           </div>
-                          <div>
-                            <div>{c.name}</div>
-                            <div className="text-[10px] text-[#888888] font-mono">{c.id}</div>
-                          </div>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <div>{c.email}</div>
-                          <div className="text-[10px] text-[#777777]">{c.phone}</div>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                              c.segment === "VIP Reserve"
-                                ? "bg-amber-100 text-amber-900 border border-amber-300"
-                                : c.segment === "High LTV"
-                                  ? "bg-purple-100 text-purple-900 border border-purple-300"
-                                  : "bg-emerald-100 text-emerald-900 border border-emerald-300"
-                            }`}
-                          >
-                            ✦ {c.segment}
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4 font-mono">{c.ordersCount} orders</td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">
-                          {money(c.totalSpend)}
-                        </td>
-                        <td className="py-3.5 px-4 text-[#777777]">{c.lastOrder}</td>
-                        <td className="py-3.5 px-4 text-right">
-                          <a
-                            href={`mailto:${c.email}?subject=Private%20Reserve%20Concierge%20-%20Artisan%20Scent`}
-                            className="inline-flex items-center gap-1 text-xs text-[#1b5e3f] hover:underline font-medium"
-                          >
-                            Contact Patron →
-                          </a>
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      customerList.map((c) => (
+                        <tr key={c.id} className="hover:bg-[#faf9f7] transition-colors">
+                          <td className="py-3.5 px-4 font-medium text-[#111111] flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-full bg-[#1b5e3f]/10 border border-[#1b5e3f]/30 flex items-center justify-center font-display font-semibold text-[#1b5e3f]">
+                              {c.name.slice(0, 1)}
+                            </div>
+                            <div>
+                              <div>{c.name}</div>
+                              <div className="text-[10px] text-[#888888] font-mono">{c.id}</div>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <div>{c.email}</div>
+                            <div className="text-[10px] text-[#777777]">{c.phone}</div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span
+                              className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                                c.segment === "VIP Reserve"
+                                  ? "bg-amber-100 text-amber-900 border border-amber-300"
+                                  : c.segment === "High LTV"
+                                    ? "bg-purple-100 text-purple-900 border border-purple-300"
+                                    : "bg-emerald-100 text-emerald-900 border border-emerald-300"
+                              }`}
+                            >
+                              ✦ {c.segment}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4 font-mono">{c.ordersCount} orders</td>
+                          <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">
+                            {money(c.totalSpend)}
+                          </td>
+                          <td className="py-3.5 px-4 text-[#777777]">{c.lastOrder}</td>
+                          <td className="py-3.5 px-4 text-right">
+                            <a
+                              href={`mailto:${c.email}?subject=Private%20Reserve%20Concierge%20-%20Artisan%20Scent`}
+                              className="inline-flex items-center gap-1 text-xs text-[#1b5e3f] hover:underline font-medium"
+                            >
+                              Contact Patron →
+                            </a>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ======================= INQUIRIES TAB ======================= */}
+        {activeTab === "inquiries" && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 className="font-display text-3xl text-[#111111] font-normal">Contact Inquiries &amp; Leads</h1>
+                <p className="text-xs text-[#666666] mt-0.5 font-light">
+                  Form submissions and bespoke commissions received through the website contact form.
+                </p>
+              </div>
+
+              <Button
+                onClick={exportInquiriesCSV}
+                variant="outline"
+                size="sm"
+                className="rounded-full border-[#dcd6cb] bg-white hover:bg-[#f2efe9] text-[#222222] h-9 px-4 text-xs gap-1.5 self-start sm:self-auto"
+              >
+                <Download size={13} /> Export Inquiries CSV
+              </Button>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-[#e4ded5] shadow-xs overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#fcfbf9] border-b border-[#eeebe5] text-[#777777] uppercase tracking-wider text-[10px]">
+                    <tr>
+                      <th className="py-3 px-4">Ref ID</th>
+                      <th className="py-3 px-4">Customer Details</th>
+                      <th className="py-3 px-4">Interest</th>
+                      <th className="py-3 px-4">Message</th>
+                      <th className="py-3 px-4">Received</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#f2efe9]">
+                    {inquiriesList.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="py-14 text-center text-[#777777]">
+                          <Mail className="mx-auto mb-2 text-[#aaa7a0] opacity-50" size={32} />
+                          <div className="font-medium text-sm text-[#222222]">No Contact Submissions Received Yet</div>
+                          <div className="text-xs text-[#888888] mt-1 max-w-sm mx-auto">
+                            When users fill out the form on the Contact page, their message and contact info will appear here immediately.
+                          </div>
+                        </td>
+                      </tr>
+                    ) : (
+                      inquiriesList.map((inq) => (
+                        <tr key={inq.id} className="hover:bg-[#faf9f7] transition-colors">
+                          <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">{inq.id}</td>
+                          <td className="py-3.5 px-4">
+                            <div className="font-medium text-[#111111]">{inq.name}</div>
+                            <div className="text-[11px] text-[#777777]">{inq.email}</div>
+                            <div className="text-[11px] text-[#888888]">{inq.phone}</div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#e8f5f0] text-[#1b5e3f] border border-[#1b5e3f]/20">
+                              {inq.interest}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4 text-[#444444] max-w-xs truncate" title={inq.message}>
+                            {inq.message}
+                          </td>
+                          <td className="py-3.5 px-4 text-[#777777]">
+                            <div>{inq.date}</div>
+                            <div className="text-[10px] text-[#999999]">{inq.time}</div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <select
+                              value={inq.status}
+                              onChange={(e) => handleUpdateInquiryStatus(inq.id, e.target.value as any)}
+                              className="bg-[#f5f4f0] border border-[#dcd6cb] rounded-lg px-2.5 py-1 text-xs cursor-pointer focus:outline-none focus:border-[#1b5e3f]"
+                            >
+                              <option value="New">New</option>
+                              <option value="Contacted">Contacted</option>
+                              <option value="Resolved">Resolved</option>
+                            </select>
+                          </td>
+                          <td className="py-3.5 px-4 text-right">
+                            <a
+                              href={`mailto:${inq.email}?subject=Re:%20Artisan%20Scent%20Inquiry%20(${encodeURIComponent(inq.interest)})`}
+                              className="text-xs text-[#1b5e3f] hover:underline mr-3 font-medium"
+                            >
+                              Reply
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteInquiry(inq.id)}
+                              className="text-xs text-rose-600 hover:underline cursor-pointer"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

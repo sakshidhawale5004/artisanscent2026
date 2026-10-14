@@ -79,6 +79,12 @@ $flash = get_flash();
         >
           Customers CRM
         </a>
+        <a
+          href="inquiries.php"
+          class="px-4 py-1.5 rounded-full text-xs font-medium transition-all <?php echo $currentPage === 'inquiries' ? 'bg-[#1b5e3f] text-white shadow-xs' : 'text-[#a3b8ac] hover:text-white'; ?>"
+        >
+          Inquiries
+        </a>
       </nav>
 
       <!-- Right Controls -->
@@ -105,6 +111,7 @@ $flash = get_flash();
       <a href="products.php" class="px-3 py-1 rounded-full text-[11px] whitespace-nowrap <?php echo in_array($currentPage, ['products', 'product-add', 'product-edit']) ? 'bg-[#1b5e3f] text-white' : 'text-[#a3b8ac]'; ?>">Products</a>
       <a href="orders.php" class="px-3 py-1 rounded-full text-[11px] whitespace-nowrap <?php echo $currentPage === 'orders' ? 'bg-[#1b5e3f] text-white' : 'text-[#a3b8ac]'; ?>">Orders</a>
       <a href="customers.php" class="px-3 py-1 rounded-full text-[11px] whitespace-nowrap <?php echo $currentPage === 'customers' ? 'bg-[#1b5e3f] text-white' : 'text-[#a3b8ac]'; ?>">Customers CRM</a>
+      <a href="inquiries.php" class="px-3 py-1 rounded-full text-[11px] whitespace-nowrap <?php echo $currentPage === 'inquiries' ? 'bg-[#1b5e3f] text-white' : 'text-[#a3b8ac]'; ?>">Inquiries</a>
     </div>
   </header>
 
