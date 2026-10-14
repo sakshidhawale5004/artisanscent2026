@@ -459,8 +459,10 @@ export function AllProductsPage() {
                       <span>Subtotal</span>
                       <span className="font-mono font-semibold">{money(total)}</span>
                     </div>
-                    <Button className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full">
-                      Proceed to Checkout <ArrowRight size={16} className="ml-2" />
+                    <Button asChild className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full">
+                      <a href="/cart" className="flex items-center justify-center gap-2">
+                        View Shopping Cart &amp; Checkout <ArrowRight size={16} />
+                      </a>
                     </Button>
                   </div>
                 )}

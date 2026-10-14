@@ -200,7 +200,9 @@ export function Header({
               />
             </div>
             <div>
-              <div className="luxury-brand-title">ARTISAN SCENT</div>
+              <div className="luxury-brand-title">
+                ARTISAN <span className="text-[#d4af37]" style={{ color: "#d4af37" }}>SCENT</span>
+              </div>
               <div className="luxury-brand-subtitle">LUXURY FRAGRANCES</div>
             </div>
           </a>
@@ -390,12 +392,13 @@ export function Header({
                       </span>
                     </div>
                     <Button
-                      className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-medium tracking-wide shadow-md"
+                      className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-medium tracking-wide shadow-md flex items-center justify-center gap-2"
                       onClick={() => {
-                        alert("Preview Checkout: Payment integration active soon. Your cart is preserved!");
+                        setInternalDrawer(null);
+                        window.location.href = "/cart";
                       }}
                     >
-                      Proceed to Checkout <ArrowRight size={16} className="ml-2" />
+                      View Shopping Cart &amp; Checkout <ArrowRight size={16} />
                     </Button>
                     <p className="text-[10px] text-center text-[#777777] mt-2">
                       Pan-India delivery · Complimentary olfactory sampling included.
@@ -465,6 +468,22 @@ export function Header({
                     ))
                   )}
                 </div>
+
+                {savedProducts.length > 0 && (
+                  <div className="pt-4 border-t border-[#eeebe5] mt-4">
+                    <Button
+                      className="w-full h-11 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-medium text-xs flex items-center justify-center gap-2 shadow-xs"
+                      onClick={() => {
+                        setInternalDrawer(null);
+                        window.location.href = "/wishlist";
+                      }}
+                    >
+                      <Heart size={14} className="fill-rose-400 text-rose-400" />
+                      <span>Open Full Wishlist Page ({effectiveWishlistCount})</span>
+                      <ArrowRight size={14} />
+                    </Button>
+                  </div>
+                )}
               </div>
             )}
 
@@ -546,7 +565,9 @@ export function Header({
                   />
                 </div>
                 <div>
-                  <div className="luxury-brand-title" style={{ fontSize: 16 }}>ARTISAN SCENT</div>
+                  <div className="luxury-brand-title" style={{ fontSize: 16 }}>
+                    ARTISAN <span className="text-[#d4af37]" style={{ color: "#d4af37" }}>SCENT</span>
+                  </div>
                   <div className="luxury-brand-subtitle" style={{ fontSize: 7 }}>LUXURY FRAGRANCES</div>
                 </div>
               </a>

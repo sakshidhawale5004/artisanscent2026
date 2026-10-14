@@ -190,20 +190,20 @@ function SoapsPage() {
                       </div>
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-lg text-[#111111] group-hover:text-[#1b5e3f] transition-colors block font-semibold"
+                        className="font-display text-lg text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium"
                       >
                         {p.name}
                       </a>
-                      <p className="text-xs text-[#444444] line-clamp-1 mt-1 font-medium">
+                      <p className="text-xs text-[#666666] line-clamp-1 mt-1 font-light">
                         {p.notes}
                       </p>
-                      <div className="text-[10px] text-[#666666] uppercase tracking-wider mt-1 font-medium">
+                      <div className="text-[10px] text-[#888888] uppercase tracking-wider mt-1">
                         {p.size || "100 g"} · Cold Process
                       </div>
                     </div>
 
                     <div className="mt-4 pt-4 border-t border-[#e8e2d8] flex items-center justify-between">
-                      <span className="font-mono text-base font-bold text-[#111111]">
+                      <span className="font-mono text-base font-semibold text-[#1a1a1a]">
                         {money(p.price)}
                       </span>
                       <Button

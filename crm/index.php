@@ -70,8 +70,7 @@ $msg = $_GET['msg'] ?? '';
           type="text"
           name="username"
           required
-          placeholder="admin"
-          value="admin"
+          placeholder="Enter admin username"
           class="w-full bg-[#05170e] border border-[#2d8659]/60 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-[#557060] focus:outline-none focus:border-[#d4af37] transition-colors"
         />
       </div>
@@ -97,13 +96,7 @@ $msg = $_GET['msg'] ?? '';
       </button>
     </form>
 
-    <div class="mt-6 pt-5 border-t border-[#1b5e3f]/40 text-center text-[11px] text-[#86a894]">
-      <div className="font-semibold text-white/90 mb-1">Pre-configured Admin Access:</div>
-      <div>Username: <code class="text-[#86efac] font-mono bg-black/40 px-2 py-0.5 rounded">admin</code></div>
-      <div class="mt-1">Password: <code class="text-[#86efac] font-mono bg-black/40 px-2 py-0.5 rounded">artisan2026</code></div>
-    </div>
-
-    <div class="mt-5 text-center">
+    <div class="mt-6 text-center">
       <a href="../" class="text-xs text-[#86efac] hover:underline">
         ← Return to Main Storefront
       </a>

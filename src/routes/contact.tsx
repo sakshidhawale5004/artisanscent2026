@@ -68,15 +68,31 @@ function ContactPage() {
     setMessage("");
   };
 
+  const handleWhatsAppClick = () => {
+    // Record client lead in CRM and Dashboard immediately upon clicking WhatsApp Concierge
+    const clientName = name.trim() || "WhatsApp Visitor";
+    const clientEmail = email.trim() || "whatsapp.client@artisanscent.com";
+    const clientPhone = phone.trim() || "+91 (unspecified)";
+    const clientInterest = interest || "WhatsApp Instant Concierge";
+    const clientMessage = message.trim() || "Client initiated Instant WhatsApp Concierge chat.";
+
+    const inquiry = addInquiryToCRM({
+      name: clientName,
+      email: clientEmail,
+      phone: clientPhone,
+      interest: clientInterest,
+      message: clientMessage,
+    });
+
+    setSubmittedInquiry({ id: inquiry.id, name: inquiry.name });
+  };
+
   const body = useMemo(
     () =>
       `Name: ${name}\nEmail: ${email}\nInterested in: ${interest}\n\n${message}`.trim(),
     [name, email, interest, message],
   );
 
-  const mailtoHref = `mailto:${EMAIL}?subject=${encodeURIComponent(
-    `Enquiry — ${interest}`,
-  )}&body=${encodeURIComponent(body)}`;
   const whatsappHref = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
     `Enquiry — ${interest}\n\n${body}`,
   )}`;
@@ -298,23 +314,24 @@ function ContactPage() {
                     />
                   </div>
 
-                  <div className="pt-2 flex flex-col gap-2.5">
-                    <div className="flex flex-col sm:flex-row gap-2.5">
-                      <a
-                        href={whatsappHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="h-11 px-5 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-xs font-medium tracking-wide shadow-xs transition-all flex-1"
-                      >
-                        <MessageCircle size={15} className="text-[#1b5e3f]" /> Instant WhatsApp Concierge
-                      </a>
-                      <a
-                        href={mailtoHref}
-                        className="h-11 px-5 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-xs font-medium tracking-wide shadow-xs transition-all flex-1"
-                      >
-                        <Mail size={15} className="text-[#1b5e3f]" /> Compose Email App
-                      </a>
-                    </div>
+                  <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="submit"
+                      className="h-11 px-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white text-xs font-semibold tracking-wide shadow-md transition-all flex-1 cursor-pointer"
+                    >
+                      <span>Submit Inquiry to Atelier</span>
+                      <ArrowRight size={14} className="text-[#86efac]" />
+                    </button>
+                    <a
+                      href={whatsappHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={handleWhatsAppClick}
+                      className="h-11 px-5 inline-flex items-center justify-center gap-2 rounded-full border border-[#2d8659]/50 hover:border-[#1b5e3f] bg-white hover:bg-[#fbfaf8] text-[#1b5e3f] text-xs font-semibold tracking-wide shadow-xs transition-all flex-1"
+                    >
+                      <MessageCircle size={15} className="text-[#1b5e3f]" />
+                      <span>Instant WhatsApp Concierge</span>
+                    </a>
                   </div>
 
                   <p className="text-[11px] text-[#777777] leading-relaxed pt-1">

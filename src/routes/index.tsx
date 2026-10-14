@@ -774,35 +774,19 @@ function Index() {
               {[
                 {
                   q: "What makes Artisan Scent fragrances different from regular perfumes?",
-                  a: "Our fragrances are crafted in small batches using high-concentration botanical essences sourced from KEOMC's aromatic plant labs. We use traditional extraction methods — steam distillation and cold-press — to preserve the authentic character of each ingredient. Every product is free from synthetic fillers and harmful chemicals."
+                  a: "Our fragrances are crafted in small batches using high-concentration botanical essences sourced in collaboration with KEOMC's aromatic plant labs. We utilize traditional steam distillation and cold-press extraction to preserve the authentic character of rare botanicals. Every formulation is free from synthetic fillers, phthalates, and harsh chemicals.",
                 },
                 {
                   q: "Are your products 100% natural and chemical-free?",
-                  a: "Yes. We are committed to using only pure botanical extracts, essential oils, plant-derived butters, and natural bamboo or glass packaging materials. Our agarbatti sticks are charcoal-free; our soaps contain no SLS or parabens; and our essence oils are unadulterated single-origin distillates."
+                  a: "Yes. We are committed to pure botanical extracts, therapeutic-grade essential oils, cold-pressed plant oils, and sustainable glass and wooden packaging. Our agarbatti sticks are 100% charcoal-free, our soaps contain no SLS or parabens, and our essence oils are pure single-origin distillates.",
                 },
                 {
                   q: "How long do the perfumes and essence oils last?",
-                  a: "Our luxury perfumes have a high extrait concentration of 30–40% pure essence and typically last 8–12 hours on the skin. Essence oils, when applied to pulse points, can last 6–10 hours. Car perfumes provide continuous fragrance for up to 60 days."
+                  a: "Our luxury perfumes feature an Extrait de Parfum concentration (30–40% pure essence) and typically provide 8–12 hours of lingering sillage on skin and fabric. Essence oils applied to pulse points last 6–10 hours, while hanging car diffusers deliver steady fragrance for up to 60 days.",
                 },
                 {
-                  q: "Do you offer bulk or wholesale pricing?",
-                  a: "Yes! We supply essence oils in bulk quantities (500ml, 1L, and custom larger quantities) for perfumers, spas, and wellness businesses. We also offer agarbatti in wholesale packs. Please contact us through the Contact page for pricing and MOQ details."
-                },
-                {
-                  q: "What is your shipping policy?",
-                  a: "We offer free shipping on all orders above ₹999 within India. Standard delivery takes 3–5 business days. Express delivery is available at checkout for faster dispatch. All orders are carefully packed to prevent breakage during transit."
-                },
-                {
-                  q: "Can I return or exchange a product?",
-                  a: "We accept returns within 7 days of delivery for unopened, unused products in original packaging. For damaged or incorrect items, please contact us within 48 hours of delivery with a photo, and we'll arrange an immediate replacement at no cost."
-                },
-                {
-                  q: "Are Artisan Scent products suitable as gifts?",
-                  a: "Absolutely. Our luxury perfumes, essence oil kits, and handcrafted soap sets make beautiful gifts for any occasion. We offer gift-ready packaging on select products. For corporate gifting or bulk gift orders, please reach out to us directly."
-                },
-                {
-                  q: "Where are Artisan Scent products manufactured?",
-                  a: "All our products are made in India, leveraging the rich tradition of Indian perfumery and botanical expertise. We work closely with KEOMC's aromatic plant cultivation and distillation facilities to ensure traceable, ethical sourcing from farm to bottle."
+                  q: "What is your shipping and returns policy?",
+                  a: "We offer complimentary pan-India shipping on all orders above ₹999, dispatched within 24 hours via insured couriers. We also provide a 7-day return guarantee for unopened products in original packaging, along with an instant replacement guarantee in case of any transit breakage.",
                 },
               ].map((faq, idx) => (
                 <details

@@ -398,6 +398,9 @@ a {
   line-height: 1.1;
   text-transform: uppercase;
 }
+.luxury-brand-title span {
+  color: #d4af37;
+}
 .luxury-brand-subtitle {
   font-size: 8px;
   letter-spacing: 0.22em;

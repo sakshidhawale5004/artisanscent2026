@@ -270,40 +270,90 @@ function ProductDetailPage() {
                 </div>
               </div>
 
-              {/* Quantity Stepper & Add to Cart */}
-              <div className="mt-8 flex items-center gap-4">
-                {/* Stepper */}
-                <div className="flex items-center border border-[#1b5e3f]/30 rounded-full bg-[#f5f5f0] p-1">
-                  <button
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
-                    onClick={() => setQty((q) => Math.max(1, q - 1))}
-                    aria-label="Decrease quantity"
+              {/* Quantity Stepper, Add to Cart & Wishlist Actions */}
+              <div className="mt-8 space-y-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  {/* Stepper */}
+                  <div className="flex items-center justify-center border border-[#1b5e3f]/30 rounded-full bg-[#f5f5f0] p-1 h-12 shrink-0">
+                    <button
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
+                      onClick={() => setQty((q) => Math.max(1, q - 1))}
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="w-10 text-center font-mono text-base text-[#333333] font-semibold">{qty}</span>
+                    <button
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
+                      onClick={() => setQty((q) => q + 1)}
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+
+                  {/* Add to Bag Button */}
+                  <Button
+                    className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/40 font-semibold tracking-wide shadow-lg text-sm flex items-center justify-center gap-2 transition-all"
+                    onClick={() => addToBag(product, qty)}
                   >
-                    <Minus size={16} />
-                  </button>
-                  <span className="w-10 text-center font-mono text-base text-[#333333] font-semibold">{qty}</span>
-                  <button
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-[#333333] hover:text-[#1b5e3f] hover:bg-white transition"
-                    onClick={() => setQty((q) => q + 1)}
-                    aria-label="Increase quantity"
+                    {addedFlash ? (
+                      "✓ Added to Bag"
+                    ) : (
+                      <>
+                        Add to Cart <ShoppingBag size={16} className="text-[#86efac]" />
+                      </>
+                    )}
+                  </Button>
+
+                  {/* Save to Wishlist Button for Individual Product */}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className={`h-12 px-5 rounded-full border text-xs font-semibold tracking-wide transition-all flex items-center justify-center gap-2 shrink-0 ${
+                      saved.includes(product.id)
+                        ? "bg-rose-50 border-rose-300 text-rose-600 hover:bg-rose-100"
+                        : "border-[#1b5e3f]/40 text-[#1b5e3f] hover:bg-[#1b5e3f]/5"
+                    }`}
+                    onClick={() => toggleSaved(product.id)}
+                    title={saved.includes(product.id) ? "Remove from wishlist" : "Save to wishlist"}
                   >
-                    <Plus size={16} />
-                  </button>
+                    <Heart
+                      size={16}
+                      className={saved.includes(product.id) ? "fill-rose-600 text-rose-600" : "text-[#1b5e3f]"}
+                    />
+                    <span>{saved.includes(product.id) ? "In Wishlist" : "Wishlist"}</span>
+                  </Button>
                 </div>
 
-                {/* Add to Bag Button */}
-                <Button
-                  className="flex-1 h-12 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/40 font-semibold tracking-wide shadow-lg text-sm flex items-center justify-center gap-2 transition-all"
-                  onClick={() => addToBag(product, qty)}
-                >
-                  {addedFlash ? (
-                    "✓ Added to Bag"
+                {/* Direct Links to Cart Page & Wishlist Page for Individual Products */}
+                <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+                  {bag[product.id] ? (
+                    <div className="flex items-center gap-1.5 text-[#1b5e3f] font-medium bg-[#f5fbf7] px-3 py-1.5 rounded-full border border-[#2d8659]/30">
+                      <span className="w-2 h-2 rounded-full bg-[#1b5e3f]" />
+                      <span>{bag[product.id]} in your cart</span>
+                      <a href="/cart" className="underline font-semibold ml-1.5 hover:text-[#164a31]">
+                        Open Cart Page →
+                      </a>
+                    </div>
                   ) : (
-                    <>
-                      Add to Cart <ShoppingBag size={16} className="text-[#86efac]" />
-                    </>
+                    <a
+                      href="/cart"
+                      className="text-[#555555] hover:text-[#1b5e3f] flex items-center gap-1.5 transition-colors font-medium"
+                    >
+                      <ShoppingBag size={14} className="text-[#1b5e3f]" />
+                      <span>View Shopping Cart ({totalItems})</span>
+                    </a>
                   )}
-                </Button>
+
+                  <a
+                    href="/wishlist"
+                    className="text-[#555555] hover:text-rose-600 flex items-center gap-1.5 transition-colors font-medium ml-auto"
+                  >
+                    <Heart size={14} className={wishlistCount > 0 ? "fill-rose-600 text-rose-600" : ""} />
+                    <span>View Wishlist ({wishlistCount}) →</span>
+                  </a>
+                </div>
               </div>
 
               {/* Trust Badges Bar */}
@@ -461,13 +511,27 @@ function ProductDetailPage() {
                         <span className="font-mono text-sm font-semibold text-[#1a1a1a]">
                           {money(p.price)}
                         </span>
-                        <Button
-                          size="sm"
-                          className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-xs font-medium"
-                          onClick={() => addToBag(p)}
-                        >
-                          Add <Plus size={12} className="ml-0.5 text-[#86efac]" />
-                        </Button>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => toggleSaved(p.id)}
+                            className="w-8 h-8 rounded-full border border-[#e8e2d8] flex items-center justify-center text-[#666666] hover:text-rose-600 hover:border-rose-300 transition-colors bg-white shadow-xs"
+                            aria-label={saved.includes(p.id) ? "Remove from wishlist" : "Add to wishlist"}
+                            title={saved.includes(p.id) ? "Remove from wishlist" : "Add to wishlist"}
+                          >
+                            <Heart
+                              size={14}
+                              className={saved.includes(p.id) ? "fill-rose-600 text-rose-600" : "text-[#777777]"}
+                            />
+                          </button>
+                          <Button
+                            size="sm"
+                            className="h-8 px-3 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-xs font-medium"
+                            onClick={() => addToBag(p)}
+                          >
+                            Add <Plus size={12} className="ml-0.5 text-[#86efac]" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </article>
@@ -549,7 +613,7 @@ function ProductDetailPage() {
                   <span>{money(total)}</span>
                 </div>
                 <Button 
-                  className="w-full h-12"
+                  className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-semibold text-xs tracking-wide shadow-md"
                   onClick={() => {
                     const cartItems = Object.entries(bag)
                       .map(([id, qty]) => {
@@ -562,9 +626,29 @@ function ProductDetailPage() {
                     window.open(whatsappUrl, '_blank');
                   }}
                 >
-                  Continue to checkout <ArrowRight />
+                  Continue to WhatsApp Checkout <ArrowRight size={15} className="ml-1" />
                 </Button>
-                <p className="status-note mt-3">Shipping and taxes calculated at checkout.</p>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full h-11 rounded-full border-[#1b5e3f]/40 text-[#1b5e3f] hover:bg-[#1b5e3f]/5 text-xs font-semibold mt-2.5"
+                >
+                  <a href="/cart" className="flex items-center justify-center gap-2">
+                    <ShoppingBag size={14} /> View Dedicated Cart Page ({totalItems})
+                  </a>
+                </Button>
+
+                <div className="mt-3 text-center">
+                  <a
+                    href="/wishlist"
+                    className="text-xs text-[#666666] hover:text-rose-600 inline-flex items-center gap-1.5 transition-colors"
+                  >
+                    <Heart size={12} className={wishlistCount > 0 ? "fill-rose-600 text-rose-600" : ""} />
+                    Manage Saved Wishlist ({wishlistCount}) →
+                  </a>
+                </div>
+                <p className="status-note mt-3 text-center">Complimentary pan-India delivery applies on orders above ₹999.</p>
               </div>
             )}
           </div>

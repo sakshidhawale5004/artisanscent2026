@@ -363,7 +363,7 @@ export const products: Product[] = [
   },
   {
     id: "soap-varad-ring",
-    name: "Artisan Aromatics Soap Ring",
+    name: "Artisan Scent Aromatics Soap Ring",
     notes: "Floral · Woody · Rich",
     family: "Personal Care",
     category: "soaps",
@@ -401,8 +401,12 @@ export function getStoredProducts(): Product[] {
         if (p.id === "soap-signature" && (p.image.includes("soaps/soap") || !p.image.includes("SOAP NEW"))) {
           return { ...p, image: soap1 };
         }
-        if (p.id === "soap-varad-ring" && (p.image.includes("Varad Aromatics") || !p.image.includes("SOAP NEW"))) {
-          return { ...p, image: soap2 };
+        if (p.id === "soap-varad-ring") {
+          return {
+            ...p,
+            name: "Artisan Scent Aromatics Soap Ring",
+            image: soap2,
+          };
         }
         return p;
       });
