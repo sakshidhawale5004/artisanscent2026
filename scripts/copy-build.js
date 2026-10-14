@@ -1,13 +1,22 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const src = path.resolve(".output/public");
-const dest = path.resolve("dist");
+const candidates = [
+  path.resolve(".vercel/output/static"),
+  path.resolve(".output/public"),
+  path.resolve("dist"),
+];
 
-if (fs.existsSync(src)) {
-  fs.mkdirSync(dest, { recursive: true });
-  fs.cpSync(src, dest, { recursive: true });
-  console.log("Successfully copied .output/public to dist for static deployment.");
+const source = candidates.find((dir) => fs.existsSync(path.join(dir, "index.html")));
+
+if (source) {
+  for (const target of candidates) {
+    if (target !== source) {
+      fs.mkdirSync(target, { recursive: true });
+      fs.cpSync(source, target, { recursive: true });
+    }
+  }
+  console.log(`Successfully mirrored static build from ${source} to all output targets.`);
 } else {
-  console.warn("Source directory .output/public does not exist.");
+  console.warn("No static build source directory with index.html found.");
 }

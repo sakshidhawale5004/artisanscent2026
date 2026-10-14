@@ -22,5 +22,8 @@ export default defineConfig({
       crawlLinks: true,
     },
   },
+  nitro: {
+    preset: "vercel",
+  },
   ssrErrorLogger: false,
 });

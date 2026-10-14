@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "dist",
   "redirects": [
     {
       "source": "/dashboard.php",
@@ -31,13 +30,6 @@
       "source": "/index.php",
       "destination": "/",
       "permanent": true
-    }
-  ],
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
