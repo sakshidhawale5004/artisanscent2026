@@ -64,7 +64,7 @@ function ContactPage() {
 
       <main className="bg-[#fafaf8] text-[#333333] min-h-screen">
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-[#1b5e3f]/15 py-20 px-6 sm:px-12 bg-[#0d0c0b] text-white">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/15 py-14 sm:py-20 px-4 sm:px-12 bg-[#0d0c0b] text-white">
           {/* Unsplash Background Image - Luxury Fragrance Flacon Atelier */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img
@@ -99,7 +99,7 @@ function ContactPage() {
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Contact details */}
             <div className="lg:col-span-5 reveal-on-scroll">
@@ -178,7 +178,7 @@ function ContactPage() {
 
             {/* Enquiry form with high readability */}
             <div className="lg:col-span-7 reveal-on-scroll reveal-delay-150">
-              <div className="rounded-2xl border border-[#e8e2d8] bg-white p-7 sm:p-9 shadow-xl">
+              <div className="rounded-2xl border border-[#e8e2d8] bg-white p-5 sm:p-9 shadow-xl">
                 <div className="eyebrow text-[#1b5e3f] font-semibold mb-1">ATELIER CONCIERGE &amp; INQUIRIES</div>
                 <h2 className="font-display text-2xl text-[#1a1a1a] mb-6">Let&rsquo;s find your signature.</h2>
 
@@ -235,10 +235,10 @@ function ContactPage() {
                     />
                   </div>
 
-                  <div className="flex flex-wrap gap-3 pt-2">
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <a
                       href={mailtoHref}
-                      className="h-12 px-7 inline-flex items-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-sm font-medium tracking-wide shadow-md transition-all"
+                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 text-sm font-medium tracking-wide shadow-md transition-all w-full sm:w-auto"
                     >
                       Compose email <ArrowRight size={15} className="text-[#86efac]" />
                     </a>
@@ -246,7 +246,7 @@ function ContactPage() {
                       href={whatsappHref}
                       target="_blank"
                       rel="noreferrer"
-                      className="h-12 px-7 inline-flex items-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-sm font-medium tracking-wide shadow-sm transition-all"
+                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full border border-[#e8e2d8] hover:border-[#1b5e3f]/50 bg-white hover:bg-[#fbfaf8] text-[#222222] text-sm font-medium tracking-wide shadow-sm transition-all w-full sm:w-auto"
                     >
                       <MessageCircle size={15} className="text-[#1b5e3f]" /> Send via WhatsApp
                     </a>

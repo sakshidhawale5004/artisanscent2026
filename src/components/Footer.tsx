@@ -75,8 +75,8 @@ export function Footer({
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] bg-[#d4af37]/10 blur-[100px] rounded-full pointer-events-none" />
 
       {/* Top Value Assurance Ribbon */}
-      <div className="border-b border-white/10 bg-[#071d12]/70 backdrop-blur-sm py-6 px-6 sm:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-xs">
+      <div className="border-b border-white/10 bg-[#071d12]/70 backdrop-blur-sm py-5 sm:py-6 px-4 sm:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-xs">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#1b5e3f]/40 border border-[#2d8659]/50 flex items-center justify-center text-[#86efac] shrink-0">
               <ShieldCheck size={16} />
@@ -120,10 +120,10 @@ export function Footer({
       </div>
 
       {/* Main Footer Body */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10">
           {/* Column 1: Brand & Identity (4 Cols) */}
-          <div className="lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-4">
             <a href="/" className="inline-flex items-center gap-3 mb-4 group">
               <img
                 src="/assets/logo.jpeg"
@@ -221,7 +221,7 @@ export function Footer({
       </div>
 
       {/* Bottom Bar with Links & Copyright */}
-      <div className="border-t border-white/10 bg-[#04110a] py-6 px-6 sm:px-8 text-xs text-[#7e9185]">
+      <div className="border-t border-white/10 bg-[#04110a] py-6 px-4 sm:px-8 text-xs text-[#7e9185]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left text-[11px]">
             © {new Date().getFullYear()} Artisan Scent. All rights reserved. Handcrafted with Botanical Dedication.
@@ -231,7 +231,7 @@ export function Footer({
             ✦ FRAGRANCE IS PERSONAL. MAKE IT YOURS. ✦
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-[#9eb3a6]">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] text-[#9eb3a6]">
             <a href="/privacy-policy" className="hover:text-[#86efac] transition-colors">
               Privacy Policy
             </a>

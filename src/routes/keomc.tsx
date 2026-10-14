@@ -28,7 +28,7 @@ function KEOMCPage() {
 
       <main className="bg-[#fafaf8] text-[#333333] min-h-screen">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-[#1b5e3f]/15 py-20 px-6 sm:px-12 bg-[#0d0c0b] text-white">
+        <section className="relative overflow-hidden border-b border-[#1b5e3f]/15 py-14 sm:py-20 px-4 sm:px-12 bg-[#0d0c0b] text-white">
           {/* Unsplash Background Image */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img
@@ -59,24 +59,24 @@ function KEOMCPage() {
         </section>
 
         {/* About KEOMC */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
           <div className="reveal-on-scroll max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>ABOUT KEOMC</span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-[#333333] mb-6">
+            <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-tight text-[#333333] mb-6">
               Kulswami Essence Oil
               <br />
               Manufacturing Company
             </h2>
-            <p className="text-base leading-relaxed text-[#666666] mb-6 font-light">
+            <p className="text-sm sm:text-base leading-relaxed text-[#666666] mb-6 font-light">
               Kulswami Essence Oil Manufacturing Company (KEOMC) is a dedicated processor of aromatic
               and medicinal plants, specializing in the recovery of essence oils and botanical
               expertise. We work with premium botanical sources including Geranium, Citronella,
               Lemongrass, Vetiver, Patchouli, and many other rare plants.
             </p>
-            <p className="text-base leading-relaxed text-[#666666] mb-8 font-light">
+            <p className="text-sm sm:text-base leading-relaxed text-[#666666] mb-8 font-light">
               Essential oils are extracted using the traditional and scientific steam distillation
               method, ensuring the highest quality and purity in every batch. Our commitment to
               botanical excellence and traditional methods ensures that every product meets the
@@ -86,8 +86,8 @@ function KEOMCPage() {
         </section>
 
         {/* Services Grid */}
-        <section className="bg-[#f5f5f0] py-16 border-y border-[#1b5e3f]/12">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <section className="bg-[#f5f5f0] py-12 sm:py-16 border-y border-[#1b5e3f]/12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 reveal-on-scroll">
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
                 <span className="w-5 h-[1px] bg-[#d4af37]" />
@@ -177,7 +177,7 @@ function KEOMCPage() {
         </section>
 
         {/* Botanical Expertise */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
           <div className="reveal-on-scroll">
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
@@ -186,7 +186,7 @@ function KEOMCPage() {
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#333333] mb-8">
               Aromatic &amp; Medicinal Plants
             </h2>
-            <p className="text-base leading-relaxed text-[#666666] mb-8 font-light max-w-3xl">
+            <p className="text-sm sm:text-base leading-relaxed text-[#666666] mb-8 font-light max-w-3xl">
               KEOMC specializes in processing a diverse portfolio of premium aromatic and medicinal
               plants through traditional steam distillation methods. Each plant is carefully selected
               and processed to recover the finest essence oils suitable for fragrance, therapeutic,
@@ -216,8 +216,8 @@ function KEOMCPage() {
         </section>
 
         {/* Connection Section */}
-        <section className="bg-gradient-to-b from-[#fafaf8] to-[#f5f5f0] py-16 border-t border-[#1b5e3f]/12">
-          <div className="max-w-3xl mx-auto px-6 sm:px-8 text-center reveal-on-scroll">
+        <section className="bg-gradient-to-b from-[#fafaf8] to-[#f5f5f0] py-12 sm:py-16 border-t border-[#1b5e3f]/12">
+          <div className="max-w-3xl mx-auto px-4 sm:px-8 text-center reveal-on-scroll">
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
               <span className="w-5 h-[1px] bg-[#d4af37]" />
               <span>PARTNERSHIP</span>
@@ -225,14 +225,14 @@ function KEOMCPage() {
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#333333] mb-4">
               KEOMC & Artisan Scents
             </h2>
-            <p className="text-base leading-relaxed text-[#666666] mb-8 font-light">
+            <p className="text-sm sm:text-base leading-relaxed text-[#666666] mb-8 font-light">
               Artisan Scents operates as a trusted partner and customer of KEOMC, sourcing premium
               essence oils and botanical expertise to create distinctive fragrances. This partnership
               ensures that every Artisan Scents product is crafted with botanical excellence and
               artisanal dedication.
             </p>
-            <a href="/about">
-              <Button className="h-12 px-8 bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 rounded-full font-medium tracking-wide shadow-lg transition-all">
+            <a href="/about" className="inline-block w-full sm:w-auto">
+              <Button className="w-full sm:w-auto h-12 px-8 bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#1b5e3f]/30 rounded-full font-medium tracking-wide shadow-lg transition-all">
                 Learn More About Artisan Scents <ArrowRight size={16} className="ml-2" />
               </Button>
             </a>

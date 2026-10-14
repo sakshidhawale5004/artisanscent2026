@@ -84,7 +84,9 @@ export default function ScentSculpture({ compact = false }: { compact?: boolean 
           />
         </Environment>
         <Sculpture {...colors} compact={compact} />
-        {!compact && <OrbitControls enableZoom={false} enablePan={false} />}
+        {!compact && typeof window !== "undefined" && window.innerWidth >= 768 && (
+          <OrbitControls enableZoom={false} enablePan={false} />
+        )}
       </Suspense>
     </Canvas>
   );

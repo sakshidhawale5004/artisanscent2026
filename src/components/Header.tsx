@@ -200,7 +200,21 @@ export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 
             onClick={(e) => e.stopPropagation()}
           >
             <div className="luxury-mobile-header">
-              <img src="/assets/logo.jpeg" alt="Artisan Scents" className="luxury-mobile-logo" />
+              <a href="/" className="flex items-center gap-3 no-underline" onClick={() => setMobileOpen(false)}>
+                <div className="luxury-logo-circle" style={{ width: 40, height: 40 }}>
+                  <img
+                    src="/assets/logo.jpeg"
+                    alt="Artisan Scents logo"
+                    className="luxury-logo-img"
+                    width={40}
+                    height={40}
+                  />
+                </div>
+                <div>
+                  <div className="luxury-brand-title" style={{ fontSize: 16 }}>ARTISAN SCENT</div>
+                  <div className="luxury-brand-subtitle" style={{ fontSize: 7 }}>LUXURY FRAGRANCES</div>
+                </div>
+              </a>
               <button
                 className="luxury-icon-btn"
                 aria-label="Close menu"
