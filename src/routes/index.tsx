@@ -22,9 +22,9 @@ import { EntranceLoader } from "@/components/EntranceLoader";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import perfumeStory from "@/assets/images/perfume_story_editorial_1791888489737.jpg";
+import emeraldPerfume from "@/assets/images/hero_emerald_perfume_1791888469120.jpg";
 
 const ScentSculpture = lazy(() => import("@/components/ScentSculpture"));
-const FloatingSprinkles = lazy(() => import("@/components/FloatingSprinkles"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -359,122 +359,175 @@ function Index() {
           </span>
         </section>
 
-        {/* Our Product Categories Section */}
-        <section className="section bg-[#fafaf8] text-[#333333] border-y border-[#2d8659]/15 py-20">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-3">
-                <span className="w-5 h-[1px] bg-[#d4af37]" />
-                <span>ARTISANAL PORTFOLIO</span>
-                <span className="w-5 h-[1px] bg-[#d4af37]" />
+        {/* Premium About Us Section */}
+        <section id="about-us" className="relative overflow-hidden py-24 sm:py-32 bg-[#fafaf8] text-[#1a1a1a] border-y border-[#1b5e3f]/15">
+          {/* Subtle Ambient Decorative Backdrops */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1b5e3f]/5 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#d4af37]/8 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8">
+            {/* Eyebrow & Main Section Heading */}
+            <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20 reveal-on-scroll">
+              <div className="inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.3em] text-[#1b5e3f] font-semibold mb-3">
+                <span className="w-8 h-[1px] bg-[#d4af37]" />
+                <span>ABOUT ARTISAN SCENTS</span>
+                <span className="w-8 h-[1px] bg-[#d4af37]" />
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#333333]">
-                Our Product Categories
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#1a1a1a] leading-[1.12]">
+                The Alchemy of Botanical Luxury &amp;
+                <br />
+                <em className="text-[#1b5e3f] font-serif italic">Artisanal Mastery</em>
               </h2>
-              <p className="text-[#666666] text-sm mt-3 font-light leading-relaxed">
-                Five distinct scent worlds, each crafted with rare botanical essences and artisanal dedication.
+              <p className="mt-4 text-[#555555] text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
+                Rooted in centuries-old Indian perfume traditions and crafted in unison with KEOMC&apos;s botanical laboratories, we transform nature&apos;s rare essences into unforgettable sensory poetry.
               </p>
             </div>
 
-            {/* Category Cards – 2 col grid with shopimages */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  href: "/perfumes",
-                  img: "/assets/shopimages/perfume sectionimage.png",
-                  badge: "Extrait",
-                  title: "Perfumes",
-                  desc: "Luxury high-concentration fragrances crafted for lasting presence.",
-                  delay: "reveal-delay-100",
-                  accent: "#1b5e3f",
-                },
-                {
-                  href: "/essence-oils",
-                  img: "/assets/shopimages/essenceoil section image.png",
-                  badge: "100% Pure",
-                  title: "Essence Oils",
-                  desc: "Steam-distilled botanical extracts. Unadulterated & therapeutic grade.",
-                  delay: "reveal-delay-200",
-                  accent: "#1b5e3f",
-                },
-                {
-                  href: "/car-perfumes",
-                  img: "/assets/shopimages/carsectionimagw.png",
-                  badge: "Wood Cap",
-                  title: "Car Perfumes",
-                  desc: "Hanging diffusers that transform your cabin into a scented sanctuary.",
-                  delay: "reveal-delay-300",
-                  accent: "#1b5e3f",
-                },
-                {
-                  href: "/agarbatti",
-                  img: "/assets/shopimages/agarbatti section image.png",
-                  badge: "Sacred",
-                  title: "Agarbatti",
-                  desc: "Charcoal-free handcrafted incense for prayer, meditation & calm.",
-                  delay: "reveal-delay-400",
-                  accent: "#1b5e3f",
-                },
-                {
-                  href: "/soaps",
-                  img: "/assets/shopimages/soap sectionimage.jpg",
-                  badge: "Handcrafted",
-                  title: "Soaps",
-                  desc: "Cold-process botanical bathing bars enriched with pure essential oils.",
-                  delay: "reveal-delay-500",
-                  accent: "#1b5e3f",
-                },
-              ].map((cat) => (
-                <a
-                  key={cat.href}
-                  href={cat.href}
-                  className={`reveal-on-scroll ${cat.delay} group relative rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-2xl hover:shadow-[#1b5e3f]/8`}
-                >
-                  {/* Image */}
-                  <div className="relative h-52 w-full overflow-hidden">
-                    <img
-                      src={cat.img}
-                      alt={cat.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                    <span className="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/25 font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
-                      {cat.badge}
+            {/* Split Story Showcase */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              {/* Left Column: Premium Flacon Image with Floating Badges */}
+              <div className="lg:col-span-6 relative reveal-on-scroll">
+                <div className="relative rounded-3xl overflow-hidden border-2 border-[#1b5e3f]/25 shadow-2xl bg-[#0b2b1c] group">
+                  <img
+                    src={emeraldPerfume}
+                    alt="Artisan Scents Veridian Jasmine Eau de Parfum Flacon"
+                    className="w-full h-[460px] sm:h-[540px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {/* Soft gradient vignetting */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+                  {/* Top Badges */}
+                  <div className="absolute top-5 left-5 right-5 flex items-center justify-between pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-[#d4af37]/50 text-[#f6e05e] text-xs font-medium tracking-widest uppercase">
+                      <Sparkles size={13} className="text-[#d4af37]" />
+                      Haute Parfumerie
+                    </span>
+                    <span className="px-3.5 py-1.5 rounded-full bg-[#1b5e3f]/90 backdrop-blur-md border border-[#86efac]/40 text-white text-xs font-semibold tracking-wider uppercase">
+                      30–40% Extrait
                     </span>
                   </div>
-                  {/* Info */}
-                  <div className="p-5 flex flex-col flex-1 justify-between">
-                    <div>
-                      <h3 className="font-display text-xl text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors mb-1">
-                        {cat.title}
-                      </h3>
-                      <p className="text-xs text-[#666666] font-light leading-relaxed">{cat.desc}</p>
+
+                  {/* Floating Bottom Stamp Card */}
+                  <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center gap-4 shadow-xl">
+                    <div className="w-14 h-14 rounded-full bg-[#1b5e3f] border-2 border-[#d4af37] flex flex-col items-center justify-center shrink-0 shadow-lg">
+                      <span className="text-[9px] font-mono tracking-widest uppercase text-[#86efac] leading-tight">EST.</span>
+                      <span className="text-xs font-bold font-serif text-[#f6e05e]">KEOMC</span>
                     </div>
-                    <div className="mt-4 flex items-center justify-between text-xs text-[#1b5e3f] font-semibold pt-3 border-t border-[#e8e2d8]">
-                      <span>Explore Collection</span>
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    <div>
+                      <div className="font-display text-base font-medium text-white tracking-wide">
+                        Pure Steam-Distilled Terroir
+                      </div>
+                      <div className="text-xs text-[#c4f0db] font-light mt-0.5">
+                        Zero synthetic fillers · Non-toxic · Ethical botanical harvest
+                      </div>
                     </div>
                   </div>
-                </a>
-              ))}
+                </div>
+              </div>
+
+              {/* Right Column: Narrative & Heritage Pillars */}
+              <div className="lg:col-span-6 flex flex-col justify-center reveal-on-scroll reveal-delay-150">
+                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-bold mb-3">
+                  <span>OUR STORY &amp; PHILOSOPHY</span>
+                </div>
+
+                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[#1a1a1a] font-normal leading-snug mb-5">
+                  More Than a Fragrance. An Invisible Signature.
+                </h3>
+
+                <p className="text-[#444444] text-base leading-relaxed font-light mb-4">
+                  At Artisan Scents, we believe perfume is not merely an accessory—it is an emotional sanctuary, a living memory, and the purest reflection of who you are. Born in collaboration with <strong>Kulswami Essence Oil Manufacturing Company (KEOMC)</strong>, our atelier bridges age-old Indian aromatic wisdom with modern scientific refinement.
+                </p>
+
+                <p className="text-[#555555] text-sm sm:text-base leading-relaxed font-light mb-8">
+                  From steam-distilled single-origin essential oils to high-concentration extrait perfumes, cold-process botanical soaps, charcoal-free dhoop, and inverted wooden car diffusers, every creation is composed in small artisanal batches to honour the spirit of the earth.
+                </p>
+
+                {/* 3 Pillars Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                  <div className="p-4 rounded-xl border border-[#e8e2d8] bg-white shadow-sm hover:border-[#1b5e3f]/40 transition-colors">
+                    <div className="w-9 h-9 rounded-lg bg-[#1b5e3f]/10 text-[#1b5e3f] flex items-center justify-center mb-2.5">
+                      <ShieldCheck size={18} />
+                    </div>
+                    <h4 className="font-display text-sm font-semibold text-[#1a1a1a] mb-1">Single-Origin</h4>
+                    <p className="text-xs text-[#666666] font-light leading-relaxed">
+                      Traceable botanicals cultivated at peak season.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-[#e8e2d8] bg-white shadow-sm hover:border-[#1b5e3f]/40 transition-colors">
+                    <div className="w-9 h-9 rounded-lg bg-[#1b5e3f]/10 text-[#1b5e3f] flex items-center justify-center mb-2.5">
+                      <Sparkles size={18} />
+                    </div>
+                    <h4 className="font-display text-sm font-semibold text-[#1a1a1a] mb-1">Small Batch</h4>
+                    <p className="text-xs text-[#666666] font-light leading-relaxed">
+                      Slow-matured and hand-poured in limited runs.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-[#e8e2d8] bg-white shadow-sm hover:border-[#1b5e3f]/40 transition-colors">
+                    <div className="w-9 h-9 rounded-lg bg-[#1b5e3f]/10 text-[#1b5e3f] flex items-center justify-center mb-2.5">
+                      <ShoppingBag size={18} />
+                    </div>
+                    <h4 className="font-display text-sm font-semibold text-[#1a1a1a] mb-1">Enduring Sillage</h4>
+                    <p className="text-xs text-[#666666] font-light leading-relaxed">
+                      30–40% pure oil for all-day intimate presence.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Metric Strip */}
+                <div className="mb-8 py-4 px-6 rounded-2xl bg-[#f0ede6]/70 border border-[#e8e2d8] grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <div className="font-display text-2xl font-semibold text-[#1b5e3f]">100%</div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#666666] mt-0.5 font-medium">Botanical Purity</div>
+                  </div>
+                  <div>
+                    <div className="font-display text-2xl font-semibold text-[#1b5e3f]">35%+</div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#666666] mt-0.5 font-medium">Extrait Strength</div>
+                  </div>
+                  <div>
+                    <div className="font-display text-2xl font-semibold text-[#1b5e3f]">60 Days</div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#666666] mt-0.5 font-medium">Diffuser Life</div>
+                  </div>
+                  <div>
+                    <div className="font-display text-2xl font-semibold text-[#1b5e3f]">Zero</div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#666666] mt-0.5 font-medium">Harsh Chemicals</div>
+                  </div>
+                </div>
+
+                {/* Action CTA Buttons */}
+                <div className="flex flex-wrap items-center gap-4">
+                  <Button
+                    asChild
+                    className="h-12 px-7 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white border border-[#2d8659]/50 font-medium tracking-wide shadow-lg transition-all"
+                  >
+                    <a href="/about" className="inline-flex items-center gap-2">
+                      Discover Our Story <ArrowRight size={16} />
+                    </a>
+                  </Button>
+
+                  <Button
+                    asChild
+                    className="h-12 px-7 rounded-full border border-[#1b5e3f]/30 hover:border-[#1b5e3f] bg-white hover:bg-[#1b5e3f]/5 text-[#1b5e3f] text-sm font-medium tracking-wide transition-all shadow-sm"
+                  >
+                    <a href="/keomc" className="inline-flex items-center gap-2">
+                      Botanical Heritage (KEOMC) <ArrowRight size={14} />
+                    </a>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Curated Masterpieces - The Signature Icons (Luxury Green & 3D Floating Sprinkles) */}
+        {/* Curated Masterpieces - The Signature Icons (Luxury Green) */}
         <section className="relative overflow-hidden py-24 px-6 sm:px-8 bg-gradient-to-b from-[#04150c] via-[#09291a] to-[#04150c] text-white border-y border-[#2d8659]/30">
           {/* Ambient Emerald & Gold Radial Glows */}
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[#1b5e3f]/25 blur-[140px] rounded-full pointer-events-none" />
           <div className="absolute bottom-10 right-10 w-[500px] h-[350px] bg-[#d4af37]/12 blur-[120px] rounded-full pointer-events-none" />
           <div className="absolute top-10 left-10 w-[450px] h-[300px] bg-[#34d399]/10 blur-[100px] rounded-full pointer-events-none" />
-
-          {/* 3D Floating Sprinkles Background */}
-          {mounted && (
-            <Suspense fallback={null}>
-              <FloatingSprinkles />
-            </Suspense>
-          )}
 
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-14 reveal-on-scroll">
