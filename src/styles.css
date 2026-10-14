@@ -393,17 +393,18 @@ a {
   font-family: var(--font-display);
   font-size: 20px;
   letter-spacing: 0.16em;
-  font-weight: 500;
-  color: #1b5e3f;
+  font-weight: 600;
+  color: #0d3b22;
   line-height: 1.1;
   text-transform: uppercase;
 }
 .luxury-brand-subtitle {
   font-size: 8px;
   letter-spacing: 0.22em;
-  color: #1b5e3f;
+  color: #0d3b22;
   text-transform: uppercase;
   margin-top: 2px;
+  font-weight: 600;
 }
 
 /* nav on right */

@@ -363,7 +363,7 @@ export const products: Product[] = [
   },
   {
     id: "soap-varad-ring",
-    name: "Varad Aromatics Soap Ring",
+    name: "Artisan Aromatics Soap Ring",
     notes: "Floral · Woody · Rich",
     family: "Personal Care",
     category: "soaps",

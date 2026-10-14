@@ -548,7 +548,20 @@ function ProductDetailPage() {
                   <span>Subtotal</span>
                   <span>{money(total)}</span>
                 </div>
-                <Button className="w-full h-12">
+                <Button 
+                  className="w-full h-12"
+                  onClick={() => {
+                    const cartItems = Object.entries(bag)
+                      .map(([id, qty]) => {
+                        const product = allProducts.find(p => p.id === id);
+                        return product ? `${product.name} x${qty}` : '';
+                      })
+                      .filter(Boolean)
+                      .join(', ');
+                    const whatsappUrl = `https://wa.me/919820252868?text=Hi! I would like to purchase: ${encodeURIComponent(cartItems)}. Total: ${encodeURIComponent(money(total))}`;
+                    window.open(whatsappUrl, '_blank');
+                  }}
+                >
                   Continue to checkout <ArrowRight />
                 </Button>
                 <p className="status-note mt-3">Shipping and taxes calculated at checkout.</p>
