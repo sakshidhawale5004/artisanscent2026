@@ -42,9 +42,9 @@ export type Product = {
   image: string;
   badge: string;
   description: string;
-  botanicalName?: string;
-  size?: string;
-  applications?: string[];
+  botanicalName?: string | undefined;
+  size?: string | undefined;
+  applications?: string[] | undefined;
 };
 
 export const products: Product[] = [

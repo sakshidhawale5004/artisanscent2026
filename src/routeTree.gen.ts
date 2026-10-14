@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AgarbattiRouteImport } from './routes/agarbatti'
 import { Route as CarPerfumesRouteImport } from './routes/car-perfumes'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CrmRouteImport } from './routes/crm'
 import { Route as EssenceOilsRouteImport } from './routes/essence-oils'
 import { Route as ExhibitionsRouteImport } from './routes/exhibitions'
 import { Route as KeomcRouteImport } from './routes/keomc'
@@ -23,6 +25,7 @@ import { Route as ProjectSitesRouteImport } from './routes/project-sites'
 import { Route as ReturnPolicyRouteImport } from './routes/return-policy'
 import { Route as SoapsRouteImport } from './routes/soaps'
 import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsProductIdRouteImport } from './routes/products.$productId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -33,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgarbattiRoute = AgarbattiRouteImport.update({
@@ -48,6 +56,11 @@ const CarPerfumesRoute = CarPerfumesRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CrmRoute = CrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EssenceOilsRoute = EssenceOilsRouteImport.update({
@@ -95,6 +108,11 @@ const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
   path: '/terms-and-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
   id: '/products/$productId',
   path: '/products/$productId',
@@ -104,9 +122,11 @@ const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
+  '/crm': typeof CrmRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -117,13 +137,16 @@ export interface FileRoutesByFullPath {
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
+  '/crm': typeof CrmRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -134,14 +157,17 @@ export interface FileRoutesByTo {
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
+  '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
+  '/crm': typeof CrmRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -152,15 +178,18 @@ export interface FileRoutesById {
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/products/$productId': typeof ProductsProductIdRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
     | '/contact'
+    | '/crm'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -171,13 +200,16 @@ export interface FileRouteTypes {
     | '/soaps'
     | '/terms-and-conditions'
     | '/products/$productId'
+    | '/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
     | '/contact'
+    | '/crm'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -188,13 +220,16 @@ export interface FileRouteTypes {
     | '/soaps'
     | '/terms-and-conditions'
     | '/products/$productId'
+    | '/products'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
     | '/contact'
+    | '/crm'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -205,14 +240,17 @@ export interface FileRouteTypes {
     | '/soaps'
     | '/terms-and-conditions'
     | '/products/$productId'
+    | '/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
   AgarbattiRoute: typeof AgarbattiRoute
   CarPerfumesRoute: typeof CarPerfumesRoute
   ContactRoute: typeof ContactRoute
+  CrmRoute: typeof CrmRoute
   EssenceOilsRoute: typeof EssenceOilsRoute
   ExhibitionsRoute: typeof ExhibitionsRoute
   KeomcRoute: typeof KeomcRoute
@@ -223,6 +261,7 @@ export interface RootRouteChildren {
   SoapsRoute: typeof SoapsRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   ProductsProductIdRoute: typeof ProductsProductIdRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agarbatti': {
@@ -260,6 +306,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crm': {
+      id: '/crm'
+      path: '/crm'
+      fullPath: '/crm'
+      preLoaderRoute: typeof CrmRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/essence-oils': {
@@ -325,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/$productId': {
       id: '/products/$productId'
       path: '/products/$productId'
@@ -338,9 +398,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
   AgarbattiRoute: AgarbattiRoute,
   CarPerfumesRoute: CarPerfumesRoute,
   ContactRoute: ContactRoute,
+  CrmRoute: CrmRoute,
   EssenceOilsRoute: EssenceOilsRoute,
   ExhibitionsRoute: ExhibitionsRoute,
   KeomcRoute: KeomcRoute,
@@ -351,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   SoapsRoute: SoapsRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
   ProductsProductIdRoute: ProductsProductIdRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

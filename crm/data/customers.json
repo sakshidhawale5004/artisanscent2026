@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CUST-101",
+    "name": "Aarav Sharma",
+    "email": "aarav.sharma@example.com",
+    "phone": "+91 98201 44521",
+    "segment": "VIP Reserve",
+    "ordersCount": 6,
+    "totalSpend": 38450,
+    "lastOrder": "2026-10-12"
+  },
+  {
+    "id": "CUST-102",
+    "name": "Meera Singhania",
+    "email": "meera.singhania@luxurymail.com",
+    "phone": "+91 98112 90123",
+    "segment": "High LTV",
+    "ordersCount": 4,
+    "totalSpend": 29800,
+    "lastOrder": "2026-10-13"
+  },
+  {
+    "id": "CUST-103",
+    "name": "Rohan Kapoor",
+    "email": "rohan.k@zenithcorp.in",
+    "phone": "+91 98900 11223",
+    "segment": "Frequent Patron",
+    "ordersCount": 5,
+    "totalSpend": 15400,
+    "lastOrder": "2026-10-13"
+  },
+  {
+    "id": "CUST-104",
+    "name": "Ananya Deshmukh",
+    "email": "ananya.d@botanica.org",
+    "phone": "+91 97654 32109",
+    "segment": "New Client",
+    "ordersCount": 1,
+    "totalSpend": 2695,
+    "lastOrder": "2026-10-14"
+  },
+  {
+    "id": "CUST-105",
+    "name": "Vikram Malhotra",
+    "email": "v.malhotra@atelier.in",
+    "phone": "+91 98220 78901",
+    "segment": "VIP Reserve",
+    "ordersCount": 8,
+    "totalSpend": 54200,
+    "lastOrder": "2026-10-14"
+  }
+]

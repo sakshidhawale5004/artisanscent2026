@@ -14,6 +14,7 @@ const navItems = [
     label: "Shop",
     href: "#",
     children: [
+      { label: "All Products (Complete)", href: "/products" },
       { label: "Perfumes", href: "/perfumes" },
       { label: "Essence Oils", href: "/essence-oils" },
       { label: "Car Perfumes", href: "/car-perfumes" },
@@ -24,6 +25,7 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "KEOMC", href: "/keomc" },
   { label: "Contact", href: "/contact" },
+  { label: "Admin CRM", href: "/admin" },
 ];
 
 export function Header({ currentPage, onSearchClick, onBagClick, totalItems = 0 }: HeaderProps) {
