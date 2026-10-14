@@ -23,6 +23,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import perfumeStory from "@/assets/images/perfume_story_editorial_1791888489737.jpg";
 import emeraldPerfume from "@/assets/images/hero_emerald_perfume_1791888469120.jpg";
+import aboutSectionImage from "@/assets/images/aboutsectionimagehomepage.jpg";
 
 const ScentSculpture = lazy(() => import("@/components/ScentSculpture"));
 export const Route = createFileRoute("/")({
@@ -385,17 +386,17 @@ function Index() {
 
             {/* Split Story Showcase */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-center">
-              {/* Left Column: Premium Flacon Image with Floating Badges */}
+              {/* Left Column: Premium About Section Image with Floating Badges */}
               <div className="lg:col-span-6 relative reveal-on-scroll">
-                <div className="relative rounded-3xl overflow-hidden border-2 border-[#1b5e3f]/25 shadow-2xl bg-[#0b2b1c] group">
+                <div className="relative rounded-3xl overflow-hidden border-2 border-[#1b5e3f]/25 shadow-2xl bg-[#f5f5f0] group">
                   <img
-                    src={emeraldPerfume}
-                    alt="Artisan Scents Veridian Jasmine Eau de Parfum Flacon"
+                    src={aboutSectionImage}
+                    alt="Artisan Scents About Section - Premium Fragrances & Botanical Excellence"
                     className="w-full h-[300px] sm:h-[440px] lg:h-[540px] object-cover transition-transform duration-1000 group-hover:scale-105"
                     loading="lazy"
                   />
                   {/* Soft gradient vignetting */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 right-3 sm:top-5 sm:left-5 sm:right-5 flex items-center justify-between pointer-events-none">
