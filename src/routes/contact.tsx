@@ -299,14 +299,7 @@ function ContactPage() {
                   </div>
 
                   <div className="pt-2 flex flex-col gap-2.5">
-                    <button
-                      type="submit"
-                      className="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full bg-[#1b5e3f] hover:bg-[#164a31] text-white text-sm font-medium tracking-wide shadow-md transition-all w-full cursor-pointer"
-                    >
-                      Submit Inquiry to Maison CRM <ArrowRight size={15} className="text-[#86efac]" />
-                    </button>
-
-                    <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                    <div className="flex flex-col sm:flex-row gap-2.5">
                       <a
                         href={whatsappHref}
                         target="_blank"
