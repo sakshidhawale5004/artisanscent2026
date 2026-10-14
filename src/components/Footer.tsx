@@ -144,10 +144,17 @@ export function Footer({
               Rooted in centuries-old Indian perfume traditions and modern steam distillation with KEOMC Botanical Labs. Formulating luxury perfumes, therapeutic essence oils, hanging car diffusers, and sacred incense.
             </p>
 
-            <div className="space-y-2 text-xs text-[#cad6cf]">
-              <div className="flex items-center gap-2 text-[11px]">
-                <MapPin size={13} className="text-[#d4af37] shrink-0" />
-                <span>Maharashtra, India · Sourced in collaboration with KEOMC</span>
+            <div className="space-y-3 text-xs text-[#cad6cf]">
+              <div className="flex items-start gap-2.5 text-[11px]">
+                <MapPin size={15} className="text-[#d4af37] shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold text-white block text-[10px] uppercase tracking-wider mb-0.5">
+                    Visit us
+                  </span>
+                  <span className="text-[#a8b8ae] leading-relaxed block">
+                    Flat No. 602, Plot No. 1, Shiv Shankar Plaza 2, Sector 7, Airoli, Navi Mumbai 400708, India.
+                  </span>
+                </div>
               </div>
               <div className="flex items-center gap-2 text-[11px]">
                 <Mail size={13} className="text-[#d4af37] shrink-0" />

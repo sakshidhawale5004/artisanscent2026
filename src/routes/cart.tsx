@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useShoppingBag, useWishlist } from "@/lib/store";
+import { useShoppingBag, useWishlist, addOrderToCRM } from "@/lib/store";
 import { useProducts, money, type Product } from "@/lib/products";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -57,6 +57,14 @@ function CartPage() {
     const itemsSummary = cartProducts
       .map((p) => `${p.name} (${p.size || "Standard"}) x${bag[p.id]} [${money(p.price * (bag[p.id] || 0))}]`)
       .join(", ");
+
+    // Record order and client interaction in CRM Dashboard
+    addOrderToCRM({
+      customer: "WhatsApp Shopper",
+      email: "whatsapp.shopper@artisanscent.com",
+      items: itemsSummary,
+      total: total,
+    });
 
     const message = `Hello Artisan Scent! I would like to order the following items from my cart:\n\n${itemsSummary}\n\nSubtotal: ${money(cartSubtotal)}\nShipping: ${shipping === 0 ? "Complimentary (FREE)" : money(shipping)}\nEstimated Total: ${money(total)}${checkoutNote ? `\nSpecial Instructions: ${checkoutNote}` : ""}\n\nPlease confirm availability and dispatch details.`;
 

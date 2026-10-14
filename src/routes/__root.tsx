@@ -44,12 +44,12 @@ function NotFoundComponent() {
           >
             Go home
           </Link>
-          <a
-            href="/admin"
+          <Link
+            to="/products"
             className="inline-flex items-center justify-center rounded-full border border-[#1b5e3f]/40 bg-white px-5 py-2 text-sm font-medium text-[#1b5e3f] transition-colors hover:bg-[#f2efe9]"
           >
-            Open Admin CRM Dashboard →
-          </a>
+            Explore Fragrances →
+          </Link>
         </div>
       </div>
     </div>

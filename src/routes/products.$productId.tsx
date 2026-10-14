@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products, useProducts, getStoredProducts, money, type Product } from "@/lib/products";
-import { useWishlist, useShoppingBag } from "@/lib/store";
+import { useWishlist, useShoppingBag, addOrderToCRM } from "@/lib/store";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -622,6 +622,12 @@ function ProductDetailPage() {
                       })
                       .filter(Boolean)
                       .join(', ');
+                    addOrderToCRM({
+                      customer: "WhatsApp Drawer Client",
+                      email: "whatsapp.client@artisanscent.com",
+                      items: cartItems,
+                      total: total,
+                    });
                     const whatsappUrl = `https://wa.me/919820252868?text=Hi! I would like to purchase: ${encodeURIComponent(cartItems)}. Total: ${encodeURIComponent(money(total))}`;
                     window.open(whatsappUrl, '_blank');
                   }}

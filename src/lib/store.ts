@@ -252,3 +252,93 @@ export function addInquiryToCRM(data: Omit<Inquiry, "id" | "status" | "date" | "
 
   return newInquiry;
 }
+
+export type CRMOrder = {
+  id: string;
+  customer: string;
+  email: string;
+  items: string;
+  total: number;
+  status: "Completed" | "Processing" | "Shipped" | "Pending";
+  date: string;
+};
+
+export function addOrderToCRM(data: {
+  customer?: string;
+  email?: string;
+  phone?: string;
+  items: string;
+  total: number;
+}): CRMOrder {
+  const now = new Date();
+  const dateStr = now.toISOString().split("T")[0] as string;
+  const orderId = `ORD-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, "0")}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+  const customerName = data.customer || "WhatsApp Concierge Client";
+  const customerEmail = data.email || "whatsapp.order@artisanscent.com";
+
+  const newOrder: CRMOrder = {
+    id: orderId,
+    customer: customerName,
+    email: customerEmail,
+    items: data.items,
+    total: data.total,
+    status: "Pending",
+    date: dateStr,
+  };
+
+  if (typeof window !== "undefined") {
+    // 1. Record in CRM Orders list
+    try {
+      const raw = localStorage.getItem("artisanscent_crm_orders");
+      const orders = raw ? JSON.parse(raw) : [];
+      const updatedOrders = [newOrder, ...orders];
+      localStorage.setItem("artisanscent_crm_orders", JSON.stringify(updatedOrders));
+      window.dispatchEvent(new CustomEvent("artisanscent:orders-updated", { detail: updatedOrders }));
+    } catch (e) {
+      console.error("Failed to record CRM order", e);
+    }
+
+    // 2. Record / update CRM Customer Patron
+    try {
+      const patronKey = "artisanscent_crm_customers";
+      const raw = localStorage.getItem(patronKey);
+      const patrons = raw ? JSON.parse(raw) : [];
+      const existingIdx = patrons.findIndex((p: any) => p.email.toLowerCase() === customerEmail.toLowerCase());
+
+      if (existingIdx >= 0) {
+        patrons[existingIdx].ordersCount = (patrons[existingIdx].ordersCount || 0) + 1;
+        patrons[existingIdx].totalSpend = (patrons[existingIdx].totalSpend || 0) + data.total;
+        patrons[existingIdx].lastOrder = dateStr;
+      } else {
+        patrons.unshift({
+          id: `CUST-${Date.now().toString().slice(-4)}`,
+          name: customerName,
+          email: customerEmail,
+          phone: data.phone || "+91 98202 52868",
+          segment: "WhatsApp Order / Patron",
+          ordersCount: 1,
+          totalSpend: data.total,
+          lastOrder: dateStr,
+          inquiryInterest: data.items,
+        });
+      }
+      localStorage.setItem(patronKey, JSON.stringify(patrons));
+      window.dispatchEvent(new CustomEvent("artisanscent:customers-updated", { detail: patrons }));
+    } catch (e) {
+      console.error("Failed to sync patron customer", e);
+    }
+
+    // 3. Also log as Inquiry in CRM so it shows up under Recent Activity on Dashboard tab
+    addInquiryToCRM({
+      name: customerName,
+      email: customerEmail,
+      phone: data.phone || "+91 98202 52868",
+      interest: "WhatsApp Checkout Order",
+      message: `WhatsApp Checkout initiated for: ${data.items}. Total Value: ₹${data.total}`,
+    });
+  }
+
+  return newOrder;
+}
+

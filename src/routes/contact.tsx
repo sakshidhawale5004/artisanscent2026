@@ -228,9 +228,9 @@ function ContactPage() {
                   <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 flex items-start gap-3">
                     <CheckCircle2 size={20} className="text-emerald-700 shrink-0 mt-0.5" />
                     <div>
-                      <div className="font-semibold text-sm">✦ Inquiry Logged in CRM Dashboard!</div>
+                      <div className="font-semibold text-sm">✦ Inquiry Received!</div>
                       <div className="text-xs text-emerald-900 mt-1 leading-relaxed">
-                        Thank you, <strong>{submittedInquiry.name}</strong>. Your inquiry (Reference: <code>{submittedInquiry.id}</code>) has been recorded in the Staff CRM Dashboard. Our concierge will connect with you shortly.
+                        Thank you, <strong>{submittedInquiry.name}</strong>. Your message (Reference: <code>{submittedInquiry.id}</code>) has been received. Our perfumery concierge will connect with you shortly.
                       </div>
                     </div>
                   </div>
@@ -335,7 +335,7 @@ function ContactPage() {
                   </div>
 
                   <p className="text-[11px] text-[#777777] leading-relaxed pt-1">
-                    Your inquiry is logged instantly into the Artisan Scent Staff CRM Hub. Our perfumery concierge will contact you within 24 hours.
+                    Your inquiry has been received. Our perfumery concierge will be delighted to connect with you within 24 hours.
                   </p>
                 </form>
               </div>
