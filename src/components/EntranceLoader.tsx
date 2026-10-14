@@ -54,9 +54,11 @@ export function EntranceLoader() {
       aria-label="Loading Artisan Scents fragrances"
       aria-live="polite"
     >
-      {/* 3D Logo with perspective */}
+      {/* Circular Logo with 360 Rotating Accent Rings */}
       <div className="entrance-logo-container" aria-hidden="true">
-        <div className="entrance-logo-3d">
+        <div className="entrance-logo-ring-outer" />
+        <div className="entrance-logo-ring" />
+        <div className="entrance-logo-circle">
           <img
             src="/assets/logo.jpeg"
             alt="Artisan Scents"

@@ -59,8 +59,8 @@ function SprinklesField() {
     for (let i = 0; i < count; i++) {
       const isGold = Math.random() > 0.45;
       const palette = isGold ? goldColors : emeraldColors;
-      const color = palette[Math.floor(Math.random() * palette.length)];
-      const type = types[Math.floor(Math.random() * types.length)];
+      const color = palette[Math.floor(Math.random() * palette.length)] ?? "#d4af37";
+      const type = types[Math.floor(Math.random() * types.length)] ?? "diamond";
 
       list.push({
         position: [
