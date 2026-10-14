@@ -95,7 +95,7 @@ function SoapsPage() {
             {/* Image Left */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#e8e2d8] bg-[#faf8f5]">
               <img
-                src="/assets/images/soap_sectionimage.jpg"
+                src="/assets/soap_sectionimage.jpg"
                 alt="Bathing as a Daily Ritual - Artisan Soaps"
                 className="w-full h-[500px] object-cover p-6"
               />
