@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   Package,
   Users,
@@ -23,6 +23,10 @@ import {
   ShieldCheck,
   Sparkles,
   Mail,
+  UploadCloud,
+  Image as ImageIcon,
+  Camera,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -125,6 +129,99 @@ export function AdminHubPage() {
     "Handcrafted formulation distilled with rare botanicals in collaboration with KEOMC Botanical Labs."
   );
 
+  // Image Upload Control States
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imageUploadMethod, setImageUploadMethod] = useState<"file" | "url">("file");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+
+  const processImageFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      showFeedback("Please select an image file (PNG, JPG, WEBP, or SVG).");
+      return;
+    }
+
+    setIsUploadingImage(true);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const src = e.target?.result as string;
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        // Create canvas to resize to reasonable web dimensions (max 900x900)
+        const canvas = document.createElement("canvas");
+        const MAX_DIM = 900;
+        let { width, height } = img;
+
+        if (width > height) {
+          if (width > MAX_DIM) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          }
+        } else {
+          if (height > MAX_DIM) {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const isPng = file.type === "image/png";
+          const compressedDataUrl = canvas.toDataURL(isPng ? "image/png" : "image/jpeg", 0.88);
+          setFormImage(compressedDataUrl);
+          showFeedback(`Image "${file.name}" uploaded and optimized!`);
+        } else {
+          setFormImage(src);
+          showFeedback(`Image "${file.name}" uploaded successfully!`);
+        }
+        setIsUploadingImage(false);
+      };
+      img.onerror = () => {
+        setFormImage(src);
+        setIsUploadingImage(false);
+        showFeedback(`Image "${file.name}" uploaded successfully!`);
+      };
+    };
+    reader.onerror = () => {
+      setIsUploadingImage(false);
+      showFeedback("Could not read image file. Please try again.");
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      processImageFile(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      processImageFile(file);
+    }
+  };
+
   // Toast / Feedback message
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
@@ -224,6 +321,7 @@ export function AdminHubPage() {
     setFormSalePrice(undefined);
     setFormRating(4.9);
     setFormImage("/assets/perfumes/Faceted Gold Perfume Bottle.png");
+    setImageUploadMethod("file");
     setFormNotes("Amber · Sandalwood · Jasmine");
     setFormFamily("Luxury");
     setFormSize("50 ml");
@@ -247,6 +345,7 @@ export function AdminHubPage() {
     setFormSalePrice(p.salePrice);
     setFormRating(p.rating || 4.9);
     setFormImage(p.image);
+    setImageUploadMethod(p.image.startsWith("data:") ? "file" : "url");
     setFormNotes(p.notes);
     setFormFamily(p.family);
     setFormSize(p.size || "50 ml");
@@ -1565,73 +1664,182 @@ export function AdminHubPage() {
                 </div>
               </div>
 
-              {/* Image URL with Preset Selector */}
-              <div>
-                <label className="block text-[11px] uppercase tracking-wider text-[#555555] font-semibold mb-1">
-                  Product Image URL or Path *
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    required
-                    value={formImage}
-                    onChange={(e) => setFormImage(e.target.value)}
-                    placeholder="/assets/perfumes/... or image URL"
-                    className="w-full bg-[#faf9f7] border border-[#dcd6cb] rounded-xl px-3.5 py-2 text-xs text-[#222222] focus:outline-none focus:border-[#1b5e3f]"
-                  />
-                  <img
-                    src={formImage}
-                    alt="Preview"
-                    className="w-9 h-9 rounded-lg border border-[#dcd6cb] object-contain p-0.5 bg-white shrink-0"
-                    onError={(e) => {
-                      (e.currentTarget as any).src =
-                        "/assets/perfumes/Faceted Gold Perfume Bottle.png";
-                    }}
-                  />
+              {/* Product Image Upload & Selection Section */}
+              <div className="rounded-2xl border border-[#dcd6cb] p-4 bg-[#fbfaf8] space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] uppercase tracking-wider text-[#333333] font-semibold flex items-center gap-1.5">
+                    <ImageIcon size={14} className="text-[#1b5e3f]" />
+                    Product Image *
+                  </label>
+                  <div className="flex items-center gap-1 bg-[#eeebe5] p-0.5 rounded-lg text-[10px]">
+                    <button
+                      type="button"
+                      onClick={() => setImageUploadMethod("file")}
+                      className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                        imageUploadMethod === "file"
+                          ? "bg-white text-[#1b5e3f] shadow-xs"
+                          : "text-[#666666] hover:text-[#111111]"
+                      }`}
+                    >
+                      Upload File
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setImageUploadMethod("url")}
+                      className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                        imageUploadMethod === "url"
+                          ? "bg-white text-[#1b5e3f] shadow-xs"
+                          : "text-[#666666] hover:text-[#111111]"
+                      }`}
+                    >
+                      Image URL / Presets
+                    </button>
+                  </div>
                 </div>
-                {/* Image presets */}
-                <div className="flex items-center gap-1.5 mt-1.5 overflow-x-auto text-[10px] text-[#777777]">
-                  <span className="font-semibold">Quick Presets:</span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormImage("/assets/perfumes/Faceted Gold Perfume Bottle.png")
-                    }
-                    className="hover:text-[#1b5e3f] underline"
-                  >
-                    Gold Flacon
-                  </button>
-                  <span>·</span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormImage("/assets/perfumes/Glossy Black-to-Blue Perfume Bottle.png")
-                    }
-                    className="hover:text-[#1b5e3f] underline"
-                  >
-                    Midnight Flacon
-                  </button>
-                  <span>·</span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormImage("/assets/essence oil/Amber Patchouli Oil Bottle.png")
-                    }
-                    className="hover:text-[#1b5e3f] underline"
-                  >
-                    Amber Oil Dropper
-                  </button>
-                  <span>·</span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormImage("/assets/car perfume/car perfume.png")
-                    }
-                    className="hover:text-[#1b5e3f] underline"
-                  >
-                    Car Diffuser
-                  </button>
-                </div>
+
+                {imageUploadMethod === "file" ? (
+                  <div>
+                    {/* Hidden Native File Input */}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageFileChange}
+                      className="hidden"
+                    />
+
+                    {/* Drag and Drop / Click to Select Box */}
+                    <div
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all ${
+                        dragActive
+                          ? "border-[#1b5e3f] bg-[#e8f5f0]"
+                          : "border-[#dcd6cb] bg-white hover:border-[#1b5e3f] hover:bg-[#faf9f7]"
+                      }`}
+                    >
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full bg-[#1b5e3f]/10 text-[#1b5e3f] flex items-center justify-center">
+                          {isUploadingImage ? (
+                            <RefreshCw className="animate-spin" size={22} />
+                          ) : (
+                            <UploadCloud size={24} />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-[#111111]">
+                            {isUploadingImage
+                              ? "Optimizing & Uploading..."
+                              : "Click to select or drag & drop product photo"}
+                          </p>
+                          <p className="text-[10px] text-[#777777] mt-0.5">
+                            Supports JPG, PNG, WEBP, SVG (auto-optimized for lightning fast loading)
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-4 rounded-full text-xs font-medium border-[#1b5e3f]/40 text-[#1b5e3f] hover:bg-[#1b5e3f] hover:text-white mt-1"
+                        >
+                          <Camera size={13} className="mr-1.5" /> Choose from Device / Photos
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    {/* Direct Image URL input */}
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        required
+                        value={formImage}
+                        onChange={(e) => setFormImage(e.target.value)}
+                        placeholder="Paste image URL (https://... or /assets/...)"
+                        className="w-full bg-white border border-[#dcd6cb] rounded-xl px-3.5 py-2 text-xs text-[#222222] focus:outline-none focus:border-[#1b5e3f]"
+                      />
+                    </div>
+
+                    {/* Presets */}
+                    <div className="flex items-center gap-1.5 mt-2 overflow-x-auto text-[10px] text-[#777777]">
+                      <span className="font-semibold text-[#444444]">Quick Presets:</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormImage("/assets/perfumes/Faceted Gold Perfume Bottle.png")
+                        }
+                        className="hover:text-[#1b5e3f] underline whitespace-nowrap"
+                      >
+                        Gold Flacon
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormImage("/assets/perfumes/Glossy Black-to-Blue Perfume Bottle.png")
+                        }
+                        className="hover:text-[#1b5e3f] underline whitespace-nowrap"
+                      >
+                        Midnight Flacon
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormImage("/assets/essence oil/Amber Patchouli Oil Bottle.png")
+                        }
+                        className="hover:text-[#1b5e3f] underline whitespace-nowrap"
+                      >
+                        Amber Oil
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormImage("/assets/car perfume/car perfume.png")
+                        }
+                        className="hover:text-[#1b5e3f] underline whitespace-nowrap"
+                      >
+                        Car Diffuser
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Live Image Preview Bar */}
+                {formImage && (
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-[#e4ded5]">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={formImage}
+                        alt="Product preview"
+                        className="w-12 h-12 rounded-lg object-contain bg-[#faf8f5] p-1 border border-[#eeebe5]"
+                        onError={(e) => {
+                          (e.currentTarget as any).src =
+                            "/assets/perfumes/Faceted Gold Perfume Bottle.png";
+                        }}
+                      />
+                      <div>
+                        <div className="text-xs font-semibold text-[#111111]">Active Product Image</div>
+                        <div className="text-[10px] text-[#777777] font-mono truncate max-w-xs">
+                          {formImage.startsWith("data:")
+                            ? "Uploaded from device (Optimized Data URI)"
+                            : formImage}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-xs text-[#1b5e3f] hover:underline font-medium px-2 py-1"
+                    >
+                      Change photo
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Fragrance Notes & Size */}

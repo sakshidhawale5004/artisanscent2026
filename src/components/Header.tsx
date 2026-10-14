@@ -134,14 +134,14 @@ export function Header({
           {/* Mobile Hamburger on the left */}
           <button
             type="button"
-            className="luxury-hamburger md:hidden mr-3"
+            className="luxury-hamburger lg:hidden mr-2"
             aria-label="Open menu"
             onClick={() => setMobileOpen(true)}
           >
             <Menu size={22} />
           </button>
 
-          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation left">
+          <nav className="luxury-nav hidden lg:flex" aria-label="Primary navigation left">
             {navItems.slice(0, 2).map((item) =>
               item.children ? (
                 <div key={item.label} className="luxury-dropdown-wrapper">
@@ -208,7 +208,7 @@ export function Header({
 
         {/* Right Side: Desktop Right Nav Links & Action Icons */}
         <div className="luxury-header-right">
-          <nav className="luxury-nav hidden md:flex" aria-label="Primary navigation right">
+          <nav className="luxury-nav hidden lg:flex" aria-label="Primary navigation right">
             {navItems.slice(2).map((item) => (
               <a
                 key={item.label}

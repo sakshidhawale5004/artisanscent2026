@@ -414,12 +414,17 @@ a {
   margin-left: auto;
 }
 .luxury-nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  display: none !important;
+}
+@media (min-width: 1024px) {
+  .luxury-nav {
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 }
 .luxury-nav--right {
   display: flex;
@@ -630,69 +635,84 @@ a {
 }
 
 /* ─ responsive header ─ */
-@media (max-width: 900px) {
-  .luxury-nav--left {
-    display: none;
-  }
-  .luxury-nav--right .luxury-nav-link {
-    display: none;
+@media (max-width: 1023px) {
+  .luxury-nav {
+    display: none !important;
   }
   .luxury-hamburger {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+  }
+  .luxury-header-left {
+    flex: 0 0 auto !important;
+  }
+  .luxury-header-center {
+    flex: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 4px !important;
+    min-width: 0 !important;
+  }
+  .luxury-header-right {
+    flex: 0 0 auto !important;
+    gap: 4px !important;
   }
 }
 @media (max-width: 640px) {
   .luxury-header {
-    height: 68px;
-    padding: 0 12px;
+    height: 64px !important;
+    padding: 0 10px !important;
   }
   .luxury-header-center {
-    margin: 0 4px;
+    margin: 0 2px !important;
   }
   .luxury-logo-link {
-    gap: 8px;
+    gap: 8px !important;
   }
   .luxury-logo-circle {
-    width: 38px;
-    height: 38px;
+    width: 36px !important;
+    height: 36px !important;
   }
   .luxury-brand-title {
-    font-size: 15px;
-    letter-spacing: 0.12em;
+    font-size: 14px !important;
+    letter-spacing: 0.1em !important;
+    white-space: nowrap !important;
   }
   .luxury-brand-subtitle {
-    font-size: 7px;
-    letter-spacing: 0.16em;
+    font-size: 7px !important;
+    letter-spacing: 0.14em !important;
+    white-space: nowrap !important;
   }
   .luxury-icons {
-    gap: 2px;
+    gap: 2px !important;
   }
   .luxury-icon-btn {
-    width: 32px;
-    height: 32px;
+    width: 32px !important;
+    height: 32px !important;
   }
   .luxury-hamburger {
-    margin-right: 2px;
-    width: 32px;
-    height: 32px;
+    margin-right: 2px !important;
+    width: 32px !important;
+    height: 32px !important;
   }
 }
 @media (max-width: 380px) {
   .luxury-header {
-    padding: 0 8px;
+    padding: 0 6px !important;
+    height: 58px !important;
   }
   .luxury-brand-title {
-    font-size: 13px;
-    letter-spacing: 0.08em;
+    font-size: 12px !important;
+    letter-spacing: 0.05em !important;
   }
   .luxury-brand-subtitle {
-    display: none;
+    display: none !important;
   }
   .luxury-logo-circle {
-    width: 34px;
-    height: 34px;
+    width: 30px !important;
+    height: 30px !important;
   }
 }
 .hero {
