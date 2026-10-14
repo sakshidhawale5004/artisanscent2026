@@ -388,7 +388,24 @@ export function getStoredProducts(): Product[] {
     if (!raw) return products;
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+      return parsed.map((p: Product) => {
+        if (p.id === "agarbatti-premium" && (p.image.includes("agarbatti (1)") || !p.image.includes("AGARBATTI NEW"))) {
+          return { ...p, image: agarbatti1 };
+        }
+        if (p.id === "agarbatti-deluxe" && (p.image.includes("agarbatti (2)") || !p.image.includes("AGARBATTI NEW"))) {
+          return { ...p, image: agarbatti2 };
+        }
+        if (p.id === "agarbatti-pyramid" && (p.image.includes("Pyramid of Premium") || !p.image.includes("AGARBATTI NEW"))) {
+          return { ...p, image: agarbatti3 };
+        }
+        if (p.id === "soap-signature" && (p.image.includes("soaps/soap") || !p.image.includes("SOAP NEW"))) {
+          return { ...p, image: soap1 };
+        }
+        if (p.id === "soap-varad-ring" && (p.image.includes("Varad Aromatics") || !p.image.includes("SOAP NEW"))) {
+          return { ...p, image: soap2 };
+        }
+        return p;
+      });
     }
   } catch {
     // fallback to initial

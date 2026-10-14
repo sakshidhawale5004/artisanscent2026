@@ -93,44 +93,45 @@ function SoapsPage() {
         <section className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image Left */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#e8e2d8] bg-[#faf8f5]">
               <img
-                src="/assets/shopimages/soap sectionimage.jpg"
+                src="/assets/SOAP NEW/ARTISAN SCENT Aromatics Soap Ring.png"
                 alt="Artisan Handcrafted Soaps Collection"
-                className="w-full h-[420px] object-cover"
+                className="w-full h-[420px] object-contain p-6"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none" />
             </div>
             {/* Info Right */}
             <div className="flex flex-col justify-center">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-medium mb-4">
-                <span className="w-5 h-[1px] bg-[#d4af37]" />
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#1b5e3f] font-semibold mb-3">
+                <span className="w-5 h-[1.5px] bg-[#d4af37]" />
                 <span>PERSONAL CARE</span>
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl font-normal tracking-tight text-[#1a1a1a] mb-4">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-4">
                 Bathing as a<br />
-                <em className="text-[#1b5e3f] font-serif italic">Daily Ritual</em>
+                <em className="text-[#1b5e3f] font-serif italic font-medium">Daily Ritual</em>
               </h2>
-              <p className="text-[#555555] text-sm sm:text-base font-light leading-relaxed mb-4">
+              <p className="text-[#2b2b2b] text-sm sm:text-base font-normal leading-relaxed mb-5">
                 Our handcrafted bathing bars are made using the traditional cold-process method — slow-cured in small batches to preserve the natural glycerin and essential oil integrity. Enriched with plant-derived butters, these soaps are gentle on the skin, generous in lather, and quietly luxurious in lasting botanical fragrance.
               </p>
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-2.5 mb-6">
                 {[
-                  '✦ Cold-processed — naturally glycerin-rich',
-                  '✦ Enriched with pure essential oils',
-                  '✦ No synthetic fragrances or harsh SLS',
-                  '✦ Gentle for all skin types',
-                  '✦ Handcrafted in small batches',
+                  'Cold-processed — naturally glycerin-rich',
+                  'Enriched with pure essential oils',
+                  'No synthetic fragrances or harsh SLS',
+                  'Gentle for all skin types',
+                  'Handcrafted in small batches',
                 ].map((item) => (
-                  <li key={item} className="text-sm text-[#444444] font-light flex items-start gap-2">
+                  <li key={item} className="text-sm sm:text-[15px] text-[#1a1a1a] font-medium flex items-center gap-2.5">
+                    <span className="text-[#1b5e3f] font-bold">✦</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
               <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-[#e8e2d8]" />
-                <span className="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-semibold">Cold Process · Botanical · Artisan</span>
-                <div className="h-px flex-1 bg-[#e8e2d8]" />
+                <div className="h-px flex-1 bg-[#dcd6cb]" />
+                <span className="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-bold">Cold Process · Botanical · Artisan</span>
+                <div className="h-px flex-1 bg-[#dcd6cb]" />
               </div>
             </div>
           </div>
@@ -189,20 +190,20 @@ function SoapsPage() {
                       </div>
                       <a
                         href={`/products/${p.id}`}
-                        className="font-display text-lg text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium"
+                        className="font-display text-lg text-[#111111] group-hover:text-[#1b5e3f] transition-colors block font-semibold"
                       >
                         {p.name}
                       </a>
-                      <p className="text-xs text-[#666666] line-clamp-1 mt-1 font-light">
+                      <p className="text-xs text-[#444444] line-clamp-1 mt-1 font-medium">
                         {p.notes}
                       </p>
-                      <div className="text-[10px] text-[#888888] uppercase tracking-wider mt-1">
+                      <div className="text-[10px] text-[#666666] uppercase tracking-wider mt-1 font-medium">
                         {p.size || "100 g"} · Cold Process
                       </div>
                     </div>
 
                     <div className="mt-4 pt-4 border-t border-[#e8e2d8] flex items-center justify-between">
-                      <span className="font-mono text-base font-semibold text-[#1a1a1a]">
+                      <span className="font-mono text-base font-bold text-[#111111]">
                         {money(p.price)}
                       </span>
                       <Button
