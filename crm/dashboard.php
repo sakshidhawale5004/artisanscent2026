@@ -5,16 +5,47 @@ $products = get_products();
 $orders = get_orders();
 $customers = get_customers();
 
-// Compute KPIs
-$grossRevenue = 142500;
+// Compute real-time accurate KPIs (No fake additions, no duplicate info)
+$grossRevenue = 0;
 foreach ($orders as $o) {
     $grossRevenue += (float)$o['total'];
 }
 
+$totalOrdersCount = count($orders);
+$avgOrderValue = $totalOrdersCount > 0 ? round($grossRevenue / $totalOrdersCount) : 0;
+
 $inventoryValue = 0;
+$categoryCounts = [
+    'perfumes' => 0,
+    'essence-oils' => 0,
+    'car-perfumes' => 0,
+    'agarbatti' => 0,
+    'soaps' => 0
+];
+
 foreach ($products as $p) {
     $stock = !empty($p['stock']) ? (int)$p['stock'] : 25;
     $inventoryValue += ((float)$p['price'] * $stock);
+    $cat = $p['category'] ?? 'perfumes';
+    if (isset($categoryCounts[$cat])) {
+        $categoryCounts[$cat]++;
+    } else {
+        $categoryCounts[$cat] = 1;
+    }
+}
+
+// Order fulfillment counts
+$statusCounts = [
+    'Completed' => 0,
+    'Processing' => 0,
+    'Shipped' => 0,
+    'Pending' => 0
+];
+foreach ($orders as $o) {
+    $st = $o['status'] ?? 'Pending';
+    if (isset($statusCounts[$st])) {
+        $statusCounts[$st]++;
+    }
 }
 ?>
 
@@ -50,29 +81,27 @@ foreach ($products as $p) {
     </div>
   </div>
 
-  <!-- KPI Metric Cards -->
+  <!-- Real-time Accurate KPI Metric Cards -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     <div class="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
-      <div className="flex items-center justify-between text-xs text-[#777777] mb-2 font-medium uppercase tracking-wider">
-        <span class="text-xs text-[#777777] uppercase tracking-wider font-semibold">Gross Revenue</span>
-      </div>
+      <div class="text-xs text-[#777777] uppercase tracking-wider font-semibold">Gross Revenue</div>
       <div class="font-mono text-2xl font-bold text-[#111111] mt-1">
         <?php echo format_inr($grossRevenue); ?>
       </div>
-      <div class="text-[11px] text-[#1b5e3f] font-medium mt-1">
-        ↗ +18.4% vs previous cycle
+      <div class="text-[11px] text-[#777777] font-light mt-1">
+        Avg. Order Value: <span class="font-mono font-medium text-[#111111]"><?php echo format_inr($avgOrderValue); ?></span>
       </div>
     </div>
 
     <div class="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
       <div class="text-xs text-[#777777] uppercase tracking-wider font-semibold">
-        Orders Processed
+        Total Orders
       </div>
       <div class="font-mono text-2xl font-bold text-[#111111] mt-1">
-        <?php echo count($orders) + 142; ?> Orders
+        <?php echo $totalOrdersCount; ?> Orders
       </div>
-      <div class="text-[11px] text-[#777777] font-light mt-1">
-        98.2% on-time logistics delivery
+      <div class="text-[11px] text-[#1b5e3f] font-medium mt-1">
+        <?php echo $statusCounts['Completed']; ?> completed · <?php echo ($statusCounts['Processing'] + $statusCounts['Shipped']); ?> in transit
       </div>
     </div>
 
@@ -83,158 +112,115 @@ foreach ($products as $p) {
       <div class="font-mono text-2xl font-bold text-[#111111] mt-1">
         <?php echo count($customers); ?> Profiles
       </div>
-      <div class="text-[11px] text-[#1b5e3f] font-medium mt-1">
-        ₹28,400 Avg. Customer LTV
+      <div class="text-[11px] text-[#777777] font-light mt-1">
+        Direct concierge records active
       </div>
     </div>
 
     <div class="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
       <div class="text-xs text-[#777777] uppercase tracking-wider font-semibold">
-        Total Catalog Value
+        Catalog Valuation
       </div>
       <div class="font-mono text-2xl font-bold text-[#111111] mt-1">
         <?php echo format_inr($inventoryValue); ?>
       </div>
       <div class="text-[11px] text-[#777777] font-light mt-1">
-        <?php echo count($products); ?> Active formulations
+        Across <?php echo count($products); ?> active formulations
       </div>
     </div>
   </div>
 
-  <!-- Recent Orders Table -->
-  <div class="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <h3 class="font-display text-xl text-[#111111]">Recent Orders Telemetry</h3>
-        <p class="text-xs text-[#666666] font-light">Real-time status updates across perfumes, essence oils, and car diffusers.</p>
-      </div>
-      <a href="orders.php" class="text-xs text-[#1b5e3f] hover:underline font-medium">
-        View All Orders →
-      </a>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead>
-          <tr class="border-b border-[#eeebe5] text-[#777777] uppercase tracking-wider text-[10px]">
-            <th class="py-2.5 px-3">Order ID</th>
-            <th class="py-2.5 px-3">Patron Customer</th>
-            <th class="py-2.5 px-3">Formulation Items</th>
-            <th class="py-2.5 px-3">Amount</th>
-            <th class="py-2.5 px-3">Status</th>
-            <th class="py-2.5 px-3">Date</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-[#f2efe9]">
-          <?php foreach (array_slice($orders, 0, 5) as $o): ?>
-            <tr class="hover:bg-[#faf9f7] transition-colors">
-              <td class="py-3 px-3 font-mono font-medium text-[#111111]"><?php echo htmlspecialchars($o['id']); ?></td>
-              <td class="py-3 px-3">
-                <div class="font-medium text-[#111111]"><?php echo htmlspecialchars($o['customer']); ?></div>
-                <div class="text-[10px] text-[#888888]"><?php echo htmlspecialchars($o['email']); ?></div>
-              </td>
-              <td class="py-3 px-3 text-[#555555] max-w-xs truncate"><?php echo htmlspecialchars($o['items']); ?></td>
-              <td class="py-3 px-3 font-mono font-semibold text-[#111111]"><?php echo format_inr($o['total']); ?></td>
-              <td class="py-3 px-3">
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium <?php 
-                  echo $o['status'] === 'Completed' ? 'bg-emerald-100 text-emerald-800' : 
-                      ($o['status'] === 'Processing' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'); 
-                ?>">
-                  <?php echo htmlspecialchars($o['status']); ?>
-                </span>
-              </td>
-              <td class="py-3 px-3 text-[#777777]"><?php echo htmlspecialchars($o['date']); ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Catalog Health & Category Distribution -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-2 rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="font-display text-xl text-[#111111]">Recent Catalog Additions</h3>
-          <p class="text-xs text-[#666666] font-light">Latest handcrafted products entered into inventory.</p>
-        </div>
-        <a href="products.php" class="text-xs text-[#1b5e3f] hover:underline font-medium">Manage Products →</a>
-      </div>
-
-      <div class="space-y-3">
-        <?php foreach (array_slice($products, 0, 4) as $p): ?>
-          <div class="flex items-center justify-between p-3 rounded-xl border border-[#eeebe5] hover:border-[#1b5e3f]/40 transition-colors">
-            <div class="flex items-center gap-3">
-              <img
-                src="<?php echo htmlspecialchars($p['image']); ?>"
-                alt=""
-                class="w-10 h-10 object-contain rounded-lg border border-[#e8e2d8] p-1 bg-white"
-                onerror="this.src='../assets/perfumes/Faceted Gold Perfume Bottle.png'"
-              />
-              <div>
-                <div class="font-display text-sm font-semibold text-[#111111]"><?php echo htmlspecialchars($p['name']); ?></div>
-                <div class="text-[10px] text-[#777777]"><?php echo htmlspecialchars($p['notes']); ?></div>
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="font-mono text-xs font-semibold text-[#111111]"><?php echo format_inr($p['price']); ?></div>
-              <div class="text-[10px] text-[#1b5e3f] font-mono capitalize"><?php echo htmlspecialchars(str_replace('-', ' ', $p['category'])); ?></div>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-
-    <!-- Quick Export Box -->
+  <!-- Non-Duplicated Overview Section: Fulfillment Funnel & Portfolio Distribution -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Card 1: Logistics & Fulfillment Funnel -->
     <div class="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
       <div>
-        <div class="text-[10px] uppercase tracking-widest text-[#1b5e3f] font-semibold mb-1">
-          CSV SPREADSHEET ENGINE
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-display text-xl text-[#111111]">Order Fulfillment Funnel</h3>
+            <p class="text-xs text-[#666666] font-light">Status distribution of all customer orders in the system.</p>
+          </div>
+          <a href="orders.php" class="text-xs text-[#1b5e3f] hover:underline font-medium">Manage Orders →</a>
         </div>
-        <h3 class="font-display text-xl text-[#111111] mb-2">Export Data Files</h3>
-        <p class="text-xs text-[#666666] font-light leading-relaxed mb-4">
-          Export complete datasets formatted for Excel, Google Sheets, or WooCommerce migration.
-        </p>
 
-        <div class="space-y-2.5">
-          <a
-            href="export.php?type=products"
-            class="w-full flex items-center justify-between p-3 rounded-xl border border-[#e8e2d8] hover:border-[#1b5e3f] hover:bg-[#faf9f7] text-xs transition-colors"
-          >
-            <div class="flex items-center gap-2">
-              <span>📦</span>
-              <span class="font-medium text-[#111111]">Products Catalog CSV</span>
-            </div>
-            <span class="text-[11px] text-[#1b5e3f]">Download →</span>
-          </a>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+          <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200/60 text-center">
+            <div class="text-[10px] uppercase font-semibold text-emerald-800 tracking-wider">Completed</div>
+            <div class="font-mono text-xl font-bold text-emerald-900 mt-1"><?php echo $statusCounts['Completed']; ?></div>
+            <div class="text-[9px] text-emerald-700 mt-0.5">Delivered</div>
+          </div>
 
-          <a
-            href="export.php?type=orders"
-            class="w-full flex items-center justify-between p-3 rounded-xl border border-[#e8e2d8] hover:border-[#1b5e3f] hover:bg-[#faf9f7] text-xs transition-colors"
-          >
-            <div class="flex items-center gap-2">
-              <span>🛒</span>
-              <span class="font-medium text-[#111111]">Orders History CSV</span>
-            </div>
-            <span class="text-[11px] text-[#1b5e3f]">Download →</span>
-          </a>
+          <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200/60 text-center">
+            <div class="text-[10px] uppercase font-semibold text-amber-800 tracking-wider">Processing</div>
+            <div class="font-mono text-xl font-bold text-amber-900 mt-1"><?php echo $statusCounts['Processing']; ?></div>
+            <div class="text-[9px] text-amber-700 mt-0.5">Blending / Pack</div>
+          </div>
 
-          <a
-            href="export.php?type=customers"
-            class="w-full flex items-center justify-between p-3 rounded-xl border border-[#e8e2d8] hover:border-[#1b5e3f] hover:bg-[#faf9f7] text-xs transition-colors"
-          >
-            <div class="flex items-center gap-2">
-              <span>👥</span>
-              <span class="font-medium text-[#111111]">Customers CRM CSV</span>
-            </div>
-            <span class="text-[11px] text-[#1b5e3f]">Download →</span>
-          </a>
+          <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200/60 text-center">
+            <div class="text-[10px] uppercase font-semibold text-blue-800 tracking-wider">Shipped</div>
+            <div class="font-mono text-xl font-bold text-blue-900 mt-1"><?php echo $statusCounts['Shipped']; ?></div>
+            <div class="text-[9px] text-blue-700 mt-0.5">In Transit</div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-neutral-100 border border-neutral-200 text-center">
+            <div class="text-[10px] uppercase font-semibold text-neutral-700 tracking-wider">Pending</div>
+            <div class="font-mono text-xl font-bold text-neutral-900 mt-1"><?php echo $statusCounts['Pending']; ?></div>
+            <div class="text-[9px] text-neutral-600 mt-0.5">Awaiting Action</div>
+          </div>
         </div>
       </div>
 
-      <div class="mt-6 pt-4 border-t border-[#eeebe5] text-[10px] text-[#777777] leading-relaxed">
-        ✦ Includes columns for Name, Category, Price, Rating, Image, Description, Notes, and Stock.
+      <div class="mt-5 pt-4 border-t border-[#eeebe5] flex items-center justify-between text-xs text-[#666666]">
+        <span>Total Active Workflows: <strong class="text-[#111111]"><?php echo $totalOrdersCount; ?></strong></span>
+        <a href="orders.php" class="text-[#1b5e3f] hover:underline font-medium text-xs">
+          Open full orders list in Orders tab →
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 2: Catalog Portfolio Breakdown -->
+    <div class="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-display text-xl text-[#111111]">Portfolio Distribution</h3>
+            <p class="text-xs text-[#666666] font-light">Formulation counts across luxury product categories.</p>
+          </div>
+          <a href="products.php" class="text-xs text-[#1b5e3f] hover:underline font-medium">Manage Products →</a>
+        </div>
+
+        <div class="space-y-3 mt-4">
+          <?php
+          $categoryMeta = [
+              ['key' => 'perfumes', 'label' => 'Luxury Perfumes', 'color' => 'bg-[#1b5e3f]'],
+              ['key' => 'essence-oils', 'label' => 'Pure Essence Oils', 'color' => 'bg-[#d4af37]'],
+              ['key' => 'car-perfumes', 'label' => 'Car Diffusers', 'color' => 'bg-[#2d8659]'],
+              ['key' => 'agarbatti', 'label' => 'Sacred Agarbatti', 'color' => 'bg-[#b45309]'],
+              ['key' => 'soaps', 'label' => 'Handcrafted Soaps', 'color' => 'bg-[#059669]'],
+          ];
+          $totalProds = count($products);
+          foreach ($categoryMeta as $cm):
+              $count = $categoryCounts[$cm['key']] ?? 0;
+              $percent = $totalProds > 0 ? round(($count / $totalProds) * 100) : 0;
+          ?>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="font-medium text-[#222222]"><?php echo $cm['label']; ?></span>
+                <span class="text-[#777777] font-mono"><?php echo $count; ?> items (<?php echo $percent; ?>%)</span>
+              </div>
+              <div class="w-full h-2 bg-[#f0ede8] rounded-full overflow-hidden">
+                <div class="h-full <?php echo $cm['color']; ?> rounded-full" style="width: <?php echo $percent; ?>%;"></div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-4 border-t border-[#eeebe5] flex items-center justify-between text-xs text-[#666666]">
+        <span>Total Formulations: <strong class="text-[#111111]"><?php echo $totalProds; ?></strong></span>
+        <a href="products.php" class="text-[#1b5e3f] hover:underline font-medium text-xs">
+          View catalog in Products tab →
+        </a>
       </div>
     </div>
   </div>

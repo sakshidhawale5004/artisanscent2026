@@ -468,13 +468,36 @@ export function AdminHubPage() {
     });
   }, [productList, categoryFilter, productSearch]);
 
-  // Aggregate Metrics
+  // Aggregate Metrics (Accurate, dynamic, and non-duplicated)
   const grossRevenue = useMemo(() => {
-    return ordersList.reduce((sum, o) => sum + o.total, 0) + 142500;
+    return ordersList.reduce((sum, o) => sum + o.total, 0);
   }, [ordersList]);
 
+  const totalOrdersCount = ordersList.length;
+
+  const avgOrderValue = useMemo(() => {
+    return totalOrdersCount > 0 ? Math.round(grossRevenue / totalOrdersCount) : 0;
+  }, [grossRevenue, totalOrdersCount]);
+
   const totalInventoryValue = useMemo(() => {
-    return productList.reduce((sum, p) => sum + p.price * (p.stock || 25), 0);
+    return productList.reduce((sum, p) => sum + p.price * (p.stock ?? 25), 0);
+  }, [productList]);
+
+  const orderStatusCounts = useMemo(() => {
+    return {
+      completed: ordersList.filter((o) => o.status === "Completed").length,
+      processing: ordersList.filter((o) => o.status === "Processing").length,
+      shipped: ordersList.filter((o) => o.status === "Shipped").length,
+      pending: ordersList.filter((o) => o.status === "Pending").length,
+    };
+  }, [ordersList]);
+
+  const categoryDistribution = useMemo(() => {
+    const counts: Record<string, number> = {};
+    productList.forEach((p) => {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return counts;
   }, [productList]);
 
   // If Not Authenticated -> Show Luxury Admin Login
@@ -707,7 +730,7 @@ export function AdminHubPage() {
               </div>
             </div>
 
-            {/* KPI Summary Cards */}
+            {/* KPI Summary Cards (Real-time and Accurate) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div className="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
                 <div className="flex items-center justify-between text-xs text-[#777777] mb-2 font-medium uppercase tracking-wider">
@@ -717,8 +740,8 @@ export function AdminHubPage() {
                   </span>
                 </div>
                 <div className="font-mono text-2xl font-bold text-[#111111]">{money(grossRevenue)}</div>
-                <div className="text-[11px] text-[#1b5e3f] font-medium mt-1 flex items-center gap-1">
-                  <ArrowUpRight size={13} /> +18.4% vs last cycle
+                <div className="text-[11px] text-[#777777] font-light mt-1">
+                  Avg. Order Value: <span className="font-mono font-medium text-[#111111]">{money(avgOrderValue)}</span>
                 </div>
               </div>
 
@@ -729,8 +752,10 @@ export function AdminHubPage() {
                     <ShoppingBag size={15} />
                   </span>
                 </div>
-                <div className="font-mono text-2xl font-bold text-[#111111]">147 Orders</div>
-                <div className="text-[11px] text-[#777777] font-light mt-1">98.2% fulfillment rate</div>
+                <div className="font-mono text-2xl font-bold text-[#111111]">{totalOrdersCount} Orders</div>
+                <div className="text-[11px] text-[#1b5e3f] font-medium mt-1">
+                  {orderStatusCounts.completed} completed · {orderStatusCounts.processing + orderStatusCounts.shipped} in transit
+                </div>
               </div>
 
               <div className="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
@@ -743,12 +768,14 @@ export function AdminHubPage() {
                 <div className="font-mono text-2xl font-bold text-[#111111]">
                   {customerList.length} Profiles
                 </div>
-                <div className="text-[11px] text-[#1b5e3f] font-medium mt-1">₹28,400 Avg. Lifetime Value</div>
+                <div className="text-[11px] text-[#777777] font-light mt-1">
+                  {customerList.filter((c) => c.segment === "VIP Reserve").length} VIP Reserve Patrons
+                </div>
               </div>
 
               <div className="p-5 rounded-2xl bg-white border border-[#e4ded5] shadow-xs">
                 <div className="flex items-center justify-between text-xs text-[#777777] mb-2 font-medium uppercase tracking-wider">
-                  <span>Catalog Value</span>
+                  <span>Catalog Valuation</span>
                   <span className="p-1.5 rounded-lg bg-[#fef3c7] text-[#b45309]">
                     <Package size={15} />
                   </span>
@@ -757,70 +784,121 @@ export function AdminHubPage() {
                   {money(totalInventoryValue)}
                 </div>
                 <div className="text-[11px] text-[#777777] font-light mt-1">
-                  {productList.length} active formulations
+                  Across {productList.length} active formulations
                 </div>
               </div>
             </div>
 
-            {/* Recent Orders Overview */}
-            <div className="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center justify-between mb-4">
+            {/* Non-Duplicated Overview Section: Logistics Funnel & Category Distribution */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Card 1: Logistics & Fulfillment Funnel */}
+              <div className="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
                 <div>
-                  <h3 className="font-display text-xl text-[#111111]">Recent Orders</h3>
-                  <p className="text-xs text-[#666666] font-light">Latest orders received across all fragrance lines.</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <h3 className="font-display text-xl text-[#111111]">Order Fulfillment Funnel</h3>
+                      <p className="text-xs text-[#666666] font-light">Status distribution of all customer orders in the system.</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setActiveTab("orders")}
+                      className="text-xs text-[#1b5e3f] hover:underline"
+                    >
+                      Manage Orders →
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+                    <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200/60 text-center">
+                      <div className="text-[10px] uppercase font-semibold text-emerald-800 tracking-wider">Completed</div>
+                      <div className="font-mono text-xl font-bold text-emerald-900 mt-1">{orderStatusCounts.completed}</div>
+                      <div className="text-[9px] text-emerald-700 mt-0.5">Delivered</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200/60 text-center">
+                      <div className="text-[10px] uppercase font-semibold text-amber-800 tracking-wider">Processing</div>
+                      <div className="font-mono text-xl font-bold text-amber-900 mt-1">{orderStatusCounts.processing}</div>
+                      <div className="text-[9px] text-amber-700 mt-0.5">Blending / Pack</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200/60 text-center">
+                      <div className="text-[10px] uppercase font-semibold text-blue-800 tracking-wider">Shipped</div>
+                      <div className="font-mono text-xl font-bold text-blue-900 mt-1">{orderStatusCounts.shipped}</div>
+                      <div className="text-[9px] text-blue-700 mt-0.5">In Transit</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-200 text-center">
+                      <div className="text-[10px] uppercase font-semibold text-neutral-700 tracking-wider">Pending</div>
+                      <div className="font-mono text-xl font-bold text-neutral-900 mt-1">{orderStatusCounts.pending}</div>
+                      <div className="text-[9px] text-neutral-600 mt-0.5">Awaiting Action</div>
+                    </div>
+                  </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setActiveTab("orders")}
-                  className="text-xs text-[#1b5e3f] hover:underline"
-                >
-                  View All Orders →
-                </Button>
+
+                <div className="mt-5 pt-4 border-t border-[#eeebe5] flex items-center justify-between text-xs text-[#666666]">
+                  <span>Total Active Workflows: <strong className="text-[#111111]">{totalOrdersCount}</strong></span>
+                  <button
+                    onClick={() => setActiveTab("orders")}
+                    className="text-[#1b5e3f] hover:underline font-medium text-xs cursor-pointer"
+                  >
+                    Open full orders list in Orders tab →
+                  </button>
+                </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-[#eeebe5] text-[#777777] uppercase tracking-wider text-[10px]">
-                      <th className="py-2.5 px-3">Order ID</th>
-                      <th className="py-2.5 px-3">Customer</th>
-                      <th className="py-2.5 px-3">Items</th>
-                      <th className="py-2.5 px-3">Amount</th>
-                      <th className="py-2.5 px-3">Status</th>
-                      <th className="py-2.5 px-3">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#f2efe9]">
-                    {ordersList.slice(0, 5).map((o) => (
-                      <tr key={o.id} className="hover:bg-[#faf9f7] transition-colors">
-                        <td className="py-3 px-3 font-mono font-medium text-[#111111]">{o.id}</td>
-                        <td className="py-3 px-3">
-                          <div className="font-medium text-[#111111]">{o.customer}</div>
-                          <div className="text-[10px] text-[#888888]">{o.email}</div>
-                        </td>
-                        <td className="py-3 px-3 text-[#555555] max-w-xs truncate">{o.items}</td>
-                        <td className="py-3 px-3 font-mono font-semibold text-[#111111]">{money(o.total)}</td>
-                        <td className="py-3 px-3">
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium ${
-                              o.status === "Completed"
-                                ? "bg-emerald-100 text-emerald-800"
-                                : o.status === "Processing"
-                                  ? "bg-amber-100 text-amber-800"
-                                  : o.status === "Shipped"
-                                    ? "bg-blue-100 text-blue-800"
-                                    : "bg-neutral-100 text-neutral-700"
-                            }`}
-                          >
-                            {o.status}
-                          </span>
-                        </td>
-                        <td className="py-3 px-3 text-[#777777]">{o.date}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {/* Card 2: Catalog Portfolio Breakdown */}
+              <div className="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <h3 className="font-display text-xl text-[#111111]">Portfolio Distribution</h3>
+                      <p className="text-xs text-[#666666] font-light">Formulation counts across luxury product categories.</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setActiveTab("products")}
+                      className="text-xs text-[#1b5e3f] hover:underline"
+                    >
+                      Manage Products →
+                    </Button>
+                  </div>
+
+                  <div className="space-y-3 mt-4">
+                    {[
+                      { key: "perfumes", label: "Luxury Perfumes", color: "bg-[#1b5e3f]" },
+                      { key: "essence-oils", label: "Pure Essence Oils", color: "bg-[#d4af37]" },
+                      { key: "car-perfumes", label: "Car Diffusers", color: "bg-[#2d8659]" },
+                      { key: "agarbatti", label: "Sacred Agarbatti", color: "bg-[#b45309]" },
+                      { key: "soaps", label: "Handcrafted Soaps", color: "bg-[#059669]" },
+                    ].map((cat) => {
+                      const count = categoryDistribution[cat.key] || 0;
+                      const percent = productList.length > 0 ? Math.round((count / productList.length) * 100) : 0;
+                      return (
+                        <div key={cat.key} className="space-y-1">
+                          <div className="flex justify-between text-xs">
+                            <span className="font-medium text-[#222222]">{cat.label}</span>
+                            <span className="text-[#777777] font-mono">{count} items ({percent}%)</span>
+                          </div>
+                          <div className="w-full h-2 bg-[#f0ede8] rounded-full overflow-hidden">
+                            <div className={`h-full ${cat.color} rounded-full`} style={{ width: `${percent}%` }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-[#eeebe5] flex items-center justify-between text-xs text-[#666666]">
+                  <span>Total Formulations: <strong className="text-[#111111]">{productList.length}</strong></span>
+                  <button
+                    onClick={() => setActiveTab("products")}
+                    className="text-[#1b5e3f] hover:underline font-medium text-xs cursor-pointer"
+                  >
+                    View catalog in Products tab →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
