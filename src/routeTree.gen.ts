@@ -16,6 +16,7 @@ import { Route as AgarbattiRouteImport } from './routes/agarbatti'
 import { Route as CarPerfumesRouteImport } from './routes/car-perfumes'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CrmRouteImport } from './routes/crm'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as EssenceOilsRouteImport } from './routes/essence-oils'
 import { Route as ExhibitionsRouteImport } from './routes/exhibitions'
 import { Route as KeomcRouteImport } from './routes/keomc'
@@ -61,6 +62,11 @@ const ContactRoute = ContactRouteImport.update({
 const CrmRoute = CrmRouteImport.update({
   id: '/crm',
   path: '/crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EssenceOilsRoute = EssenceOilsRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
+  '/dashboard': typeof DashboardRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
+  '/dashboard': typeof DashboardRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/car-perfumes': typeof CarPerfumesRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
+  '/dashboard': typeof DashboardRoute
   '/essence-oils': typeof EssenceOilsRoute
   '/exhibitions': typeof ExhibitionsRoute
   '/keomc': typeof KeomcRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/car-perfumes'
     | '/contact'
     | '/crm'
+    | '/dashboard'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/car-perfumes'
     | '/contact'
     | '/crm'
+    | '/dashboard'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/car-perfumes'
     | '/contact'
     | '/crm'
+    | '/dashboard'
     | '/essence-oils'
     | '/exhibitions'
     | '/keomc'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   CarPerfumesRoute: typeof CarPerfumesRoute
   ContactRoute: typeof ContactRoute
   CrmRoute: typeof CrmRoute
+  DashboardRoute: typeof DashboardRoute
   EssenceOilsRoute: typeof EssenceOilsRoute
   ExhibitionsRoute: typeof ExhibitionsRoute
   KeomcRoute: typeof KeomcRoute
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/crm'
       fullPath: '/crm'
       preLoaderRoute: typeof CrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/essence-oils': {
@@ -403,6 +423,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarPerfumesRoute: CarPerfumesRoute,
   ContactRoute: ContactRoute,
   CrmRoute: CrmRoute,
+  DashboardRoute: DashboardRoute,
   EssenceOilsRoute: EssenceOilsRoute,
   ExhibitionsRoute: ExhibitionsRoute,
   KeomcRoute: KeomcRoute,

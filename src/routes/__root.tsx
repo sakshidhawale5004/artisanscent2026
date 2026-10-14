@@ -15,21 +15,41 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname.toLowerCase();
+      if (
+        path.includes("dashboard") ||
+        path.includes("crm") ||
+        path.includes("admin") ||
+        path.endsWith(".php")
+      ) {
+        window.location.replace("/admin");
+      }
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          The page you're looking for doesn't exist or has been moved to our new commerce hub.
         </p>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center rounded-full bg-[#1b5e3f] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[#164a31]"
           >
             Go home
           </Link>
+          <a
+            href="/admin"
+            className="inline-flex items-center justify-center rounded-full border border-[#1b5e3f]/40 bg-white px-5 py-2 text-sm font-medium text-[#1b5e3f] transition-colors hover:bg-[#f2efe9]"
+          >
+            Open Admin CRM Dashboard →
+          </a>
         </div>
       </div>
     </div>
