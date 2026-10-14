@@ -24,13 +24,13 @@ const car2 = "/assets/car perfume/Hanging Wooden Amber Diffuser.png";
 const car3 = "/assets/car perfume/Minimalist Hanging Green Diffuser Bottle.png";
 
 // Agarbatti
-const agarbatti1 = "/assets/agarbatti/agarbatti (1).png";
-const agarbatti2 = "/assets/agarbatti/agarbatti (2).png";
-const agarbatti3 = "/assets/agarbatti/Pyramid of Premium Dhoop Sticks.png";
+const agarbatti1 = "/assets/AGARBATTI NEW/Premium Agarbatti Sticks.png";
+const agarbatti2 = "/assets/AGARBATTI NEW/Deluxe Incense Collection.png";
+const agarbatti3 = "/assets/AGARBATTI NEW/Artisanscent Incense Jar Pyramid.png";
 
 // Soaps
-const soap1 = "/assets/soaps/soap.png";
-const soap2 = "/assets/soaps/Varad Aromatics Soap Ring.png";
+const soap1 = "/assets/SOAP NEW/Artisan Signature Soap.png";
+const soap2 = "/assets/SOAP NEW/ARTISAN SCENT Aromatics Soap Ring.png";
 
 import { useState, useEffect } from "react";
 

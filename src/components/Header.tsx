@@ -30,7 +30,6 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "KEOMC", href: "/keomc" },
   { label: "Contact", href: "/contact" },
-  { label: "Admin CRM", href: "/admin" },
 ];
 
 export function Header({
@@ -98,7 +97,7 @@ export function Header({
     if (onWishlistClick) {
       onWishlistClick();
     } else {
-      setInternalDrawer("wishlist");
+      window.location.href = "/wishlist";
     }
   };
 
@@ -107,7 +106,7 @@ export function Header({
     if (onBagClick) {
       onBagClick();
     } else {
-      setInternalDrawer("bag");
+      window.location.href = "/cart";
     }
   };
 

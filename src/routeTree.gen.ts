@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AgarbattiRouteImport } from './routes/agarbatti'
 import { Route as CarPerfumesRouteImport } from './routes/car-perfumes'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CrmRouteImport } from './routes/crm'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -26,6 +27,7 @@ import { Route as ProjectSitesRouteImport } from './routes/project-sites'
 import { Route as ReturnPolicyRouteImport } from './routes/return-policy'
 import { Route as SoapsRouteImport } from './routes/soaps'
 import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsProductIdRouteImport } from './routes/products.$productId'
 
@@ -52,6 +54,11 @@ const AgarbattiRoute = AgarbattiRouteImport.update({
 const CarPerfumesRoute = CarPerfumesRouteImport.update({
   id: '/car-perfumes',
   path: '/car-perfumes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -114,6 +121,11 @@ const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
   path: '/terms-and-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
@@ -131,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
   '/dashboard': typeof DashboardRoute
@@ -143,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/wishlist': typeof WishlistRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -152,6 +166,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
   '/dashboard': typeof DashboardRoute
@@ -164,6 +179,7 @@ export interface FileRoutesByTo {
   '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/wishlist': typeof WishlistRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -174,6 +190,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/agarbatti': typeof AgarbattiRoute
   '/car-perfumes': typeof CarPerfumesRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRoute
   '/dashboard': typeof DashboardRoute
@@ -186,6 +203,7 @@ export interface FileRoutesById {
   '/return-policy': typeof ReturnPolicyRoute
   '/soaps': typeof SoapsRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/wishlist': typeof WishlistRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -197,6 +215,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
+    | '/cart'
     | '/contact'
     | '/crm'
     | '/dashboard'
@@ -209,6 +228,7 @@ export interface FileRouteTypes {
     | '/return-policy'
     | '/soaps'
     | '/terms-and-conditions'
+    | '/wishlist'
     | '/products/$productId'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
@@ -218,6 +238,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
+    | '/cart'
     | '/contact'
     | '/crm'
     | '/dashboard'
@@ -230,6 +251,7 @@ export interface FileRouteTypes {
     | '/return-policy'
     | '/soaps'
     | '/terms-and-conditions'
+    | '/wishlist'
     | '/products/$productId'
     | '/products'
   id:
@@ -239,6 +261,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/agarbatti'
     | '/car-perfumes'
+    | '/cart'
     | '/contact'
     | '/crm'
     | '/dashboard'
@@ -251,6 +274,7 @@ export interface FileRouteTypes {
     | '/return-policy'
     | '/soaps'
     | '/terms-and-conditions'
+    | '/wishlist'
     | '/products/$productId'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -261,6 +285,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AgarbattiRoute: typeof AgarbattiRoute
   CarPerfumesRoute: typeof CarPerfumesRoute
+  CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
   CrmRoute: typeof CrmRoute
   DashboardRoute: typeof DashboardRoute
@@ -273,6 +298,7 @@ export interface RootRouteChildren {
   ReturnPolicyRoute: typeof ReturnPolicyRoute
   SoapsRoute: typeof SoapsRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  WishlistRoute: typeof WishlistRoute
   ProductsProductIdRoute: typeof ProductsProductIdRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
@@ -312,6 +338,13 @@ declare module '@tanstack/react-router' {
       path: '/car-perfumes'
       fullPath: '/car-perfumes'
       preLoaderRoute: typeof CarPerfumesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -398,6 +431,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/': {
       id: '/products/'
       path: '/products'
@@ -421,6 +461,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AgarbattiRoute: AgarbattiRoute,
   CarPerfumesRoute: CarPerfumesRoute,
+  CartRoute: CartRoute,
   ContactRoute: ContactRoute,
   CrmRoute: CrmRoute,
   DashboardRoute: DashboardRoute,
@@ -433,6 +474,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnPolicyRoute: ReturnPolicyRoute,
   SoapsRoute: SoapsRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
+  WishlistRoute: WishlistRoute,
   ProductsProductIdRoute: ProductsProductIdRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }
