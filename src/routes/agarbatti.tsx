@@ -97,7 +97,7 @@ function AgarbattiPage() {
               <img
                 src="/assets/AGARBATTI NEW/Sacred Aromas for section.png"
                 alt="Sacred Aromas for Mind & Spirit"
-                className="w-full h-[420px] object-cover"
+                className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
             </div>

@@ -95,9 +95,9 @@ function SoapsPage() {
             {/* Image Left */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#e8e2d8] bg-[#faf8f5]">
               <img
-                src="/assets/SOAP NEW/ARTISAN SCENT Aromatics Soap Ring.png"
-                alt="Artisan Handcrafted Soaps Collection"
-                className="w-full h-[420px] object-contain p-6"
+                src="/assets/images/soap_sectionimage.jpg"
+                alt="Bathing as a Daily Ritual - Artisan Soaps"
+                className="w-full h-[500px] object-cover p-6"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none" />
             </div>

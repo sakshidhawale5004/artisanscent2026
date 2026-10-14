@@ -19,7 +19,7 @@ const navItems = [
     label: "Shop",
     href: "#",
     children: [
-      { label: "All Products (Complete)", href: "/products" },
+      { label: "All Products", href: "/products" },
       { label: "Perfumes", href: "/perfumes" },
       { label: "Essence Oils", href: "/essence-oils" },
       { label: "Car Perfumes", href: "/car-perfumes" },
