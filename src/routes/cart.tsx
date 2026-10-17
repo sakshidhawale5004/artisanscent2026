@@ -19,6 +19,7 @@ import {
   Sparkles,
   ExternalLink,
   MessageCircle,
+  CheckCircle2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/cart")({
@@ -40,7 +41,10 @@ function CartPage() {
   const { wishlistCount } = useWishlist();
   const products = useProducts();
 
+  const [clientName, setClientName] = useState("");
+  const [clientPhone, setClientPhone] = useState("");
   const [checkoutNote, setCheckoutNote] = useState("");
+  const [checkoutOrderId, setCheckoutOrderId] = useState<string | null>(null);
 
   const cartProducts = products.filter((p) => (bag[p.id] || 0) > 0);
   const cartSubtotal = cartProducts.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
@@ -58,15 +62,24 @@ function CartPage() {
       .map((p) => `${p.name} (${p.size || "Standard"}) x${bag[p.id]} [${money(p.price * (bag[p.id] || 0))}]`)
       .join(", ");
 
-    // Record order and client interaction in CRM Dashboard
-    addOrderToCRM({
-      customer: "WhatsApp Shopper",
-      email: "whatsapp.shopper@artisanscent.com",
+    const customerName = clientName.trim() || "WhatsApp Shopper";
+    const customerPhone = clientPhone.trim() || "+91 (Mobile)";
+    const customerEmail = "whatsapp.shopper@artisanscent.com";
+
+    // Record order and client interaction in CRM Dashboard and cloud stream
+    const newOrder = addOrderToCRM({
+      customer: customerName,
+      email: customerEmail,
+      phone: customerPhone,
       items: itemsSummary,
       total: total,
+      note: checkoutNote.trim() || undefined,
+      source: "WhatsApp Checkout",
     });
 
-    const message = `Hello Artisan Scent! I would like to order the following items from my cart:\n\n${itemsSummary}\n\nSubtotal: ${money(cartSubtotal)}\nShipping: ${shipping === 0 ? "Complimentary (FREE)" : money(shipping)}\nEstimated Total: ${money(total)}${checkoutNote ? `\nSpecial Instructions: ${checkoutNote}` : ""}\n\nPlease confirm availability and dispatch details.`;
+    setCheckoutOrderId(newOrder.id);
+
+    const message = `✦ Artisan Scent Haute Parfumerie Order Concierge ✦\n\nReference: ${newOrder.id}\nPatron: ${customerName}${clientPhone.trim() ? `\nWhatsApp / Phone: ${clientPhone.trim()}` : ""}\n\nSelected Formulations:\n${itemsSummary}\n\nSubtotal: ${money(cartSubtotal)}\nPan-India Delivery: ${shipping === 0 ? "Complimentary (FREE)" : money(shipping)}\nTotal Valuation: ${money(total)}${checkoutNote.trim() ? `\n\nBespoke Instructions: ${checkoutNote.trim()}` : ""}\n\nPlease confirm availability and dispatch schedule.`;
 
     const whatsappUrl = `https://wa.me/919820252868?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
@@ -431,6 +444,35 @@ function CartPage() {
                     <span className="font-mono text-2xl font-bold text-[#1b5e3f]">{money(total)}</span>
                   </div>
 
+                  {/* Customer Information (Optional - for bespoke concierge tracking) */}
+                  <div className="mb-4 space-y-3 pt-1">
+                    <div>
+                      <label className="block text-[11px] uppercase tracking-wider text-[#666666] font-semibold mb-1">
+                        Your Full Name (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        placeholder="e.g., Sakshi Dhawale"
+                        className="w-full text-xs p-2.5 rounded-xl border border-[#d5cebf] bg-[#faf8f5] text-[#222222] focus:outline-none focus:border-[#1b5e3f] transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] uppercase tracking-wider text-[#666666] font-semibold mb-1">
+                        WhatsApp Contact Number (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
+                        placeholder="e.g., +91 98202 52868"
+                        className="w-full text-xs p-2.5 rounded-xl border border-[#d5cebf] bg-[#faf8f5] text-[#222222] focus:outline-none focus:border-[#1b5e3f] transition-colors"
+                      />
+                    </div>
+                  </div>
+
                   {/* Optional Order Note */}
                   <div className="mb-5">
                     <label className="block text-[11px] uppercase tracking-wider text-[#666666] font-semibold mb-1.5">
@@ -444,6 +486,19 @@ function CartPage() {
                       className="w-full text-xs p-3 rounded-xl border border-[#d5cebf] bg-[#faf8f5] text-[#222222] focus:outline-none focus:border-[#1b5e3f] transition-colors resize-none"
                     />
                   </div>
+
+                  {/* Instant Order Registered Feedback */}
+                  {checkoutOrderId && (
+                    <div className="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 flex items-start gap-2.5 animate-in fade-in">
+                      <CheckCircle2 size={18} className="text-emerald-700 shrink-0 mt-0.5" />
+                      <div className="text-xs">
+                        <div className="font-semibold text-emerald-900">✦ Order Reference #{checkoutOrderId} Registered!</div>
+                        <div className="text-[11px] text-emerald-800 mt-0.5 leading-relaxed">
+                          Your order has been recorded live in the Artisan Scent Staff Hub. Opening WhatsApp Concierge...
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Primary WhatsApp Concierge Checkout Button */}
                   <Button

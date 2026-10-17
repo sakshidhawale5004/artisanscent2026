@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight, Heart, Plus, Search, ShoppingBag, X, ChevronRight } from "lucide-react";
+import { ArrowRight, Heart, Plus, Search, ShoppingBag, X, ChevronRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProducts, money, type Product } from "@/lib/products";
 import { useWishlist, useShoppingBag } from "@/lib/store";
@@ -340,9 +340,19 @@ function PerfumesPage() {
                       <span>Subtotal</span>
                       <span>{money(total)}</span>
                     </div>
-                    <Button className="w-full h-12">
-                      Continue to checkout <ArrowRight />
+                    <Button
+                      className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-semibold text-xs tracking-wide shadow-md flex items-center justify-center gap-2 mb-2"
+                      onClick={() => {
+                        window.location.href = "/cart";
+                      }}
+                    >
+                      <MessageCircle size={16} className="text-[#86efac]" />
+                      <span>Proceed to WhatsApp Checkout</span>
+                      <ArrowRight size={15} />
                     </Button>
+                    <p className="status-note mt-2 text-center text-xs">
+                      Complimentary Pan-India delivery on orders above ₹999.
+                    </p>
                   </div>
                 )}
               </>

@@ -14,6 +14,7 @@ import {
   Truck,
   Lock,
   X,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProducts, money, type Product } from "@/lib/products";
@@ -921,13 +922,18 @@ function Index() {
                       <span>Subtotal</span>
                       <span>{money(total)}</span>
                     </div>
-                    <Button className="w-full h-12" onClick={() => setCheckout(true)}>
-                      Continue to checkout <ArrowRight />
+                    <Button
+                      className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-semibold text-xs tracking-wide shadow-md flex items-center justify-center gap-2 mb-2"
+                      onClick={() => {
+                        window.location.href = "/cart";
+                      }}
+                    >
+                      <MessageCircle size={16} className="text-[#86efac]" />
+                      <span>Proceed to WhatsApp Checkout</span>
+                      <ArrowRight size={15} />
                     </Button>
-                    <p className="status-note mt-3">
-                      {checkout
-                        ? "This is a preview store. Payments and order processing are not connected; no charge has been made."
-                        : "Shipping and taxes calculated at checkout."}
+                    <p className="status-note mt-2 text-center text-xs">
+                      Complimentary Pan-India delivery on orders above ₹999.
                     </p>
                   </div>
                 )}

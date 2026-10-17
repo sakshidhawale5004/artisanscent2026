@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   Star,
   X,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products, useProducts, getStoredProducts, money, type Product } from "@/lib/products";
@@ -613,7 +614,7 @@ function ProductDetailPage() {
                   <span>{money(total)}</span>
                 </div>
                 <Button 
-                  className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-semibold text-xs tracking-wide shadow-md"
+                  className="w-full h-12 bg-[#1b5e3f] hover:bg-[#164a31] text-white rounded-full font-semibold text-xs tracking-wide shadow-md flex items-center justify-center gap-2"
                   onClick={() => {
                     const cartItems = Object.entries(bag)
                       .map(([id, qty]) => {
@@ -622,17 +623,21 @@ function ProductDetailPage() {
                       })
                       .filter(Boolean)
                       .join(', ');
-                    addOrderToCRM({
-                      customer: "WhatsApp Drawer Client",
-                      email: "whatsapp.client@artisanscent.com",
+                    const newOrder = addOrderToCRM({
+                      customer: "WhatsApp Drawer Patron",
+                      email: "whatsapp.drawer@artisanscent.com",
+                      phone: "+91 (Mobile)",
                       items: cartItems,
                       total: total,
+                      source: "WhatsApp Drawer Checkout",
                     });
-                    const whatsappUrl = `https://wa.me/919820252868?text=Hi! I would like to purchase: ${encodeURIComponent(cartItems)}. Total: ${encodeURIComponent(money(total))}`;
+                    const whatsappUrl = `https://wa.me/919820252868?text=✦ Artisan Scent Haute Parfumerie ✦\n\nReference: ${newOrder.id}\nI would like to order: ${encodeURIComponent(cartItems)}.\nTotal Valuation: ${encodeURIComponent(money(total))}\n\nPlease confirm availability and dispatch details.`;
                     window.open(whatsappUrl, '_blank');
                   }}
                 >
-                  Continue to WhatsApp Checkout <ArrowRight size={15} className="ml-1" />
+                  <MessageCircle size={16} className="text-[#86efac]" />
+                  <span>Proceed to WhatsApp Checkout</span>
+                  <ArrowRight size={15} />
                 </Button>
 
                 <Button

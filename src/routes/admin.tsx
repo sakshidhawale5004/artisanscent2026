@@ -27,6 +27,7 @@ import {
   Image as ImageIcon,
   Camera,
   RefreshCw,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,6 +41,12 @@ import {
   type Inquiry,
   getStoredInquiries,
   saveStoredInquiries,
+  type CRMOrder,
+  getStoredOrders,
+  saveStoredOrders,
+  syncCloudOrders,
+  addOrderToCRM,
+  ORDERS_UPDATED_EVENT,
 } from "@/lib/store";
 
 export const Route = createFileRoute("/admin")({
@@ -56,15 +63,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminHubPage,
 });
 
-export type Order = {
-  id: string;
-  customer: string;
-  email: string;
-  items: string;
-  total: number;
-  status: "Completed" | "Processing" | "Shipped" | "Pending";
-  date: string;
-};
+export type Order = CRMOrder;
 
 export type Customer = {
   id: string;
@@ -104,6 +103,7 @@ export function AdminHubPage() {
   const [ordersList, setOrdersList] = useState<Order[]>(initialOrders);
   const [customerList, setCustomerList] = useState<Customer[]>(initialCustomers);
   const [inquiriesList, setInquiriesList] = useState<Inquiry[]>([]);
+  const [isCloudSyncing, setIsCloudSyncing] = useState<boolean>(false);
 
   // Search & Filter state
   const [productSearch, setProductSearch] = useState("");
@@ -230,6 +230,47 @@ export function AdminHubPage() {
     setTimeout(() => setFeedbackMsg(null), 3500);
   };
 
+  // Function to refresh all telemetry (local cache + live cloud sync)
+  const refreshTelemetry = async (showLoading = false) => {
+    if (showLoading) setIsCloudSyncing(true);
+
+    // 1. Immediately read local cached orders & state for instant zero-latency UI
+    const localOrders = getStoredOrders();
+    if (localOrders && localOrders.length >= 0) {
+      setOrdersList(localOrders);
+    }
+
+    try {
+      const storedCust = localStorage.getItem("artisanscent_crm_customers");
+      if (storedCust) setCustomerList(JSON.parse(storedCust));
+    } catch {}
+
+    setInquiriesList(getStoredInquiries());
+
+    // 2. Fetch latest live cloud orders (persisted across different devices & WhatsApp checkouts)
+    try {
+      const mergedOrders = await syncCloudOrders();
+      if (mergedOrders && Array.isArray(mergedOrders)) {
+        setOrdersList(mergedOrders);
+      }
+    } catch (err) {
+      console.warn("Telemetry cloud sync note:", err);
+    } finally {
+      if (showLoading) setIsCloudSyncing(false);
+    }
+  };
+
+  const updateOrderStatus = (orderId: string, newStatus: Order["status"]) => {
+    setOrdersList((prev) => {
+      const next = prev.map((item) =>
+        item.id === orderId ? { ...item, status: newStatus } : item
+      );
+      saveStoredOrders(next, true);
+      return next;
+    });
+    showFeedback(`Order ${orderId} marked as ${newStatus}.`);
+  };
+
   // Check login & load live data on mount
   useEffect(() => {
     const isLogged = localStorage.getItem("artisanscent_admin_logged");
@@ -248,49 +289,43 @@ export function AdminHubPage() {
       }))
     );
 
-    // Load CRM patron customers
-    try {
-      const storedCust = localStorage.getItem("artisanscent_crm_customers");
-      if (storedCust) {
-        setCustomerList(JSON.parse(storedCust));
-      }
-    } catch {
-      setCustomerList([]);
-    }
-
-    // Load customer orders
-    try {
-      const storedOrders = localStorage.getItem("artisanscent_crm_orders");
-      if (storedOrders) {
-        setOrdersList(JSON.parse(storedOrders));
-      }
-    } catch {
-      setOrdersList([]);
-    }
-
-    // Load contact inquiries
-    setInquiriesList(getStoredInquiries());
+    // Initial telemetry pull
+    refreshTelemetry(true);
 
     const handleSync = () => {
-      setInquiriesList(getStoredInquiries());
-      try {
-        const storedCust = localStorage.getItem("artisanscent_crm_customers");
-        if (storedCust) setCustomerList(JSON.parse(storedCust));
-      } catch {}
-      try {
-        const storedOrders = localStorage.getItem("artisanscent_crm_orders");
-        if (storedOrders) setOrdersList(JSON.parse(storedOrders));
-      } catch {}
+      refreshTelemetry(false);
     };
 
     window.addEventListener("artisanscent:inquiries-updated", handleSync);
     window.addEventListener("artisanscent:customers-updated", handleSync);
-    window.addEventListener("artisanscent:orders-updated", handleSync);
+    window.addEventListener(ORDERS_UPDATED_EVENT, handleSync);
+    window.addEventListener("storage", handleSync);
+    window.addEventListener("focus", handleSync);
+
+    // Inter-tab BroadcastChannel listener
+    let channel: BroadcastChannel | null = null;
+    if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+      try {
+        channel = new BroadcastChannel("artisanscent_sync_bus");
+        channel.onmessage = () => {
+          refreshTelemetry(false);
+        };
+      } catch {}
+    }
+
+    // Periodic cloud poll every 3.5 seconds so checkouts from mobile devices appear automatically
+    const pollInterval = setInterval(() => {
+      refreshTelemetry(false);
+    }, 3500);
 
     return () => {
       window.removeEventListener("artisanscent:inquiries-updated", handleSync);
       window.removeEventListener("artisanscent:customers-updated", handleSync);
-      window.removeEventListener("artisanscent:orders-updated", handleSync);
+      window.removeEventListener(ORDERS_UPDATED_EVENT, handleSync);
+      window.removeEventListener("storage", handleSync);
+      window.removeEventListener("focus", handleSync);
+      if (channel) channel.close();
+      clearInterval(pollInterval);
     };
   }, []);
 
@@ -1002,6 +1037,177 @@ export function AdminHubPage() {
               </div>
             </div>
 
+            {/* Live Recent WhatsApp Checkouts & Orders Telemetry */}
+            <div className="rounded-2xl bg-white border border-[#e4ded5] p-5 sm:p-6 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="flex h-2.5 w-2.5 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
+                    </span>
+                    <h3 className="font-display text-xl text-[#111111] flex items-center gap-2 font-medium">
+                      <MessageCircle size={18} className="text-[#1b5e3f]" />
+                      Recent WhatsApp Orders &amp; Checkouts
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#e8f5f0] text-[#1b5e3f] border border-[#1b5e3f]/20">
+                      Live Telemetry Stream
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#666666] font-light mt-0.5">
+                    Orders registered in real-time whenever a user clicks "Proceed to WhatsApp Checkout" on the store.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      refreshTelemetry(true);
+                      showFeedback("Refreshed orders and telemetry data from cloud.");
+                    }}
+                    className="rounded-full border-[#dcd6cb] bg-white hover:bg-[#f2efe9] text-[#222222] h-8 px-3 text-xs gap-1.5"
+                  >
+                    <RefreshCw size={12} className={isCloudSyncing ? "animate-spin text-[#1b5e3f]" : ""} /> Sync Now
+                  </Button>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setActiveTab("orders")}
+                    className="text-xs text-[#1b5e3f] hover:underline cursor-pointer"
+                  >
+                    View All Orders ({ordersList.length}) →
+                  </Button>
+                </div>
+              </div>
+
+              {ordersList.length === 0 ? (
+                <div className="py-12 text-center text-xs text-[#777777] border border-dashed border-[#dcd6cb] rounded-xl bg-[#faf9f7] px-4">
+                  <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#1b5e3f] flex items-center justify-center mx-auto mb-3 border border-emerald-200">
+                    <MessageCircle size={22} />
+                  </div>
+                  <div className="font-medium text-sm text-[#222222]">Awaiting WhatsApp Checkouts</div>
+                  <div className="text-xs text-[#888888] mt-1.5 max-w-md mx-auto leading-relaxed">
+                    Whenever any customer clicks <strong>"Proceed to WhatsApp Checkout"</strong> on the website, their order ID, client details, fragrance formulation, and subtotal will automatically register and appear here in real time.
+                  </div>
+                  <div className="mt-4">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        const testOrder = addOrderToCRM({
+                          customer: "Sakshi Dhawale (Patron)",
+                          email: "sakshi.dhawale@example.com",
+                          phone: "+91 98202 52868",
+                          items: "Santal Impérial (50 ml Extrait) x1, Oudh & Damask Rose x1",
+                          total: 8998,
+                          note: "Gift packing requested with bespoke card",
+                          source: "WhatsApp Checkout",
+                        });
+                        showFeedback(`Simulated order ${testOrder.id} logged to Dashboard!`);
+                      }}
+                      className="rounded-full text-xs border-[#1b5e3f]/40 text-[#1b5e3f] hover:bg-[#1b5e3f]/5"
+                    >
+                      ✦ Create Test WhatsApp Checkout
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-[#eeebe5] bg-[#fbfaf8] text-[#777777] uppercase tracking-wider text-[10px]">
+                        <th className="py-2.5 px-3">Order ID</th>
+                        <th className="py-2.5 px-3">Patron Details</th>
+                        <th className="py-2.5 px-3">Fragrance Formulation</th>
+                        <th className="py-2.5 px-3">Total (₹)</th>
+                        <th className="py-2.5 px-3">Status</th>
+                        <th className="py-2.5 px-3">Timestamp</th>
+                        <th className="py-2.5 px-3 text-right">Concierge Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#f2efe9]">
+                      {ordersList.slice(0, 8).map((o) => (
+                        <tr key={o.id} className="hover:bg-[#faf9f7] transition-colors">
+                          <td className="py-3 px-3">
+                            <div className="font-mono font-bold text-[#111111]">{o.id}</div>
+                            <span className="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium bg-[#e8f5f0] text-[#1b5e3f]">
+                              <MessageCircle size={10} /> WhatsApp
+                            </span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <div className="font-medium text-[#111111]">{o.customer}</div>
+                            <div className="text-[11px] text-[#666666]">{o.phone || o.email}</div>
+                          </td>
+                          <td className="py-3 px-3 max-w-xs">
+                            <div className="text-[#333333] line-clamp-2">{o.items}</div>
+                            {o.note && (
+                              <div className="text-[10px] text-amber-900 bg-amber-50 rounded px-1.5 py-0.5 mt-1 inline-block border border-amber-200">
+                                Note: {o.note}
+                              </div>
+                            )}
+                          </td>
+                          <td className="py-3 px-3 font-mono font-bold text-[#111111]">
+                            {money(o.total)}
+                          </td>
+                          <td className="py-3 px-3">
+                            <select
+                              value={o.status}
+                              onChange={(e) => {
+                                const newStatus = e.target.value as Order["status"];
+                                updateOrderStatus(o.id, newStatus);
+                              }}
+                              className={`text-xs rounded-lg px-2 py-1 font-medium border cursor-pointer focus:outline-none ${
+                                o.status === "Completed"
+                                  ? "bg-emerald-50 text-emerald-800 border-emerald-300"
+                                  : o.status === "Processing"
+                                  ? "bg-amber-50 text-amber-800 border-amber-300"
+                                  : o.status === "Shipped"
+                                  ? "bg-blue-50 text-blue-800 border-blue-300"
+                                  : "bg-neutral-100 text-neutral-800 border-neutral-300"
+                              }`}
+                            >
+                              <option value="Pending">Pending</option>
+                              <option value="Processing">Processing</option>
+                              <option value="Shipped">Shipped</option>
+                              <option value="Completed">Completed</option>
+                            </select>
+                          </td>
+                          <td className="py-3 px-3 text-[#777777] whitespace-nowrap">
+                            <div>{o.date}</div>
+                            {o.time && <div className="text-[10px] text-[#999999]">{o.time}</div>}
+                          </td>
+                          <td className="py-3 px-3 text-right whitespace-nowrap">
+                            <div className="flex items-center justify-end gap-1.5">
+                              <a
+                                href={`https://wa.me/${(o.phone || "919820252868").replace(/[^0-9]/g, "") || "919820252868"}?text=${encodeURIComponent(
+                                  `Hello ${o.customer}! Regarding your Artisan Scent Order #${o.id} for ₹${o.total}: We are pleased to assist with your bespoke dispatch.`
+                                )}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#1b5e3f] text-white hover:bg-[#164a31] transition-colors"
+                              >
+                                <MessageCircle size={11} /> WhatsApp
+                              </a>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-[11px] text-[#1b5e3f] h-7 px-2"
+                                onClick={() => showFeedback(`Order receipt dispatched for ${o.id}`)}
+                              >
+                                Receipt
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
 
           </div>
         )}
@@ -1205,12 +1411,24 @@ export function AdminHubPage() {
                     ) : (
                       ordersList.map((o) => (
                         <tr key={o.id} className="hover:bg-[#faf9f7] transition-colors">
-                          <td className="py-3.5 px-4 font-mono font-bold text-[#111111]">{o.id}</td>
+                          <td className="py-3.5 px-4">
+                            <div className="font-mono font-bold text-[#111111]">{o.id}</div>
+                            <span className="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium bg-[#e8f5f0] text-[#1b5e3f]">
+                              <MessageCircle size={10} /> WhatsApp
+                            </span>
+                          </td>
                           <td className="py-3.5 px-4">
                             <div className="font-medium text-[#111111]">{o.customer}</div>
-                            <div className="text-[11px] text-[#777777]">{o.email}</div>
+                            <div className="text-[11px] text-[#777777]">{o.phone || o.email}</div>
                           </td>
-                          <td className="py-3.5 px-4 text-[#444444] max-w-sm">{o.items}</td>
+                          <td className="py-3.5 px-4 text-[#444444] max-w-sm">
+                            <div>{o.items}</div>
+                            {o.note && (
+                              <div className="text-[10px] text-amber-900 bg-amber-50 rounded px-1.5 py-0.5 mt-1 inline-block border border-amber-200">
+                                Note: {o.note}
+                              </div>
+                            )}
+                          </td>
                           <td className="py-3.5 px-4 font-mono font-semibold text-[#111111]">
                             {money(o.total)}
                           </td>
@@ -1219,18 +1437,17 @@ export function AdminHubPage() {
                               value={o.status}
                               onChange={(e) => {
                                 const newStatus = e.target.value as Order["status"];
-                                setOrdersList((prev) => {
-                                  const next = prev.map((item) =>
-                                    item.id === o.id ? { ...item, status: newStatus } : item
-                                  );
-                                  try {
-                                    localStorage.setItem("artisanscent_crm_orders", JSON.stringify(next));
-                                  } catch {}
-                                  return next;
-                                });
-                                showFeedback(`Order ${o.id} updated to ${newStatus}.`);
+                                updateOrderStatus(o.id, newStatus);
                               }}
-                              className="bg-[#f5f4f0] border border-[#dcd6cb] rounded-lg px-2.5 py-1 text-xs cursor-pointer focus:outline-none focus:border-[#1b5e3f]"
+                              className={`bg-[#f5f4f0] border rounded-lg px-2.5 py-1 text-xs cursor-pointer focus:outline-none focus:border-[#1b5e3f] font-medium ${
+                                o.status === "Completed"
+                                  ? "text-emerald-800 border-emerald-300 bg-emerald-50"
+                                  : o.status === "Processing"
+                                  ? "text-amber-800 border-amber-300 bg-amber-50"
+                                  : o.status === "Shipped"
+                                  ? "text-blue-800 border-blue-300 bg-blue-50"
+                                  : "text-neutral-800 border-[#dcd6cb]"
+                              }`}
                             >
                               <option value="Pending">Pending</option>
                               <option value="Processing">Processing</option>
@@ -1238,16 +1455,31 @@ export function AdminHubPage() {
                               <option value="Completed">Completed</option>
                             </select>
                           </td>
-                          <td className="py-3.5 px-4 text-[#777777]">{o.date}</td>
+                          <td className="py-3.5 px-4 text-[#777777]">
+                            <div>{o.date}</div>
+                            {o.time && <div className="text-[10px] text-[#999999]">{o.time}</div>}
+                          </td>
                           <td className="py-3.5 px-4 text-right">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="text-xs text-[#1b5e3f] h-7 px-2"
-                              onClick={() => showFeedback(`Receipt dispatched for ${o.id}`)}
-                            >
-                              Send Receipt
-                            </Button>
+                            <div className="flex items-center justify-end gap-1.5">
+                              <a
+                                href={`https://wa.me/${(o.phone || "919820252868").replace(/[^0-9]/g, "") || "919820252868"}?text=${encodeURIComponent(
+                                  `Hello ${o.customer}! Regarding your Artisan Scent Order #${o.id} for ₹${o.total}: We are pleased to assist with your bespoke dispatch.`
+                                )}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#1b5e3f] text-white hover:bg-[#164a31] transition-colors"
+                              >
+                                <MessageCircle size={11} /> WhatsApp
+                              </a>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-xs text-[#1b5e3f] h-7 px-2"
+                                onClick={() => showFeedback(`Receipt dispatched for ${o.id}`)}
+                              >
+                                Send Receipt
+                              </Button>
+                            </div>
                           </td>
                         </tr>
                       ))

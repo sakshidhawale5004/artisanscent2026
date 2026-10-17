@@ -257,11 +257,149 @@ export type CRMOrder = {
   id: string;
   customer: string;
   email: string;
+  phone?: string;
   items: string;
   total: number;
   status: "Completed" | "Processing" | "Shipped" | "Pending";
   date: string;
+  time?: string;
+  note?: string;
+  source?: string;
 };
+
+export const ORDERS_STORAGE_KEY = "artisanscent_crm_orders";
+export const ORDERS_UPDATED_EVENT = "artisanscent:orders-updated";
+export const CLOUD_ORDERS_ENDPOINT = "https://api.restful-api.dev/objects/ff808181a09d98f701a1498372b77e25";
+
+// Inter-tab / inter-window broadcast channel for instant live updates across open browser tabs
+function getSyncChannel(): BroadcastChannel | null {
+  if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+    try {
+      return new BroadcastChannel("artisanscent_sync_bus");
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+export function getStoredOrders(): CRMOrder[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(ORDERS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+// Push latest order batch to the cloud store (cross-device persistence)
+export async function syncOrdersToCloud(orders: CRMOrder[]): Promise<boolean> {
+  if (typeof window === "undefined" || !orders) return false;
+  try {
+    const payload = {
+      name: "Artisan Scent Orders Store",
+      data: { orders: orders.slice(0, 100) }, // retain up to 100 recent orders
+    };
+    const res = await fetch(CLOUD_ORDERS_ENDPOINT, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn("Artisan Scent cloud telemetry push bypassed:", err);
+    return false;
+  }
+}
+
+// Pull latest orders from cloud store (cross-device persistence)
+export async function fetchRemoteOrders(): Promise<CRMOrder[]> {
+  if (typeof window === "undefined") return [];
+  try {
+    const res = await fetch(CLOUD_ORDERS_ENDPOINT, { cache: "no-store" });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const remote = json?.data?.orders;
+    return Array.isArray(remote) ? remote : [];
+  } catch (err) {
+    console.warn("Artisan Scent cloud telemetry pull bypassed:", err);
+    return [];
+  }
+}
+
+// Save orders locally and broadcast everywhere
+export function saveStoredOrders(orders: CRMOrder[], syncToRemote = true): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+    window.dispatchEvent(new CustomEvent(ORDERS_UPDATED_EVENT, { detail: orders }));
+
+    const ch = getSyncChannel();
+    if (ch) {
+      ch.postMessage({ type: "orders_updated", payload: orders });
+      ch.close();
+    }
+
+    if (syncToRemote) {
+      syncOrdersToCloud(orders).catch(() => {});
+    }
+  } catch (e) {
+    console.error("Failed to save CRM orders", e);
+  }
+}
+
+// Bidirectional sync: merges local & cloud orders
+export async function syncCloudOrders(): Promise<CRMOrder[]> {
+  const local = getStoredOrders();
+  const remote = await fetchRemoteOrders();
+
+  if (!remote || remote.length === 0) {
+    if (local.length > 0) {
+      syncOrdersToCloud(local).catch(() => {});
+    }
+    return local;
+  }
+
+  // Merge local and remote, preserving newest by id
+  const map = new Map<string, CRMOrder>();
+  // Remote first
+  remote.forEach((o) => map.set(o.id, o));
+  // Local overrides if newer or present
+  local.forEach((o) => {
+    if (!map.has(o.id)) {
+      map.set(o.id, o);
+    } else {
+      // Keep whichever has status change or local edits
+      const r = map.get(o.id)!;
+      map.set(o.id, { ...r, ...o });
+    }
+  });
+
+  const merged = Array.from(map.values()).sort((a, b) => {
+    // Sort descending by id or date
+    return b.id.localeCompare(a.id);
+  });
+
+  // Check if anything new was added
+  const localIds = new Set(local.map((l) => l.id));
+  const hasNewFromRemote = merged.some((m) => !localIds.has(m.id));
+
+  if (hasNewFromRemote || merged.length !== local.length) {
+    saveStoredOrders(merged, false);
+  }
+
+  // If local had orders remote didn't have, push merged up
+  const remoteIds = new Set(remote.map((r) => r.id));
+  const hasNewFromLocal = merged.some((m) => !remoteIds.has(m.id));
+  if (hasNewFromLocal) {
+    syncOrdersToCloud(merged).catch(() => {});
+  }
+
+  return merged;
+}
 
 export function addOrderToCRM(data: {
   customer?: string;
@@ -269,32 +407,38 @@ export function addOrderToCRM(data: {
   phone?: string;
   items: string;
   total: number;
+  note?: string;
+  source?: string;
 }): CRMOrder {
   const now = new Date();
   const dateStr = now.toISOString().split("T")[0] as string;
+  const timeStr = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const orderId = `ORD-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, "0")}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-  const customerName = data.customer || "WhatsApp Concierge Client";
-  const customerEmail = data.email || "whatsapp.order@artisanscent.com";
+  const customerName = data.customer?.trim() || "WhatsApp Concierge Client";
+  const customerEmail = data.email?.trim() || "whatsapp.order@artisanscent.com";
+  const customerPhone = data.phone?.trim() || "+91 98202 52868";
 
   const newOrder: CRMOrder = {
     id: orderId,
     customer: customerName,
     email: customerEmail,
+    phone: customerPhone,
     items: data.items,
     total: data.total,
     status: "Pending",
     date: dateStr,
+    time: timeStr,
+    note: data.note,
+    source: data.source || "WhatsApp Checkout",
   };
 
   if (typeof window !== "undefined") {
-    // 1. Record in CRM Orders list
+    // 1. Record in CRM Orders list & broadcast
     try {
-      const raw = localStorage.getItem("artisanscent_crm_orders");
-      const orders = raw ? JSON.parse(raw) : [];
-      const updatedOrders = [newOrder, ...orders];
-      localStorage.setItem("artisanscent_crm_orders", JSON.stringify(updatedOrders));
-      window.dispatchEvent(new CustomEvent("artisanscent:orders-updated", { detail: updatedOrders }));
+      const orders = getStoredOrders();
+      const updatedOrders = [newOrder, ...orders.filter((o) => o.id !== newOrder.id)];
+      saveStoredOrders(updatedOrders, true);
     } catch (e) {
       console.error("Failed to record CRM order", e);
     }
@@ -310,12 +454,13 @@ export function addOrderToCRM(data: {
         patrons[existingIdx].ordersCount = (patrons[existingIdx].ordersCount || 0) + 1;
         patrons[existingIdx].totalSpend = (patrons[existingIdx].totalSpend || 0) + data.total;
         patrons[existingIdx].lastOrder = dateStr;
+        if (data.phone) patrons[existingIdx].phone = data.phone;
       } else {
         patrons.unshift({
           id: `CUST-${Date.now().toString().slice(-4)}`,
           name: customerName,
           email: customerEmail,
-          phone: data.phone || "+91 98202 52868",
+          phone: customerPhone,
           segment: "WhatsApp Order / Patron",
           ordersCount: 1,
           totalSpend: data.total,
@@ -325,20 +470,27 @@ export function addOrderToCRM(data: {
       }
       localStorage.setItem(patronKey, JSON.stringify(patrons));
       window.dispatchEvent(new CustomEvent("artisanscent:customers-updated", { detail: patrons }));
+
+      const ch = getSyncChannel();
+      if (ch) {
+        ch.postMessage({ type: "customers_updated", payload: patrons });
+        ch.close();
+      }
     } catch (e) {
       console.error("Failed to sync patron customer", e);
     }
 
-    // 3. Also log as Inquiry in CRM so it shows up under Recent Activity on Dashboard tab
+    // 3. Also log as Inquiry in CRM so it shows up under Recent Activity on Dashboard
     addInquiryToCRM({
       name: customerName,
       email: customerEmail,
-      phone: data.phone || "+91 98202 52868",
+      phone: customerPhone,
       interest: "WhatsApp Checkout Order",
-      message: `WhatsApp Checkout initiated for: ${data.items}. Total Value: ₹${data.total}`,
+      message: `WhatsApp Checkout initiated for: ${data.items}. Total Value: ₹${data.total}${data.note ? ` | Note: ${data.note}` : ""}`,
     });
   }
 
   return newOrder;
 }
+
 
