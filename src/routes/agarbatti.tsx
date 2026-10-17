@@ -95,7 +95,7 @@ function AgarbattiPage() {
             {/* Image Left */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#e8e2d8]">
               <img
-                src="/assets/AGARBATTI NEW/Sacred Aromas for section.png"
+                src="/assets/agarbatti_sectionimage.jpeg"
                 alt="Sacred Aromas for Mind & Spirit"
                 className="w-full h-[500px] object-cover"
               />
