@@ -96,7 +96,7 @@ function Index() {
     if (filter === "Soaps") return p.category === "soaps";
     return true;
   });
-  const signatureIcons = ["gold-collection", "midnight-mystery", "car-wooden", "vetiver-oil"]
+  const signatureIcons = ["ivory-amber", "ocean-breeze", "car-arctic-mist", "vetiver-oil"]
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is Product => Boolean(p));
 

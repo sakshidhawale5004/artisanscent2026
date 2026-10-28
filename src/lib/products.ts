@@ -1,11 +1,16 @@
-// Luxury Perfumes
-const perfume1 = "/assets/perfumes/Faceted Gold Perfume Bottle.png";
-const perfume2 = "/assets/perfumes/Glossy Black-to-Blue Perfume Bottle.png";
-const perfume3 = "/assets/perfumes/Jewel-Toned Perfume Bottle Display.png";
-const perfume4 = "/assets/perfumes/Lavender Crystal Perfume Bottle.png";
-const perfume5 = "/assets/perfumes/Luxury Black Perfume Bottle with Gold Cap.png";
-const perfume6 = "/assets/perfumes/Luxury Perfume Collection in Gold and Glass.png";
-const perfume7 = "/assets/perfumes/Ruby Perfume Bottle with Gold Cap.png";
+// Body Perfumes (12 New Fragrances)
+const bodyPerfume1 = "/assets/body perform/Luxurious Ivory Amber Perfume Display.png";
+const bodyPerfume2 = "/assets/body perform/Ocean Breeze Luxury Perfume by the Sea.png";
+const bodyPerfume3 = "/assets/body perform/Lone Legend Amber Perfume Still Life.png";
+const bodyPerfume4 = "/assets/body perform/Ocean Breeze Luxury Perfume Ad.png";
+const bodyPerfume5 = "/assets/body perform/Ivory Oud Luxury Perfume Still Life.png";
+const bodyPerfume6 = "/assets/body perform/Wild Essence Botanical Perfume Display.png";
+const bodyPerfume7 = "/assets/body perform/Crimson Charm Luxury Perfume Still Life.png";
+const bodyPerfume8 = "/assets/body perform/Scarlet Spirit Luxury Perfume Bottle.png";
+const bodyPerfume9 = "/assets/body perform/Pure Musk Luxury Still Life.png";
+const bodyPerfume10 = "/assets/body perform/Ice Wave Luxury Perfume Still Life.png";
+const bodyPerfume11 = "/assets/body perform/Visionary Amber Body Perfume.png";
+const bodyPerfume12 = "/assets/body perform/Royal Noir Luxury Perfume Still Life.png";
 
 // Essence Oils
 const essence1 = "/assets/essence oil/Amber Patchouli Oil Bottle.png";
@@ -18,10 +23,12 @@ const essence7 = "/assets/essence oil/Premium Lemongrass Essential Oil Bottle.pn
 const essence8 = "/assets/essence oil/Premium Menthol Mint Oil Bottle.png";
 const essence9 = "/assets/essence oil/Vetiver Oil Amber Bottle Mockup.png";
 
-// Car Perfumes
-const car1 = "/assets/car perfume/car perfume.png";
-const car2 = "/assets/car perfume/Hanging Wooden Amber Diffuser.png";
-const car3 = "/assets/car perfume/Minimalist Hanging Green Diffuser Bottle.png";
+// Car Perfumes (5 New Fragrances)
+const carPerfume1 = "/assets/car perfurm/Arctic Mist Luxury Car Fragrance.png";
+const carPerfume2 = "/assets/car perfurm/Royal Valley Car Fragrance Glow.png";
+const carPerfume3 = "/assets/car perfurm/Regal Oud Luxury Car Fragrance.png";
+const carPerfume4 = "/assets/car perfurm/Amber Heritage Car Perfume.png";
+const carPerfume5 = "/assets/car perfurm/Mystic Musk Luxury Car Fragrance.png";
 
 // Agarbatti
 const agarbatti1 = "/assets/AGARBATTI NEW/Premium Agarbatti Sticks.png";
@@ -54,90 +61,174 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  // LUXURY PERFUMES
+  // BODY PERFUMES (12 New Products - 30ml / ₹569)
   {
-    id: "gold-faceted",
-    name: "Golden Essence",
-    notes: "Floral · Amber · Woody",
-    family: "Luxury",
+    id: "ivory-amber",
+    name: "Ivory Amber",
+    notes: "Warm Amber · Golden Resin · Vanilla",
+    family: "Oriental Amber",
     category: "perfumes",
-    price: 5999,
-    image: perfume1,
-    badge: "Premium",
+    price: 569,
+    size: "30 ml",
+    sku: "2235101",
+    image: bodyPerfume1,
+    badge: "Bestseller",
     description:
-      "A sophisticated blend of golden florals with warm amber undertones. Perfect for special occasions and memorable evenings.",
+      "A radiant and velvety blend of golden amber, warm resin, and comforting vanilla accords. An intimate, enduring aura designed for refined day-to-evening wear.",
   },
   {
-    id: "midnight-mystery",
-    name: "Midnight Mystery",
-    notes: "Black Currant · Dark Florals · Sandalwood",
-    family: "Luxury",
+    id: "ocean-breeze",
+    name: "Ocean Breeze",
+    notes: "Marine Accord · Sea Salt · Crisp Citrus",
+    family: "Aquatic Fresh",
     category: "perfumes",
-    price: 4999,
-    image: perfume2,
+    price: 569,
+    size: "30 ml",
+    sku: "2235102",
+    image: bodyPerfume2,
+    badge: "Fresh",
+    description:
+      "Invigorating coastal marine notes kissed by ocean sea spray and crisp sunlit citrus. Evoking the brisk freshness of morning ocean winds.",
+  },
+  {
+    id: "lone-legend",
+    name: "Lone Legend",
+    notes: "Smoky Woods · Rich Leather · Spiced Amber",
+    family: "Woody Leather",
+    category: "perfumes",
+    price: 569,
+    size: "30 ml",
+    sku: "2235103",
+    image: bodyPerfume3,
     badge: "Signature",
     description:
-      "Mysterious and alluring. The deep essence of night with hints of precious woods and dark florals.",
+      "Bold, mysterious, and unapologetically distinct. Rich spiced amber layered over aged cedarwood and dark leather undertones.",
   },
   {
-    id: "jeweled-collection",
-    name: "Jeweled Collection",
-    notes: "Rose · Peony · Musk",
-    family: "Luxury",
+    id: "ocean-breeze-men",
+    name: "Ocean Breeze Men",
+    notes: "Aquatic Mint · Cedarwood · Bergamot",
+    family: "Aromatic Aquatic",
     category: "perfumes",
-    price: 5499,
-    image: perfume3,
+    price: 569,
+    size: "30 ml",
+    sku: "2235104",
+    image: bodyPerfume4,
+    badge: "Popular",
+    description:
+      "A sharp, masculine oceanic surge pairing zesty Italian bergamot with crushed mint and a grounded, cedarwood base.",
+  },
+  {
+    id: "ivory-oud",
+    name: "Ivory Oud",
+    notes: "Precious Agarwood · White Florals · Musk",
+    family: "Oud Floral",
+    category: "perfumes",
+    price: 569,
+    size: "30 ml",
+    sku: "2235105",
+    image: bodyPerfume5,
     badge: "Exclusive",
     description:
-      "A precious collection inspired by gemstones. Each note is carefully composed for lasting elegance.",
+      "A sophisticated modern oud softened with delicate white petals and cream musk. Opulent yet wearable, bridging regal depth and modern grace.",
   },
   {
-    id: "lavender-crystal",
-    name: "Lavender Crystal",
-    notes: "Lavender · Citrus · White Floral",
-    family: "Luxury",
+    id: "wild-essence",
+    name: "Wild Essence",
+    notes: "Botanical Green · Forest Moss · Earthy Woods",
+    family: "Chypre Green",
     category: "perfumes",
-    price: 4699,
-    image: perfume4,
+    price: 569,
+    size: "30 ml",
+    sku: "2235106",
+    image: bodyPerfume6,
+    badge: "Artisanal",
+    description:
+      "Untamed botanical harmony inspired by deep untouched forests. Crisp verdant leaves, damp oakmoss, and aromatic vetiver roots.",
+  },
+  {
+    id: "crimson-charm",
+    name: "Crimson Charm",
+    notes: "Damask Rose · Red Berries · Sandalwood",
+    family: "Fruity Floral",
+    category: "perfumes",
+    price: 569,
+    size: "30 ml",
+    sku: "2235107",
+    image: bodyPerfume7,
+    badge: "Romantic",
+    description:
+      "An intoxicating composition of velvety crimson rose petals, succulent wild berries, and a lingering, sensual sandalwood base.",
+  },
+  {
+    id: "scarlet-spirit",
+    name: "Scarlet Spirit",
+    notes: "Spiced Plum · Dark Florals · Warm Patchouli",
+    family: "Oriental Floral",
+    category: "perfumes",
+    price: 569,
+    size: "30 ml",
+    sku: "2235108",
+    image: bodyPerfume8,
+    badge: "Bold",
+    description:
+      "Exuberant and passionate. Luminous dark florals woven with warm spiced plum notes and patchouli for a hypnotic signature trail.",
+  },
+  {
+    id: "pure-musk",
+    name: "Pure Musk",
+    notes: "White Musk · Powdery Florals · Clean Iris",
+    family: "Musk Floral",
+    category: "perfumes",
+    price: 569,
+    size: "30 ml",
+    sku: "2235109",
+    image: bodyPerfume9,
     badge: "Timeless",
     description:
-      "Pure lavender essence with crystalline citrus notes. Refreshing, timeless, and universally adored.",
+      "Serene, clean, and softly seductive. Intimate powdery white musk enveloping skin like a whisper of cashmere on a calm morning.",
   },
   {
-    id: "black-luxury",
-    name: "Black Luxury",
-    notes: "Oud · Leather · Vanilla",
-    family: "Luxury",
+    id: "ice-wave",
+    name: "Ice Wave",
+    notes: "Glacial Mint · Eucalyptus · Crisp Amber",
+    family: "Frost Aromatic",
     category: "perfumes",
-    price: 6499,
-    image: perfume5,
-    badge: "Rare",
+    price: 569,
+    size: "30 ml",
+    sku: "2235110",
+    image: bodyPerfume10,
+    badge: "Refreshing",
     description:
-      "An opulent fragrance with precious oud, subtle leather, and creamy vanilla. The epitome of sophistication.",
+      "A chilled rush of crystalline mint and glacial freshness tempered with soft modern woods. Crisp, exhilarating, and intensely revitalizing.",
   },
   {
-    id: "gold-collection",
-    name: "Gold Collection Harmony",
-    notes: "Jasmine · Vanilla · Amber",
-    family: "Luxury",
+    id: "visionary",
+    name: "Visionary",
+    notes: "Golden Amber · Rare Woods · Spiced Saffron",
+    family: "Warm Spicy",
     category: "perfumes",
-    price: 5799,
-    image: perfume6,
-    badge: "Premium Collection",
+    price: 569,
+    size: "30 ml",
+    sku: "2235111",
+    image: bodyPerfume11,
+    badge: "Signature",
     description:
-      "A harmonious blend celebrating luxury. Jasmine, vanilla, and golden amber create an unforgettable experience.",
+      "Formulated for the trailblazer. Luxurious golden amber illuminated by precious saffron threads and deep roasted woods.",
   },
   {
-    id: "ruby-luxury",
-    name: "Ruby Radiance",
-    notes: "Red Rose · Raspberry · Sandalwood",
-    family: "Luxury",
+    id: "royal-noir",
+    name: "Royal Noir",
+    notes: "Dark Woods · Black Pepper · Smoky Incense",
+    family: "Woody Amber",
     category: "perfumes",
-    price: 5399,
-    image: perfume7,
-    badge: "Exclusive",
+    price: 569,
+    size: "30 ml",
+    sku: "2235112",
+    image: bodyPerfume12,
+    badge: "Luxury",
     description:
-      "Radiant and bold. Ruby-red florals with juicy raspberry and warm sandalwood create an unforgettable impression.",
+      "Regal nocturnal majesty. Dark woods, black pepper spices, and hypnotic frankincense create an unforgettable atmosphere of luxury.",
   },
 
   // ESSENCE OILS
@@ -265,45 +356,76 @@ export const products: Product[] = [
       "Deep earthy woody notes. Excellent perfume fixative used in attars and luxury fragrances.",
   },
 
-  // CAR PERFUMES
+  // CAR PERFUMES (5 New Products - 8ml / ₹189)
   {
-    id: "car-classic",
-    name: "Classic Car Diffuser",
-    notes: "Fresh · Woody · Citrus",
-    family: "Automotive",
+    id: "car-arctic-mist",
+    name: "Arctic Mist",
+    notes: "Glacial Mint · Clean Air · Cool Ozone",
+    family: "Automotive Fresh",
     category: "car-perfumes",
-    price: 1299,
-    image: car1,
+    price: 189,
+    size: "8 ml",
+    sku: "5573101",
+    image: carPerfume1,
+    badge: "Bestseller",
+    description:
+      "A breath of pristine arctic mountain air. Diffuses crisp glacial mint and clean ozone notes to keep your car interior permanently fresh and uplifting.",
+  },
+  {
+    id: "car-royal-valley",
+    name: "Royal Valley",
+    notes: "Lush Pine · Valley Florals · Damp Cedar",
+    family: "Automotive Woody",
+    category: "car-perfumes",
+    price: 189,
+    size: "8 ml",
+    sku: "5573102",
+    image: carPerfume2,
+    badge: "Signature",
+    description:
+      "Inspired by royal valley woodlands. Fresh alpine pine, crushed green needles, and sweet morning blossom for a serene, luxurious driving ambience.",
+  },
+  {
+    id: "car-regal-oud",
+    name: "Regal Oud",
+    notes: "Oriental Oud · Ambergris · Warm Spices",
+    family: "Automotive Luxury",
+    category: "car-perfumes",
+    price: 189,
+    size: "8 ml",
+    sku: "5573103",
+    image: carPerfume3,
+    badge: "Luxury",
+    description:
+      "An opulent hanging diffuser releasing velvety agarwood, warm golden amber, and subtle spice to elevate your vehicle into a palace lounge.",
+  },
+  {
+    id: "car-amber-heritage",
+    name: "Amber Heritage",
+    notes: "Golden Amber · Sandalwood · Sweet Vanilla",
+    family: "Automotive Amber",
+    category: "car-perfumes",
+    price: 189,
+    size: "8 ml",
+    sku: "5573104",
+    image: carPerfume4,
     badge: "Popular",
-    size: "Compact",
     description:
-      "Designed for automotive fragrance use. Fresh and woody notes perfect for your driving environment.",
+      "Timeless warmth. Rich amber resin blended with heritage Mysore sandalwood to deliver a calming, premium atmosphere on every journey.",
   },
   {
-    id: "car-wooden",
-    name: "Wooden Amber Diffuser",
-    notes: "Amber · Woody · Warm",
-    family: "Automotive",
+    id: "car-mystic-musk",
+    name: "Mystic Musk",
+    notes: "White Musk · Soft Petals · Clean Linen",
+    family: "Automotive Fresh",
     category: "car-perfumes",
-    price: 1499,
-    image: car2,
-    badge: "Premium",
-    size: "Hanging",
+    price: 189,
+    size: "8 ml",
+    sku: "5573105",
+    image: carPerfume5,
+    badge: "Delicate",
     description:
-      "Combines compact design with stylish appearance. Warm amber and woody notes for a luxurious in-car experience.",
-  },
-  {
-    id: "car-minimalist",
-    name: "Green Minimalist Diffuser",
-    notes: "Fresh · Green · Herbal",
-    family: "Automotive",
-    category: "car-perfumes",
-    price: 1399,
-    image: car3,
-    badge: "Modern",
-    size: "Hanging",
-    description:
-      "Minimalist green bottle with fresh herbal fragrance. Perfect for personalizing your driving space.",
+      "Pure, delicate white musk and gentle blossoms create an aura of pristine cleanliness and comforting elegance in your cabin.",
   },
 
   // AGARBATTI
@@ -378,16 +500,35 @@ export const products: Product[] = [
 
 export const money = (amount: number) => `₹${amount}`;
 
-export const PRODUCTS_STORAGE_KEY = "artisanscent_live_catalog";
+export const PRODUCTS_STORAGE_KEY = "artisanscent_live_catalog_v5";
 export const PRODUCTS_UPDATED_EVENT = "artisanscent:products-updated";
 
 export function getStoredProducts(): Product[] {
   if (typeof window === "undefined") return products;
   try {
     const raw = localStorage.getItem(PRODUCTS_STORAGE_KEY);
-    if (!raw) return products;
+    if (!raw) {
+      // Clear legacy storage keys
+      localStorage.removeItem("artisanscent_live_catalog");
+      localStorage.removeItem("artisanscent_live_catalog_v2");
+      localStorage.removeItem("artisanscent_live_catalog_v3");
+      localStorage.removeItem("artisanscent_live_catalog_v4");
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      return products;
+    }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
+      const hasOldProducts = parsed.some(
+        (p: Product) =>
+          p.id === "gold-faceted" ||
+          p.id === "midnight-mystery" ||
+          p.id === "car-classic" ||
+          p.id === "car-wooden"
+      );
+      if (hasOldProducts) {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+        return products;
+      }
       return parsed.map((p: Product) => {
         if (p.id === "agarbatti-premium" && (p.image.includes("agarbatti (1)") || !p.image.includes("AGARBATTI NEW"))) {
           return { ...p, image: agarbatti1 };
