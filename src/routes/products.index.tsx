@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { ArrowRight, Heart, Plus, Search, ShoppingBag, X, SlidersHorizontal, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -301,7 +301,11 @@ export function AllProductsPage() {
                   >
                     {/* Bottle Display Area */}
                     <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-gradient-to-b from-[#faf9f6] via-[#f5f3ee] to-[#faf9f6] border-b border-[#e8e2d8]/80">
-                      <a href={`/products/${p.id}`} className="w-full h-full flex items-center justify-center">
+                      <Link
+                        to="/products/$productId"
+                        params={{ productId: p.id }}
+                        className="w-full h-full flex items-center justify-center"
+                      >
                         <img
                           src={p.image}
                           alt={p.name}
@@ -310,7 +314,7 @@ export function AllProductsPage() {
                           loading="lazy"
                           className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                         />
-                      </a>
+                      </Link>
 
                       {/* Badge */}
                       <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#1b5e3f]/20 font-semibold px-2.5 py-0.5 rounded-full shadow-xs">
@@ -345,12 +349,13 @@ export function AllProductsPage() {
                         </div>
 
                         {/* Name */}
-                        <a
-                          href={`/products/${p.id}`}
+                        <Link
+                          to="/products/$productId"
+                          params={{ productId: p.id }}
                           className="font-display text-lg text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium leading-snug line-clamp-1"
                         >
                           {p.name}
-                        </a>
+                        </Link>
 
                         {/* Notes */}
                         <p className="text-xs text-[#666666] line-clamp-1 mt-1 font-light">{p.notes}</p>
@@ -480,8 +485,9 @@ export function AllProductsPage() {
                 />
                 <div className="search-results">
                   {filteredProducts.slice(0, 8).map((p) => (
-                    <a
-                      href={`/products/${p.id}`}
+                    <Link
+                      to="/products/$productId"
+                      params={{ productId: p.id }}
                       key={p.id}
                       className="bag-item"
                       onClick={close}
@@ -492,7 +498,7 @@ export function AllProductsPage() {
                         <p className="product-notes">{p.notes}</p>
                         <span className="text-xs font-mono">{money(p.price)}</span>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </>

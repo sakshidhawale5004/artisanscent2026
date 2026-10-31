@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useWishlist, useShoppingBag } from "@/lib/store";
 import { useProducts, money, type Product } from "@/lib/products";
@@ -250,8 +250,9 @@ function WishlistPage() {
                   >
                     <div>
                       {/* Product Image Showcase */}
-                      <a
-                        href={`/products/${product.id}`}
+                      <Link
+                        to="/products/$productId"
+                        params={{ productId: product.id }}
                         className="block relative h-72 overflow-hidden bg-[#faf8f5] p-6"
                       >
                         <img
@@ -266,7 +267,7 @@ function WishlistPage() {
                             {product.badge}
                           </span>
                         )}
-                      </a>
+                      </Link>
 
                       {/* Remove Button (Heart with active fill) */}
                       <button
@@ -287,11 +288,15 @@ function WishlistPage() {
                           {product.category.replace("-", " ")}
                         </div>
 
-                        <a href={`/products/${product.id}`} className="block">
+                        <Link
+                          to="/products/$productId"
+                          params={{ productId: product.id }}
+                          className="block"
+                        >
                           <h3 className="font-display text-lg sm:text-xl text-[#1a1a1a] mb-1 hover:text-[#1b5e3f] transition-colors leading-snug font-medium line-clamp-1">
                             {product.name}
                           </h3>
-                        </a>
+                        </Link>
 
                         <p className="text-xs text-[#777777] line-clamp-2 mt-1 font-light leading-relaxed">
                           {product.notes}
@@ -307,12 +312,13 @@ function WishlistPage() {
                             </div>
                           </div>
 
-                          <a
-                            href={`/products/${product.id}`}
+                          <Link
+                            to="/products/$productId"
+                            params={{ productId: product.id }}
                             className="text-xs text-[#1b5e3f] hover:underline flex items-center gap-1 font-medium"
                           >
                             Details <ExternalLink size={12} />
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>

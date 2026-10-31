@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useShoppingBag, useWishlist, addOrderToCRM } from "@/lib/store";
 import { useProducts, money, type Product } from "@/lib/products";
@@ -280,8 +280,9 @@ function CartPage() {
                       >
                         <div className="flex gap-4 sm:gap-6 items-center flex-1 min-w-0">
                           {/* Product Thumbnail */}
-                          <a
-                            href={`/products/${product.id}`}
+                          <Link
+                            to="/products/$productId"
+                            params={{ productId: product.id }}
                             className="w-20 h-24 sm:w-24 sm:h-28 flex-shrink-0 rounded-xl border border-[#eeebe5] overflow-hidden bg-[#faf8f5] p-2 flex items-center justify-center group"
                           >
                             <img
@@ -289,19 +290,20 @@ function CartPage() {
                               alt={product.name}
                               className="h-full w-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform"
                             />
-                          </a>
+                          </Link>
 
                           {/* Product Details */}
                           <div className="flex-1 min-w-0">
                             <div className="text-[10px] uppercase tracking-wider text-[#1b5e3f] font-semibold mb-1">
                               {product.category.replace("-", " ")}
                             </div>
-                            <a
-                              href={`/products/${product.id}`}
+                            <Link
+                              to="/products/$productId"
+                              params={{ productId: product.id }}
                               className="font-display text-base sm:text-lg text-[#1a1a1a] hover:text-[#1b5e3f] transition-colors leading-snug font-medium block truncate"
                             >
                               {product.name}
-                            </a>
+                            </Link>
                             <p className="text-xs text-[#777777] line-clamp-1 mt-0.5 font-light">
                               {product.notes}
                             </p>

@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -77,9 +77,21 @@ function ProductDetailPage() {
   const [activeImg, setActiveImg] = useState(0);
   const [addedFlash, setAddedFlash] = useState(false);
 
-  const product = allProducts.find((p) => p.id === productId);
+  useEffect(() => {
+    setActiveImg(0);
+    setQty(1);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [productId]);
+
+  const product = allProducts.find(
+    (p) =>
+      p.id.toLowerCase() === productId?.toLowerCase() ||
+      p.sku?.toLowerCase() === productId?.toLowerCase()
+  );
   const related = allProducts
-    .filter((p) => p.category === product?.category && p.id !== productId)
+    .filter((p) => p.category === product?.category && p.id !== product?.id)
     .slice(0, 4);
   const total = allProducts.reduce((sum, p) => sum + p.price * (bag[p.id] || 0), 0);
 
@@ -135,15 +147,15 @@ function ProductDetailPage() {
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-6 pb-4">
           <nav className="flex items-center gap-2 text-xs text-[#666666]" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-[#1b5e3f] transition-colors">
+            <Link to="/" className="hover:text-[#1b5e3f] transition-colors">
               Home
-            </a>
+            </Link>
             <span className="text-[#aaaaaa]">›</span>
             {crumb && (
               <>
-                <a href={crumb.href} className="hover:text-[#1b5e3f] transition-colors">
+                <Link to={crumb.href as any} className="hover:text-[#1b5e3f] transition-colors">
                   {crumb.label}
-                </a>
+                </Link>
                 <span className="text-[#aaaaaa]">›</span>
               </>
             )}
@@ -259,15 +271,28 @@ function ProductDetailPage() {
               {/* Size Selector */}
               <div className="mt-6">
                 <div className="text-xs uppercase tracking-widest text-[#1b5e3f] font-semibold mb-3">
-                  Select Flacon Size
+                  {product.category === "car-perfumes"
+                    ? "Diffuser Format"
+                    : product.category === "essence-oils"
+                      ? "Pure Extract Flacon"
+                      : product.category === "agarbatti" || product.category === "soaps"
+                        ? "Packaging & Size"
+                        : "Select Flacon Size"}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f] bg-[#1b5e3f] text-white hover:bg-[#164a31] transition-all">
-                    {product.size || "50 ml"}
+                    {product.size || (product.category === "car-perfumes" ? "8 ml (Hanging Diffuser)" : "50 ml")}
                   </button>
-                  <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f]/20 bg-white text-[#333333] hover:border-[#1b5e3f]/50 transition-all">
-                    100 ml (Extrait)
-                  </button>
+                  {product.category === "perfumes" && (
+                    <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f]/20 bg-white text-[#333333] hover:border-[#1b5e3f]/50 transition-all">
+                      100 ml (Extrait)
+                    </button>
+                  )}
+                  {product.category === "car-perfumes" && (
+                    <button className="px-5 py-3 rounded-xl text-xs font-semibold border border-[#1b5e3f]/20 bg-white text-[#333333] hover:border-[#1b5e3f]/50 transition-all">
+                      8 ml Refill Flacon
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -411,8 +436,19 @@ function ProductDetailPage() {
                   <div className="p-4 pt-2 text-xs text-[#555555] border-t border-[#e0e0e0] font-light leading-relaxed">
                     <p>{product.notes}</p>
                     <p className="mt-2 text-[#777777]">
-                      <strong className="text-[#333333]">Concentration:</strong> High Extrait de Parfum. <br />
-                      <strong className="text-[#333333]">Longevity:</strong> 8–12 hours on skin and fabrics.
+                      <strong className="text-[#333333]">Concentration:</strong>{" "}
+                      {product.category === "car-perfumes"
+                        ? "Diffuser Oil Concentré"
+                        : product.category === "essence-oils"
+                          ? "100% Pure Essential Essence"
+                          : "High Extrait de Parfum"}
+                      . <br />
+                      <strong className="text-[#333333]">Longevity:</strong>{" "}
+                      {product.category === "car-perfumes"
+                        ? "Up to 60 days continuous diffusion with porous beechwood cap."
+                        : product.category === "essence-oils"
+                          ? "Continuous aromatic diffusion and high blend stability."
+                          : "8–12 hours on skin and fabrics."}
                     </p>
                   </div>
                 </details>
@@ -456,9 +492,9 @@ function ProductDetailPage() {
                   size="sm"
                   className="bg-transparent border border-white/20 text-[#333333] hover:border-[#d4af37] text-xs rounded-full"
                 >
-                  <a href={crumb.href} className="flex items-center gap-1.5">
+                  <Link to={crumb.href as any} className="flex items-center gap-1.5">
                     View All <ArrowRight size={13} className="text-[#1b5e3f]" />
-                  </a>
+                  </Link>
                 </Button>
               )}
             </div>
@@ -479,8 +515,9 @@ function ProductDetailPage() {
                     className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5`}
                   >
                     <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#fcfbf9] border-b border-[#e8e2d8]">
-                      <a
-                        href={`/products/${p.id}`}
+                      <Link
+                        to="/products/$productId"
+                        params={{ productId: p.id }}
                         className="w-full h-full flex items-center justify-center"
                       >
                         <img
@@ -491,19 +528,20 @@ function ProductDetailPage() {
                           loading="lazy"
                           className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                         />
-                      </a>
+                      </Link>
                       <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                         {p.badge}
                       </span>
                     </div>
                     <div className="p-4 flex flex-col flex-1 justify-between bg-white">
                       <div>
-                        <a
-                          href={`/products/${p.id}`}
+                        <Link
+                          to="/products/$productId"
+                          params={{ productId: p.id }}
                           className="font-display text-base text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium"
                         >
                           {p.name}
-                        </a>
+                        </Link>
                         <p className="text-xs text-[#666666] line-clamp-1 mt-0.5 font-light">
                           {p.notes}
                         </p>
@@ -572,7 +610,7 @@ function ProductDetailPage() {
                   </Button>
                 </div>
               ) : (
-                products
+                allProducts
                   .filter((p) => (bag[p.id] || 0) > 0)
                   .map((p) => (
                     <div className="bag-item" key={p.id}>
