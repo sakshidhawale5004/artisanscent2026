@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState } from "react";
 import {
   ArrowDown,
@@ -287,7 +287,7 @@ function Index() {
                               : "#f5e6d3",
                     }}
                   >
-                    <a href={`/products/${p.id}`}>
+                    <Link to="/products/$productId" params={{ productId: p.id }}>
                       <img
                         src={p.image}
                         alt={`${p.name}`}
@@ -296,7 +296,7 @@ function Index() {
                         loading="lazy"
                         style={{ objectFit: "contain", padding: "20px" }}
                       />
-                    </a>
+                    </Link>
                     <span className="product-badge">{p.badge}</span>
                     <Button
                       variant="ghost"
@@ -311,9 +311,13 @@ function Index() {
                   </div>
                   <div className="product-info">
                     <div>
-                      <a href={`/products/${p.id}`} className="product-name">
+                      <Link
+                        to="/products/$productId"
+                        params={{ productId: p.id }}
+                        className="product-name"
+                      >
                         {p.name}
-                      </a>
+                      </Link>
                       <p className="product-notes">{p.notes}</p>
                       <div className="text-[9px] text-muted-foreground capitalize">
                         {p.category.replace("-", " ")}
@@ -547,9 +551,10 @@ function Index() {
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {signatureIcons.map((p, idx) => (
-                <a
+                <Link
                   key={p.id}
-                  href={`/products/${p.id}`}
+                  to="/products/$productId"
+                  params={{ productId: p.id }}
                   className={`reveal-on-scroll reveal-delay-${(idx + 1) * 100} group relative rounded-2xl overflow-hidden border border-[#2d8659]/35 bg-gradient-to-b from-[#0b2b1c]/85 to-[#051a10]/95 backdrop-blur-md flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:border-[#d4af37]/70 hover:shadow-[0_20px_50px_rgba(27,94,63,0.35)] shadow-lg`}
                 >
                   {/* Image Showcase area with soft pedestal glow */}
@@ -582,7 +587,7 @@ function Index() {
                       </span>
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
 

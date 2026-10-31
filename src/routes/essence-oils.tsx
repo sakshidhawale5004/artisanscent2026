@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, Heart, Plus, Search, ShoppingBag, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -185,8 +185,9 @@ function EssenceOilsPage() {
                     className={`reveal-on-scroll ${delayClass} group rounded-2xl overflow-hidden border border-[#e8e2d8] bg-white flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#1b5e3f]/50 hover:shadow-xl hover:shadow-[#1b5e3f]/5`}
                   >
                     <div className="relative aspect-square w-full p-6 flex items-center justify-center bg-[#fcfbf9] border-b border-[#e8e2d8]">
-                      <a
-                        href={`/products/${p.id}`}
+                      <Link
+                        to="/products/$productId"
+                        params={{ productId: p.id }}
                         className="w-full h-full flex items-center justify-center"
                       >
                         <img
@@ -197,7 +198,7 @@ function EssenceOilsPage() {
                           loading="lazy"
                           className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                         />
-                      </a>
+                      </Link>
                       <span className="absolute top-3 left-3 text-[9px] uppercase tracking-widest text-[#1b5e3f] bg-white/95 border border-[#e8e2d8] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
                         {p.badge}
                       </span>
@@ -220,12 +221,13 @@ function EssenceOilsPage() {
                           {"★★★★★"}
                           <span className="text-[11px] text-[#888888] ml-1 font-light">(98)</span>
                         </div>
-                        <a
-                          href={`/products/${p.id}`}
+                        <Link
+                          to="/products/$productId"
+                          params={{ productId: p.id }}
                           className="font-display text-lg text-[#1a1a1a] group-hover:text-[#1b5e3f] transition-colors block font-medium"
                         >
                           {p.name}
-                        </a>
+                        </Link>
                         {p.botanicalName && (
                           <p className="text-[11px] text-[#1b5e3f] italic mt-0.5 font-serif">
                             {p.botanicalName}
