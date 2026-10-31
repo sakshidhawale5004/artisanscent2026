@@ -1,7 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
   "redirects": [
     {
       "source": "/dashboard.php",
@@ -36,7 +34,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|.*\\..*).*)",
+      "source": "/products/:productId",
       "destination": "/index.html"
     }
   ]
